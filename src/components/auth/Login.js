@@ -1,22 +1,37 @@
-import React, {useRef} from 'react'
+import React, { useRef } from 'react'
 import useSimpleAuth from '../../hooks/ui/useSimpleAuth'
 
 const Login = props => {
     const email = useRef()
     const password = useRef()
 
-    const {login} = useSimpleAuth()
+    const { login } = useSimpleAuth()
 
     const handleLogin = evt => {
         evt.preventDefault()
+
+        if(email.current.value === "" || password.current.value === ""){
+            alert("Please complete all fields")
+        }
+        else{
 
         const userInfo = {
             email: email.current.value,
             password: password.current.value
         }
 
+        //login returns where the app should redirect to depending on if login was successful
         login(userInfo)
-        .then( () => props.history.push("/"))
+            .then(redirectTo => {
+                props.history.push(redirectTo)
+                //will reset login form if the user entered incorrect credentials and stays in the login page
+                if(redirectTo === '/login'){
+                    email.current.value = ""
+                    password.current.value = ""
+                }
+            })
+        }
+
     }
     return (
         <form onSubmit={handleLogin}>

@@ -45,10 +45,14 @@ const useSimpleAuth = () => {
             .then(res => res.json())
             .then(res => {
                 console.log("login", res)
-                if ("accessToken" in res) {
+                if (typeof res === "object" && "accessToken" in res) {
                     //after verifying that the user entered in correct credentials, their id is stored in localStorage and state of loggedIn is set to true
                     localStorage.setItem("currUserId", res.user.id)
                     setLoggedIn(true)
+                    return "/"
+                } else {
+                    alert("User Not Found")
+                    return "/login"
                 }
             })
     }
