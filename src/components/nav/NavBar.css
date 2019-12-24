@@ -1,0 +1,13 @@
+nav .container {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+nav .container li {
+    flex: 1;
+    padding: 5px;
+    text-align: center;
+    list-style-type: none;
+}
