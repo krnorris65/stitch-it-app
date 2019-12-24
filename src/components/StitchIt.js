@@ -1,4 +1,6 @@
 import React from "react"
+import {Route} from 'react-router-dom'
+import NavBar from "./nav/NavBar"
 
 
 
@@ -7,12 +9,11 @@ const StitchIt = () => {
 
     return (
         <>
-            <div>
-                <h2>Stitch It
+        <Route render={props => (
+            <NavBar {...props} />
+        )} />
+            <h2>Stitch It</h2>
 
-                </h2>
-               
-            </div>
         </>
     )
 }
