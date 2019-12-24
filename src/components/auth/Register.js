@@ -11,15 +11,26 @@ const Register = props => {
 
     const handleRegister = evt => {
         evt.preventDefault()
-        const userInfo = {
-            firstName: firstName.current.value,
-            lastName: lastName.current.value,
-            email: email.current.value,
-            password: password.current.value
+        if (email.current.value === "" || password.current.value === "" || firstName.current.value === "" || lastName.current.value === "") {
+            alert("Please complete all fields")
         }
+        else {
+            const userInfo = {
+                firstName: firstName.current.value,
+                lastName: lastName.current.value,
+                email: email.current.value,
+                password: password.current.value
+            }
 
-        register(userInfo)
-            .then(() => props.history.push("/"))
+            register(userInfo)
+                .then(redirectTo => {
+                    props.history.push(redirectTo)
+
+                    if(redirectTo === "/register") {
+                        password.current.value = ""
+                    }
+                })
+        }
     }
 
     return (
@@ -27,17 +38,17 @@ const Register = props => {
             <fieldset>
                 <h3>Please Register</h3>
                 <div className="formgrid">
-                    <input ref={lastName} type="text"
-                        id="lastName"
-                        placeholder="Last Name"
-                        required="" autoFocus="" />
-                    <label htmlFor="inputLastName">Last Name</label>
-
                     <input ref={firstName} type="text"
                         id="firstName"
                         placeholder="First Name"
                         required="" autoFocus="" />
                     <label htmlFor="inputFirstName">First Name</label>
+
+                    <input ref={lastName} type="text"
+                        id="lastName"
+                        placeholder="Last Name"
+                        required="" autoFocus="" />
+                    <label htmlFor="inputLastName">Last Name</label>
 
                     <input ref={email} type="email"
                         id="email"
