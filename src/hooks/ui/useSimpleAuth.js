@@ -30,7 +30,7 @@ const useSimpleAuth = () => {
                     setLoggedIn(true)
                     return "/"
                 } else {
-                    alert("User Email Already Exist")
+                    alert(res)
                     return "/register"
                 }
             })
@@ -55,7 +55,7 @@ const useSimpleAuth = () => {
                     setLoggedIn(true)
                     return "/"
                 } else {
-                    alert("User Not Found")
+                    alert(res)
                     return "/login"
                 }
             })
