@@ -56,3 +56,5 @@ const Register = props => {
         </form>
     )
 }
+
+export default Register
