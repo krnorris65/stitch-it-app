@@ -15,7 +15,7 @@ const DesignCard = props => {
                 <p>Fabric: {`${props.design.fabric.brand} ${props.design.fabric.count} count (${props.design.fabric.color})`}</p>
                 <p>Finished Size: {props.design.finishedSize.size}</p>
                 <footer>
-                    <span>Last Updated: {props.design.lastUpdated}</span>
+                    <span>Started On: {props.design.startDate}</span>
                 </footer>
             </div>
         </div>

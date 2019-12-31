@@ -6,6 +6,7 @@ import Register from './auth/Register'
 import useSimpleAuth from '../hooks/ui/useSimpleAuth'
 
 import Home from './home/Home'
+import DesignForm from './design/DesignForm'
 
 
 const ApplicationViews = props => {
@@ -29,6 +30,12 @@ const ApplicationViews = props => {
                     return <Register {...props} />
                 } else {
                     return <Redirect to="/" />
+                }
+            }} />
+
+            <Route path="/design/new" render={props => {
+                if(isAuthenticated()) {
+                    return <DesignForm />
                 }
             }} />
         </>
