@@ -7,6 +7,8 @@ const DesignForm = props => {
     const [fabrics, setFabrics] = useState([])
     const [finishedSizes, setFinishedSizes] = useState([])
 
+    const [toggle, setToggle] = useState(false)
+
 
     const [photoLink, setPhotoLink] = useState("")
 
@@ -32,6 +34,7 @@ const DesignForm = props => {
     useEffect(getFinishedSizes, [])
 
 
+
     const createNewDesign = () => {
         const design = {
             title: title.current.value,
@@ -43,10 +46,19 @@ const DesignForm = props => {
             userId: Number(localStorage.getItem("currUserId"))
         }
 
-        // ApiManager.post("designs", design)
-        // .then(() => props.history.push("/"))
+        if (design.title === "" || design.startDate === "") {
+            alert("Please fill out a Title and Start Date")
+        } else if (design.completedDate !== "" && design.completedDate < design.startDate) {
+            alert("Completed date must be later than start date")
+        } else {
+            setLoadingStatus(true)
+            // ApiManager.post("designs", design)
+            // .then(() => props.history.push("/"))
 
-        console.log(design)
+            console.log(design)
+
+        }
+
     }
 
     return (
@@ -65,20 +77,20 @@ const DesignForm = props => {
                     </div>
 
                     <div className="formgrid">
-                        <textarea
-                            ref={description}
-                            id="designDescription"
-                        ></textarea>
-                        <label htmlFor="designDescription">Description</label>
-                    </div>
-
-                    <div className="formgrid">
                         <input
                             type="date"
                             ref={startDate}
                             id="designStarted"
                         />
                         <label htmlFor="designStarted">Started On:</label>
+                    </div>
+
+                    <div className="formgrid">
+                        <textarea
+                            ref={description}
+                            id="designDescription"
+                        ></textarea>
+                        <label htmlFor="designDescription">Description</label>
                     </div>
 
                     <div className="formgrid">
@@ -93,10 +105,10 @@ const DesignForm = props => {
                     <div className="formgrid">
                         <select id="designFabric" ref={fabricId}>
                             {
-                                fabrics.map(fabric => <option key={fabric.id} value={fabric.id}>{fabric.brand} {fabric.count} {fabric.color}</option>)
+                                fabrics.map(fabric => <option key={fabric.id} value={fabric.id}>{fabric.type} {fabric.count} count</option>)
                             }
                         </select>
-                        <label htmlFor="designFabric">Fabric Type:</label>
+                        <label htmlFor="designFabric">Fabric:</label>
 
                     </div>
                     <div className="formgrid">
@@ -107,6 +119,10 @@ const DesignForm = props => {
                         </select>
                         <label htmlFor="designSize">Finished Size:</label>
                     </div>
+
+                    <button onClick={() => toggle ? setToggle(false) : setToggle(true)}>Add Fabric</button>
+                    <button>Add Size</button>
+
                     <div className="alignRight">
                         <button
                             type="button"
@@ -116,6 +132,12 @@ const DesignForm = props => {
                     </div>
                 </fieldset>
             </form>
+
+            {
+                (toggle) ? 
+                <h4>Show Form</h4> :
+                null
+            }
 
             <button onClick={() => props.history.push("/")}>Back</button>
         </>

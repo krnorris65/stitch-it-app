@@ -12,7 +12,7 @@ const DesignCard = props => {
                         <img src={require('./defaultDesign.png')} alt="default design" />
                 }
                 <p>{props.design.description}</p>
-                <p>Fabric: {`${props.design.fabric.brand} ${props.design.fabric.count} count (${props.design.fabric.color})`}</p>
+                <p>Aida Fabric: {`${props.design.fabric.count} count`}</p>
                 <p>Finished Size: {props.design.finishedSize.size}</p>
                 <footer>
                     <span>Started On: {props.design.startDate}</span>
