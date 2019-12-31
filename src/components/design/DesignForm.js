@@ -10,6 +10,7 @@ const DesignForm = props => {
     const [finishedSizes, setFinishedSizes] = useState([])
 
     const [toggle, setToggle] = useState(false)
+    const [form, setForm] = useState("")
 
 
     const [photoLink, setPhotoLink] = useState("")
@@ -21,29 +22,39 @@ const DesignForm = props => {
     const fabricId = useRef()
     const finishedSizeId = useRef()
 
-    const getFabrics = () => {
-        ApiManager.getAll("fabrics")
-            .then(fabrics => setFabrics(fabrics))
-    }
-
-    const getFinishedSizes = () => {
-        ApiManager.getAll("finishedSizes")
-            .then(finishedSizes => setFinishedSizes(finishedSizes))
-
-    }
-
-    const changeToggle = () => {
-        if(toggle) {
+    // toggleForm takes an arguement to distinguish between fabric and size forms
+    const toggleForm = (formType) => {
+        if (toggle) {
             setToggle(false)
+            setForm("")
             setLoadingStatus(false)
         } else {
             setToggle(true)
+            setForm(formType)
             setLoadingStatus(true)
         }
     }
 
-    useEffect(getFabrics, [])
-    useEffect(getFinishedSizes, [])
+    //if a toggle is false (upon page load and when fabric and size forms are closed) then the values of fabrics and finishedSizes will be updated
+    const getFabrics = () => {
+        if (!toggle) {
+            console.log("Update fabric")
+            ApiManager.getAll("fabrics")
+                .then(fabrics => setFabrics(fabrics))
+        }
+    }
+
+    const getFinishedSizes = () => {
+        if (!toggle) {
+            console.log("Update size")
+            ApiManager.getAll("finishedSizes")
+                .then(finishedSizes => setFinishedSizes(finishedSizes))
+        }
+
+    }
+
+    useEffect(getFabrics, [toggle])
+    useEffect(getFinishedSizes, [toggle])
 
 
 
@@ -64,8 +75,8 @@ const DesignForm = props => {
             alert("Completed date must be later than start date")
         } else {
             setLoadingStatus(true)
-            // ApiManager.post("designs", design)
-            // .then(() => props.history.push("/"))
+            ApiManager.post("designs", design)
+                .then(() => props.history.push("/"))
 
             console.log(design)
 
@@ -133,7 +144,8 @@ const DesignForm = props => {
                         <label htmlFor="designSize">Finished Size:</label>
                     </div>
 
-                    <h5>I don't see my fabric or finished size: <span onClick={changeToggle}>Click here to add</span></h5>
+                    <h5>I don't see my fabric : <span onClick={() => toggleForm("fabric")}>Click here to add</span></h5>
+                    <h5>I don't see my finished size: <span onClick={() => toggleForm("size")}>Click here to add</span></h5>
 
                     <div className="alignRight">
                         <button
@@ -146,12 +158,20 @@ const DesignForm = props => {
             </form>
 
             {
-                (toggle) ? 
-                <>
-                <h4>Show Form</h4> 
-                <FabricForm changeToggle={changeToggle}/>
-                </>:
-                null
+                (toggle && form === "fabric") ?
+                    <>
+                        <h4>Fabric Form</h4>
+                        <FabricForm toggleForm={toggleForm} />
+                    </> :
+                    null
+            }
+            {
+                (toggle && form === "size") ?
+                    <>
+                        <h4>Size Form</h4>
+                        {/* <FabricForm toggleForm={toggleForm}/> */}
+                    </> :
+                    null
             }
 
             <button onClick={() => props.history.push("/")}>Back</button>

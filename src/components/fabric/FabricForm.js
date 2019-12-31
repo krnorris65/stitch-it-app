@@ -27,11 +27,11 @@ const FabricForm = props => {
                 console.log(response)
                 if(response.length > 0){
                     alert("Fabric already exists!")
-                    props.changeToggle()
+                    props.toggleForm()
                 } else{
                     //if the fabric doesn't exist, add it to the database
                     ApiManager.post("fabrics", fabric)
-                    .then(props.changeToggle)
+                    .then(props.toggleForm)
                 }
             })
         }
