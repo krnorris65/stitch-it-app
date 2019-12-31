@@ -101,6 +101,7 @@ const DesignForm = props => {
                         <textarea
                             ref={description}
                             id="designDescription"
+                            placeholder="Add information pertaining to floss used, color of fabric, helpful notes, etc."
                         ></textarea>
                         <label htmlFor="designDescription">Description</label>
                     </div>
