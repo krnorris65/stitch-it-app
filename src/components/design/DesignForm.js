@@ -120,8 +120,7 @@ const DesignForm = props => {
                         <label htmlFor="designSize">Finished Size:</label>
                     </div>
 
-                    <button onClick={() => toggle ? setToggle(false) : setToggle(true)}>Add Fabric</button>
-                    <button>Add Size</button>
+                    <h5>I don't see my fabric or finished size: <span onClick={() => toggle ? setToggle(false) : setToggle(true)}>Click here to add</span></h5>
 
                     <div className="alignRight">
                         <button
