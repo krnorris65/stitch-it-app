@@ -116,6 +116,8 @@ const DesignForm = props => {
                     </div>
                 </fieldset>
             </form>
+
+            <button onClick={() => props.history.push("/")}>Back</button>
         </>
     )
 

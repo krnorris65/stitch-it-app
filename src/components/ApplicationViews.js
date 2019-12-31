@@ -14,7 +14,7 @@ const ApplicationViews = props => {
     return (
         <>
             <Route exact path="/" render={props => {
-                return <Home />
+                return <Home {...props}/>
             }} />
 
             {/* if the user is already logged in they they will not be able to access the login or register pages */}
@@ -35,7 +35,7 @@ const ApplicationViews = props => {
 
             <Route path="/design/new" render={props => {
                 if(isAuthenticated()) {
-                    return <DesignForm />
+                    return <DesignForm {...props}/>
                 }
             }} />
         </>

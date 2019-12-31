@@ -11,7 +11,7 @@ const Home = props => {
         <h2>Home Page of Stitch It</h2>
         {
             (isAuthenticated()) ? 
-            <DesignList/>
+            <DesignList {...props}/>
             : <Login />
         }
         </>
