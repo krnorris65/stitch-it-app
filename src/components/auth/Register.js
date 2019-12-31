@@ -6,6 +6,7 @@ const Register = props => {
     const lastName = useRef()
     const email = useRef()
     const password = useRef()
+    const publicProfile = useRef()
 
     const { register } = useSimpleAuth()
 
@@ -15,11 +16,13 @@ const Register = props => {
             alert("Please complete all fields")
         }
         else {
+
             const userInfo = {
                 firstName: firstName.current.value,
                 lastName: lastName.current.value,
                 email: email.current.value,
-                password: password.current.value
+                password: password.current.value,
+                publicProfile: publicProfile.current.checked
             }
 
             register(userInfo)
@@ -61,6 +64,10 @@ const Register = props => {
                         placeholder="Password"
                         required="" />
                     <label htmlFor="inputPassword">Password</label>
+
+                    <input ref={publicProfile} type="checkbox"
+                        id="publicProfile"/>
+                    <label htmlFor="inputPublic">Public Profile?</label>
                 </div>
                 <button type="submit">Register</button>
             </fieldset>
