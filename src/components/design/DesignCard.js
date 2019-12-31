@@ -2,6 +2,7 @@ import React from 'react'
 
 
 const DesignCard = props => {
+    console.log(props.design)
     return (
         <div className="card">
             <div className="card-content">
@@ -16,3 +17,5 @@ const DesignCard = props => {
         </div>
     )
 }
+
+export default DesignCard
