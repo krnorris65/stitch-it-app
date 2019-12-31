@@ -1,7 +1,7 @@
 const remoteURL = "http://localhost:5002"
 
 export default {
-    getOne(resource, parameters, id) {
+    getOne(resource, id, parameters) {
         if(resource === "designs") {
             parameters += "&_expand=fabric&_expand=finishedSize"
         }

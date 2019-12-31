@@ -17,6 +17,9 @@ const DesignList = props => {
 
     return (
         <>
+        <section>
+            <button>Add New Design</button>
+        </section>
         <div className="container-cards">
             {designs.map(design => <DesignCard key={design.id} design={design} />)}
         </div>
