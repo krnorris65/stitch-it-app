@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import ApiManager from '../../modules/ApiManager'
+import './styles/DesignForm.css'
 
 const DesignForm = props => {
     const [loadingStatus, setLoadingStatus] = useState(false)
@@ -89,21 +90,22 @@ const DesignForm = props => {
                         <label htmlFor="designCompleted">Completed On:</label>
                     </div>
 
-                    <div className="formGrid">
+                    <div className="formgrid">
                         <select id="designFabric" ref={fabricId}>
                             {
-fabrics.map(fabric => <option key={fabric.id} value={fabric.id}>{fabric.brand} {fabric.count} {fabric.color}</option>)
+                                fabrics.map(fabric => <option key={fabric.id} value={fabric.id}>{fabric.brand} {fabric.count} {fabric.color}</option>)
                             }
                         </select>
                         <label htmlFor="designFabric">Fabric Type:</label>
 
                     </div>
-                    <div className="formGrid">
-                    <select ref={finishedSizeId}>
+                    <div className="formgrid">
+                        <select id="designSize" ref={finishedSizeId}>
                             {
                                 finishedSizes.map(fSize => <option key={fSize.id} value={fSize.id}>{fSize.size}</option>)
                             }
                         </select>
+                        <label htmlFor="designSize">Finished Size:</label>
                     </div>
                     <div className="alignRight">
                         <button
