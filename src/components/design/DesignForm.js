@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import ApiManager from '../../modules/ApiManager'
 
 const DesignForm = props => {
@@ -11,24 +11,39 @@ const DesignForm = props => {
 
     const title = useRef()
     const description = useRef()
+    const startDate = useRef()
     const completedDate = useRef()
-    // const fabricId = useRef()
-    // const finishedSizeId = useRef()
+    const fabricId = useRef()
+    const finishedSizeId = useRef()
 
-    //userId
-    //lastUpdated
+    const getFabrics = () => {
+        ApiManager.getAll("fabrics")
+            .then(fabrics => setFabrics(fabrics))
+    }
+
+    const getFinishedSizes = () => {
+        ApiManager.getAll("finishedSizes")
+            .then(finishedSizes => setFinishedSizes(finishedSizes))
+
+    }
+
+    useEffect(getFabrics, [])
+    useEffect(getFinishedSizes, [])
+
 
     const createNewDesign = () => {
         const design = {
             title: title.current.value,
             description: description.current.value,
+            startDate: startDate.current.value,
             completedDate: completedDate.current.value,
+            fabricId: Number(fabricId.current.value),
+            finishedSizeId: Number(finishedSizeId.current.value),
             userId: Number(localStorage.getItem("currUserId"))
-            // fabricId: fabricId.current.value,
-            // finishedSizeId: finishedSizeId.current.value,
         }
 
         // ApiManager.post("designs", design)
+        // .then(() => props.history.push("/"))
 
         console.log(design)
     }
@@ -47,6 +62,7 @@ const DesignForm = props => {
                         />
                         <label htmlFor="designTitle">Title</label>
                     </div>
+
                     <div className="formgrid">
                         <textarea
                             ref={description}
@@ -54,6 +70,16 @@ const DesignForm = props => {
                         ></textarea>
                         <label htmlFor="designDescription">Description</label>
                     </div>
+
+                    <div className="formgrid">
+                        <input
+                            type="date"
+                            ref={startDate}
+                            id="designStarted"
+                        />
+                        <label htmlFor="designStarted">Started On:</label>
+                    </div>
+
                     <div className="formgrid">
                         <input
                             type="date"
@@ -61,6 +87,23 @@ const DesignForm = props => {
                             id="designCompleted"
                         />
                         <label htmlFor="designCompleted">Completed On:</label>
+                    </div>
+
+                    <div className="formGrid">
+                        <select id="designFabric" ref={fabricId}>
+                            {
+fabrics.map(fabric => <option key={fabric.id} value={fabric.id}>{fabric.brand} {fabric.count} {fabric.color}</option>)
+                            }
+                        </select>
+                        <label htmlFor="designFabric">Fabric Type:</label>
+
+                    </div>
+                    <div className="formGrid">
+                    <select ref={finishedSizeId}>
+                            {
+                                finishedSizes.map(fSize => <option key={fSize.id} value={fSize.id}>{fSize.size}</option>)
+                            }
+                        </select>
                     </div>
                     <div className="alignRight">
                         <button

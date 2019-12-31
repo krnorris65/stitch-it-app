@@ -8,7 +8,7 @@ const DesignCard = props => {
                 <h4>{props.design.title}</h4>
                 {
                     (props.design.photoLink) ?
-                        <img src={`${props.design.photoLink}`} alt={`image of ${props.design.title}`} /> :
+                        <img src={`${props.design.photoLink}`} alt={`${props.design.title}`} /> :
                         <img src={require('./defaultDesign.png')} alt="default design" />
                 }
                 <p>{props.design.description}</p>
@@ -16,6 +16,7 @@ const DesignCard = props => {
                 <p>Finished Size: {props.design.finishedSize.size}</p>
                 <footer>
                     <span>Started On: {props.design.startDate}</span>
+                    <span>Completed On: {props.design.completedDate}</span>
                 </footer>
             </div>
         </div>
