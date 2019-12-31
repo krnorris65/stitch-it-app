@@ -24,10 +24,14 @@ const useSimpleAuth = () => {
             .then(res => res.json())
             .then(res => {
                 console.log("register", res)
-                if ("accessToken" in res) {
+                if (typeof res === "object" && "accessToken" in res) {
                     //after registering a new user, their id is stored in localStorage to then log the user in and state of loggedIn to true
                     localStorage.setItem("currUserId", res.user.id)
                     setLoggedIn(true)
+                    return "/"
+                } else {
+                    alert(res)
+                    return "/register"
                 }
             })
     }
@@ -45,10 +49,14 @@ const useSimpleAuth = () => {
             .then(res => res.json())
             .then(res => {
                 console.log("login", res)
-                if ("accessToken" in res) {
+                if (typeof res === "object" && "accessToken" in res) {
                     //after verifying that the user entered in correct credentials, their id is stored in localStorage and state of loggedIn is set to true
                     localStorage.setItem("currUserId", res.user.id)
                     setLoggedIn(true)
+                    return "/"
+                } else {
+                    alert(res)
+                    return "/login"
                 }
             })
     }

@@ -6,20 +6,34 @@ const Register = props => {
     const lastName = useRef()
     const email = useRef()
     const password = useRef()
+    const publicProfile = useRef()
 
     const { register } = useSimpleAuth()
 
     const handleRegister = evt => {
         evt.preventDefault()
-        const userInfo = {
-            firstName: firstName.current.value,
-            lastName: lastName.current.value,
-            email: email.current.value,
-            password: password.current.value
+        if (email.current.value === "" || password.current.value === "" || firstName.current.value === "" || lastName.current.value === "") {
+            alert("Please complete all fields")
         }
+        else {
 
-        register(userInfo)
-            .then(() => props.history.push("/"))
+            const userInfo = {
+                firstName: firstName.current.value,
+                lastName: lastName.current.value,
+                email: email.current.value,
+                password: password.current.value,
+                publicProfile: publicProfile.current.checked
+            }
+
+            register(userInfo)
+                .then(redirectTo => {
+                    props.history.push(redirectTo)
+
+                    if(redirectTo === "/register") {
+                        password.current.value = ""
+                    }
+                })
+        }
     }
 
     return (
@@ -27,17 +41,17 @@ const Register = props => {
             <fieldset>
                 <h3>Please Register</h3>
                 <div className="formgrid">
-                    <input ref={lastName} type="text"
-                        id="lastName"
-                        placeholder="Last Name"
-                        required="" autoFocus="" />
-                    <label htmlFor="inputLastName">Last Name</label>
-
                     <input ref={firstName} type="text"
                         id="firstName"
                         placeholder="First Name"
                         required="" autoFocus="" />
                     <label htmlFor="inputFirstName">First Name</label>
+
+                    <input ref={lastName} type="text"
+                        id="lastName"
+                        placeholder="Last Name"
+                        required="" autoFocus="" />
+                    <label htmlFor="inputLastName">Last Name</label>
 
                     <input ref={email} type="email"
                         id="email"
@@ -50,6 +64,10 @@ const Register = props => {
                         placeholder="Password"
                         required="" />
                     <label htmlFor="inputPassword">Password</label>
+
+                    <input ref={publicProfile} type="checkbox"
+                        id="publicProfile"/>
+                    <label htmlFor="inputPublic">Public Profile?</label>
                 </div>
                 <button type="submit">Register</button>
             </fieldset>

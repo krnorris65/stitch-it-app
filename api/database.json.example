@@ -5,6 +5,7 @@
       "password": "$2a$10$I4l6.Af0TLnYw4PUJs4za.uqjM3DnOKmginETs41dkhaplACW2cOK",
       "firstName": "Kristen",
       "lastName": "Norris",
+      "publicProfile": true,
       "id": 1
     },
     {
@@ -12,7 +13,16 @@
       "password": "$2a$10$bl6GMZSvFHnpsZcYwlnkXe/6s0OX6KBYqf.e9KFrPqhPGmQ6TqjKu",
       "firstName": "Brandon",
       "lastName": "Rardin",
+      "publicProfile": true,
       "id": 2
+    },
+    {
+      "email": "Ada@aol.com",
+      "password": "$2a$10$H7EITEv2aDarnBy6hJJm.eusaaO8tdk9./EjkZsfps/NqXKuCsr6S",
+      "firstName": "Ada",
+      "lastName": "Grace",
+      "publicProfile": false,
+      "id": 3
     }
   ],
   "messages": [
@@ -29,8 +39,8 @@
       "title": "Design 1",
       "description": "this is a cross stitch design",
       "completedDate": "2019-11-01",
-      "public": true,
       "lastUpdated": "2019-12-13",
+      "photoLink": "https://images-na.ssl-images-amazon.com/images/I/71nevQuqwKL._SX466_.jpg",
       "fabricId": 1,
       "finishedSizeId": 1,
       "userId": 1
@@ -41,14 +51,6 @@
       "id": 1,
       "currentUserId": 2,
       "userId": 1
-    }
-  ],
-  "photos": [
-    {
-      "id": 1,
-      "photoLink": "https://images-na.ssl-images-amazon.com/images/I/71nevQuqwKL._SX466_.jpg",
-      "caption": "this is a photo of a cross stitch design",
-      "designId": 1
     }
   ],
   "fabrics": [
@@ -62,8 +64,7 @@
   "finishedSizes": [
     {
       "id": 1,
-      "height": "5 inches",
-      "width": "7 inches"
+      "size": "5 x 7 inches"
     }
   ]
 }
