@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react'
 import ApiManager from '../../modules/ApiManager'
 import './styles/DesignForm.css'
 
+import FabricForm from '../fabric/FabricForm'
+
 const DesignForm = props => {
     const [loadingStatus, setLoadingStatus] = useState(false)
     const [fabrics, setFabrics] = useState([])
@@ -28,6 +30,16 @@ const DesignForm = props => {
         ApiManager.getAll("finishedSizes")
             .then(finishedSizes => setFinishedSizes(finishedSizes))
 
+    }
+
+    const changeToggle = () => {
+        if(toggle) {
+            setToggle(false)
+            setLoadingStatus(false)
+        } else {
+            setToggle(true)
+            setLoadingStatus(true)
+        }
     }
 
     useEffect(getFabrics, [])
@@ -120,7 +132,7 @@ const DesignForm = props => {
                         <label htmlFor="designSize">Finished Size:</label>
                     </div>
 
-                    <h5>I don't see my fabric or finished size: <span onClick={() => toggle ? setToggle(false) : setToggle(true)}>Click here to add</span></h5>
+                    <h5>I don't see my fabric or finished size: <span onClick={changeToggle}>Click here to add</span></h5>
 
                     <div className="alignRight">
                         <button
@@ -134,7 +146,10 @@ const DesignForm = props => {
 
             {
                 (toggle) ? 
-                <h4>Show Form</h4> :
+                <>
+                <h4>Show Form</h4> 
+                <FabricForm changeToggle={changeToggle}/>
+                </>:
                 null
             }
 
