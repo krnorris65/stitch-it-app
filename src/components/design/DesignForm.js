@@ -49,6 +49,7 @@ const DesignForm = props => {
     }
 
     const getDesignToEdit = () => {
+        //if the route parameter doesn't include 'new" then it means it's a design to edit
         if(!props.match.path.includes('new')){
             console.log("Edit Design", props.match.params.designId)
             ApiManager.getOne("designs", props.match.params.designId)
@@ -101,6 +102,7 @@ const DesignForm = props => {
         toggleForm()
     }
 
+    //method that opens the cloudinary widget and sets the secure_url from the result as the photoLink
     const uploadWidget = () => {
 
         window.cloudinary.openUploadWidget({ cloud_name: `${CloudinaryInfo.cloud_name}`, upload_preset: `${CloudinaryInfo.upload_preset}`, tags: ['cross stitch'] },
@@ -209,7 +211,12 @@ const DesignForm = props => {
 
             <img className="uploadImage" src={photoLink} alt="" />
             <div className="alignRight">
-                <button onClick={uploadWidget} className="upload-button">Add Image</button>
+                {
+                    (photoLink === "") ?
+                    <button onClick={uploadWidget} className="upload-button">Add Image</button>
+                    : 
+                    <button onClick={() => setPhotoLink("")} >Delete Photo</button>
+                }
             </div>
 
             {
