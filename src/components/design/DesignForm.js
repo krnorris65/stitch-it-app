@@ -35,26 +35,29 @@ const DesignForm = props => {
         }
     }
 
-    //if a toggle is false (upon page load and when fabric and size forms are closed) then the values of fabrics and finishedSizes will be updated
-    const getFabrics = () => {
-        if (!toggle) {
-            console.log("Update fabric")
+    const getFabricsAndSizes = () => {
+        ApiManager.getAll("fabrics")
+        .then(fabrics => setFabrics(fabrics))
+        ApiManager.getAll("finishedSizes")
+            .then(finishedSizes => setFinishedSizes(finishedSizes))
+    }
+
+    useEffect(getFabricsAndSizes, [])
+
+    //pass into the Fabric Form and the Sizes Form so the new fabric/size will get added to the drop down after the form closes
+    const updateFabricDropdown = (id, status) => {
+        // if the status is update then the fabric already exists so a new fabric wasn't added to the database
+        //a getAll only needs to be done when a new fabric has been added
+        if(status === "update"){
+            fabricId.current.value = id
+        } else {
             ApiManager.getAll("fabrics")
                 .then(fabrics => setFabrics(fabrics))
+                .then(() => fabricId.current.value = id)
         }
+        //close form
+        toggleForm()
     }
-
-    const getFinishedSizes = () => {
-        if (!toggle) {
-            console.log("Update size")
-            ApiManager.getAll("finishedSizes")
-                .then(finishedSizes => setFinishedSizes(finishedSizes))
-        }
-
-    }
-
-    useEffect(getFabrics, [toggle])
-    useEffect(getFinishedSizes, [toggle])
 
 
 
@@ -161,7 +164,7 @@ const DesignForm = props => {
                 (toggle && form === "fabric") ?
                     <>
                         <h4>Fabric Form</h4>
-                        <FabricForm toggleForm={toggleForm} />
+                        <FabricForm updateFabricDropdown={updateFabricDropdown} />
                     </> :
                     null
             }

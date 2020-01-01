@@ -24,18 +24,20 @@ const FabricForm = props => {
             //make a get request to see if a fabric with that type and count exist
             ApiManager.getAll("fabrics", `type=${fabric.type}&count=${fabric.count}`)
             .then(response => {
-                console.log(response)
                 if(response.length > 0){
                     alert("Fabric already exists!")
-                    props.toggleForm()
+                    //set the existing fabric that was entered as the selected option
+                    props.updateFabricDropdown(response[0].id, "update")
                 } else{
                     //if the fabric doesn't exist, add it to the database
+                    //and get all the fabrics for the drop down
                     ApiManager.post("fabrics", fabric)
-                    .then(props.toggleForm)
+                    .then( newFabric => {
+                        props.updateFabricDropdown(newFabric.id)
+                    })
                 }
             })
         }
-        // props.changeToggle()
     }
 
     return (
