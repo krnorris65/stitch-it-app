@@ -40,7 +40,12 @@ const DesignForm = props => {
         ApiManager.getAll("fabrics")
             .then(fabrics => setFabrics(fabrics))
         ApiManager.getAll("finishedSizes")
-            .then(finishedSizes => setFinishedSizes(finishedSizes))
+            .then(finishedSizes => {
+                setFinishedSizes(finishedSizes)
+                //default value of the dropdown is the unknown size
+                const unknownId = finishedSizes.find(size => size.size === "unknown").id
+                finishedSizeId.current.value = unknownId
+            })
     }
 
     const getDesignToEdit = () => {
@@ -110,8 +115,7 @@ const DesignForm = props => {
 
 
 
-    const createNewDesign = () => {
-        console.log(photoLink)
+    const newOrUpdatedDesign = () => {
         const design = {
             title: title.current.value,
             description: description.current.value,
@@ -126,8 +130,14 @@ const DesignForm = props => {
             alert("Please fill out a Title")
         } else {
             setLoadingStatus(true)
-            ApiManager.post("designs", design)
+            if(props.match.path.includes('new')){
+                ApiManager.post("designs", design)
                 .then(() => props.history.push("/"))
+            } else {
+                design.id = Number(props.match.params.designId)
+                ApiManager.update("designs", design)
+                .then(() => props.history.push("/"))
+            }
 
         }
 
@@ -191,7 +201,7 @@ const DesignForm = props => {
                         <button
                             type="button"
                             disabled={loadingStatus}
-                            onClick={createNewDesign}
+                            onClick={newOrUpdatedDesign}
                         >Submit</button>
                     </div>
                 </fieldset>
