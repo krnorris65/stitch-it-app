@@ -39,7 +39,6 @@
       "title": "Design 1",
       "description": "this is a cross stitch design",
       "completedDate": "2019-11-01",
-      "lastUpdated": "2019-12-13",
       "photoLink": "https://images-na.ssl-images-amazon.com/images/I/71nevQuqwKL._SX466_.jpg",
       "fabricId": 1,
       "finishedSizeId": 1,
@@ -58,13 +57,16 @@
       "id": 1,
       "brand": "Aida",
       "count": 14,
-      "color": "white"
     }
   ],
   "finishedSizes": [
     {
       "id": 1,
-      "size": "5 x 7 inches"
+      "size": "5 x 7 in"
+    },
+    {
+      "id": 2,
+      "size": "5x7 in"
     }
   ]
 }

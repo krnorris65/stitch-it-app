@@ -3,6 +3,9 @@ import DesignList from '../design/DesignList'
 import useSimpleAuth from '../../hooks/ui/useSimpleAuth'
 import Login from '../auth/Login'
 
+import '../styles/DesignForm.css'
+import '../styles/Main.css'
+
 
 const Home = props => {
     const {isAuthenticated} = useSimpleAuth()
@@ -11,7 +14,7 @@ const Home = props => {
         <h2>Home Page of Stitch It</h2>
         {
             (isAuthenticated()) ? 
-            <DesignList/>
+            <DesignList {...props}/>
             : <Login />
         }
         </>
