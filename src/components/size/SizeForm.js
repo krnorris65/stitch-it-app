@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import ApiManager from '../../modules/ApiManager'
 
 const SizeForm = props => {
 
@@ -9,7 +10,7 @@ const SizeForm = props => {
     const height = useRef()
     const unit = useRef()
 
-    const newSize = evt => {
+    const handleSize = evt => {
         evt.preventDefault()
 
         const sizeObj = {}
@@ -23,18 +24,36 @@ const SizeForm = props => {
 
         if(specs.width.value ==="" || (specs.height !== null && specs.height.value === "")) {
             alert("Enter Measurement")
-        } else if(round){
-            sizeObj.size = `${specs.width.value} ${specs.unit.value} round`
-        } else{
-            sizeObj.size = `${specs.width.value}x${specs.height.value} ${specs.unit.value}`
+        } else {
+
+            if(round){
+                sizeObj.size = `${specs.width.value} ${specs.unit.value} round`
+            } else{
+                sizeObj.size = `${specs.width.value}x${specs.height.value} ${specs.unit.value}`
+            }
+
+            ApiManager.getAll("finishedSizes", `size=${sizeObj.size}`)
+            .then(response => {
+                console.log(response)
+                if(response.length > 0){
+                    alert("Design Size already exists!")
+                    props.updateSizesDropdown(response[0].id)
+                } else {
+                    ApiManager.post("finishedSizes", sizeObj)
+                    .then(newSize => {
+                        props.updateSizesDropdown(newSize.id)
+                    })
+                }
+            })
+
         }
+        
 
 
-        console.log(sizeObj)
     }
 
     return (
-        <form onSubmit={newSize}>
+        <form onSubmit={handleSize}>
             <fieldset>
                 <h3>New Size</h3>
                 <div className="formgrid">

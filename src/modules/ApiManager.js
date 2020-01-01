@@ -12,6 +12,12 @@ export default {
         if(resource === "designs") {
             parameters += "&_expand=fabric&_expand=finishedSize"
         }
+        if(resource === "finishedSizes") {
+            parameters += "&_sort=size"
+        }
+        if(resource === "fabrics") {
+            parameters += "&_sort=type,count"
+        }
         return fetch(`${remoteURL}/${resource}?${parameters}`)
             .then(response => response.json())
     },

@@ -7,7 +7,7 @@ const FabricForm = props => {
     const type = useRef()
     const count = useRef()
 
-    const newFabric = evt => {
+    const handleFabric = evt => {
         evt.preventDefault()
         
         const fabric = {
@@ -41,7 +41,7 @@ const FabricForm = props => {
     }
 
     return (
-        <form onSubmit={newFabric}>
+        <form onSubmit={handleFabric}>
             <fieldset>
                 <h3>New Fabric</h3>
                 <div className="formgrid">
