@@ -55,7 +55,7 @@ const FabricForm = props => {
                         id="count"
                         placeholder="Fabric Count"
                         required="" />
-                    <label htmlFor="inputPassword">Fabric Count</label>
+                    <label htmlFor="inputCount">Fabric Count</label>
                 </div>
                 <button type="submit">Add New Fabric</button>
             </fieldset>

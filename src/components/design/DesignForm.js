@@ -3,6 +3,7 @@ import ApiManager from '../../modules/ApiManager'
 import './styles/DesignForm.css'
 
 import FabricForm from '../fabric/FabricForm'
+import SizeForm from '../size/SizeForm'
 
 const DesignForm = props => {
     const [loadingStatus, setLoadingStatus] = useState(false)
@@ -172,7 +173,7 @@ const DesignForm = props => {
                 (toggle && form === "size") ?
                     <>
                         <h4>Size Form</h4>
-                        {/* <FabricForm toggleForm={toggleForm}/> */}
+                        <SizeForm toggleForm={toggleForm}/>
                     </> :
                     null
             }

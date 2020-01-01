@@ -58,13 +58,12 @@
       "id": 1,
       "brand": "Aida",
       "count": 14,
-      "color": "white"
     }
   ],
   "finishedSizes": [
     {
       "id": 1,
-      "size": "5 x 7 inches"
+      "size": "5 x 7 in"
     }
   ]
 }
