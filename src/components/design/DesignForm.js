@@ -7,7 +7,7 @@ import FabricForm from '../fabric/FabricForm'
 import SizeForm from '../size/SizeForm'
 
 const DesignForm = props => {
-    const [loadingStatus, setLoadingStatus] = useState(false)
+    const [loadingStatus, setLoadingStatus] = useState(true)
     const [fabrics, setFabrics] = useState([])
     const [finishedSizes, setFinishedSizes] = useState([])
 
@@ -43,7 +43,29 @@ const DesignForm = props => {
             .then(finishedSizes => setFinishedSizes(finishedSizes))
     }
 
+    const getDesignToEdit = () => {
+        if(!props.match.path.includes('new')){
+            console.log("Edit Design", props.match.params.designId)
+            ApiManager.getOne("designs", props.match.params.designId)
+            .then(editDesign => {
+                setLoadingStatus(false)
+
+                title.current.value = editDesign.title
+                description.current.value = editDesign.description
+                completedDate.current.value = editDesign.completedDate
+                fabricId.current.value = editDesign.fabricId
+                finishedSizeId.current.value = editDesign.finishedSizeId
+
+                setPhotoLink(editDesign.photoLink)
+                
+            })
+        } else{
+            setLoadingStatus(false)
+        }
+    }
+
     useEffect(getFabricsAndSizes, [])
+    useEffect(getDesignToEdit, [])
 
     //pass into the Fabric Form and the Sizes Form so the new fabric/size will get added to the drop down after the form closes
     const updateFabricDropdown = (id, status) => {
