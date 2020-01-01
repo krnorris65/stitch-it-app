@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import ApiManager from '../../modules/ApiManager'
 
+import CloudinaryInfo from './CloudinaryInfo'
+
 import FabricForm from '../fabric/FabricForm'
 import SizeForm from '../size/SizeForm'
 
@@ -36,7 +38,7 @@ const DesignForm = props => {
 
     const getFabricsAndSizes = () => {
         ApiManager.getAll("fabrics")
-        .then(fabrics => setFabrics(fabrics))
+            .then(fabrics => setFabrics(fabrics))
         ApiManager.getAll("finishedSizes")
             .then(finishedSizes => setFinishedSizes(finishedSizes))
     }
@@ -47,7 +49,7 @@ const DesignForm = props => {
     const updateFabricDropdown = (id, status) => {
         // if the status is update then the fabric already exists so a new fabric wasn't added to the database
         //a getAll only needs to be done when a new fabric has been added
-        if(status === "update"){
+        if (status === "update") {
             fabricId.current.value = id
         } else {
             ApiManager.getAll("fabrics")
@@ -61,7 +63,7 @@ const DesignForm = props => {
     const updateSizesDropdown = (id, status) => {
         // if the status is update then the size already exists so a new size wasn't added to the database
         //a getAll only needs to be done when a new size has been added
-        if(status === "update"){
+        if (status === "update") {
             finishedSizeId.current.value = id
         } else {
             ApiManager.getAll("finishedSizes")
@@ -72,13 +74,27 @@ const DesignForm = props => {
         toggleForm()
     }
 
+    const uploadWidget = () => {
+
+        window.cloudinary.openUploadWidget({ cloud_name: `${CloudinaryInfo.cloud_name}`, upload_preset: `${CloudinaryInfo.upload_preset}`, tags: ['cross stitch'] },
+            (error, result) => {
+
+                if (result !== undefined) {
+                    // change state so that the imageUrl property will contain the URL of the uploaded image
+                    setPhotoLink(`${result[0].secure_url}`)
+                }
+            });
+    }
+
 
 
     const createNewDesign = () => {
+        console.log(photoLink)
         const design = {
             title: title.current.value,
             description: description.current.value,
             completedDate: completedDate.current.value,
+            photoLink: photoLink,
             fabricId: Number(fabricId.current.value),
             finishedSizeId: Number(finishedSizeId.current.value),
             userId: Number(localStorage.getItem("currUserId"))
@@ -90,8 +106,6 @@ const DesignForm = props => {
             setLoadingStatus(true)
             ApiManager.post("designs", design)
                 .then(() => props.history.push("/"))
-
-            console.log(design)
 
         }
 
@@ -161,6 +175,11 @@ const DesignForm = props => {
                 </fieldset>
             </form>
 
+            <img className="uploadImage" src={photoLink} alt="" />
+            <div className="alignRight">
+                <button onClick={uploadWidget} className="upload-button">Add Image</button>
+            </div>
+
             {
                 (toggle && form === "fabric") ?
                     <>
@@ -173,7 +192,7 @@ const DesignForm = props => {
                 (toggle && form === "size") ?
                     <>
                         <h4>Size Form</h4>
-                        <SizeForm updateSizesDropdown={updateSizesDropdown}/>
+                        <SizeForm updateSizesDropdown={updateSizesDropdown} />
                     </> :
                     null
             }

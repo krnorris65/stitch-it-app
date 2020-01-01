@@ -8,7 +8,7 @@ const DesignCard = props => {
                 <h4>{props.design.title}</h4>
                 {
                 (props.design.completedDate !== "") ?
-                <p>Completed On: ${props.design.completedDate} </p>:
+                <p>Completed On: {props.design.completedDate} </p>:
                 <p>Work In Progress</p>
                 }
                 {
