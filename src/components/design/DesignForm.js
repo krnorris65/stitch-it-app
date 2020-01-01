@@ -7,7 +7,8 @@ import FabricForm from '../fabric/FabricForm'
 import SizeForm from '../size/SizeForm'
 
 const DesignForm = props => {
-    const [loadingStatus, setLoadingStatus] = useState(false)
+    const [loadingStatus, setLoadingStatus] = useState(true)
+    const [newDesign] = useState(props.match.path.includes('new'))
     const [fabrics, setFabrics] = useState([])
     const [finishedSizes, setFinishedSizes] = useState([])
 
@@ -40,10 +41,38 @@ const DesignForm = props => {
         ApiManager.getAll("fabrics")
             .then(fabrics => setFabrics(fabrics))
         ApiManager.getAll("finishedSizes")
-            .then(finishedSizes => setFinishedSizes(finishedSizes))
+            .then(finishedSizes => {
+                setFinishedSizes(finishedSizes)
+                //default value of the dropdown is the unknown size
+                const unknownId = finishedSizes.find(size => size.size === "unknown").id
+                finishedSizeId.current.value = unknownId
+            })
+    }
+
+
+    const getDesignToEdit = () => {
+        //if the route parameter doesn't include 'new" then it means it's a design to edit
+        if (!newDesign) {
+            ApiManager.getOne("designs", props.match.params.designId)
+                .then(editDesign => {
+                    setLoadingStatus(false)
+
+                    title.current.value = editDesign.title
+                    description.current.value = editDesign.description
+                    completedDate.current.value = editDesign.completedDate
+                    fabricId.current.value = editDesign.fabricId
+                    finishedSizeId.current.value = editDesign.finishedSizeId
+
+                    setPhotoLink(editDesign.photoLink)
+
+                })
+        } else {
+            setLoadingStatus(false)
+        }
     }
 
     useEffect(getFabricsAndSizes, [])
+    useEffect(getDesignToEdit, [])
 
     //pass into the Fabric Form and the Sizes Form so the new fabric/size will get added to the drop down after the form closes
     const updateFabricDropdown = (id, status) => {
@@ -74,6 +103,7 @@ const DesignForm = props => {
         toggleForm()
     }
 
+    //method that opens the cloudinary widget and sets the secure_url from the result as the photoLink
     const uploadWidget = () => {
 
         window.cloudinary.openUploadWidget({ cloud_name: `${CloudinaryInfo.cloud_name}`, upload_preset: `${CloudinaryInfo.upload_preset}`, tags: ['cross stitch'] },
@@ -88,8 +118,7 @@ const DesignForm = props => {
 
 
 
-    const createNewDesign = () => {
-        console.log(photoLink)
+    const newOrUpdatedDesign = () => {
         const design = {
             title: title.current.value,
             description: description.current.value,
@@ -104,8 +133,14 @@ const DesignForm = props => {
             alert("Please fill out a Title")
         } else {
             setLoadingStatus(true)
-            ApiManager.post("designs", design)
-                .then(() => props.history.push("/"))
+            if (newDesign) {
+                ApiManager.post("designs", design)
+                    .then(() => props.history.push("/"))
+            } else {
+                design.id = Number(props.match.params.designId)
+                ApiManager.update("designs", design)
+                    .then(() => props.history.push("/"))
+            }
 
         }
 
@@ -115,6 +150,12 @@ const DesignForm = props => {
         <>
             <form>
                 <fieldset>
+
+                    {
+                        (newDesign) ?
+                            <h2>Create New Design</h2> :
+                            <h2>Update Design</h2>
+                    }
                     <div className="formgrid">
                         <input
                             type="text"
@@ -169,15 +210,26 @@ const DesignForm = props => {
                         <button
                             type="button"
                             disabled={loadingStatus}
-                            onClick={createNewDesign}
-                        >Submit</button>
+                            onClick={newOrUpdatedDesign}
+                        >
+                            {
+                                (newDesign) ?
+                                    <>Create</> :
+                                    <>Update</>
+                            }
+                        </button>
                     </div>
                 </fieldset>
             </form>
 
             <img className="uploadImage" src={photoLink} alt="" />
             <div className="alignRight">
-                <button onClick={uploadWidget} className="upload-button">Add Image</button>
+                {
+                    (photoLink === "") ?
+                        <button onClick={uploadWidget} className="upload-button">Add Image</button>
+                        :
+                        <button onClick={() => setPhotoLink("")} >Delete Photo</button>
+                }
             </div>
 
             {

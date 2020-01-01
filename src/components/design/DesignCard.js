@@ -20,6 +20,9 @@ const DesignCard = props => {
                 <p>Fabric: {`${props.design.fabric.type} ${props.design.fabric.count} count`}</p>
                 <p>Finished Size: {props.design.finishedSize.size}</p>
 
+                <button onClick={() => props.history.push(`/design/edit/${props.design.id}`)}>Edit</button>
+
+
 
             </div>
         </div>

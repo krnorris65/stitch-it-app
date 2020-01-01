@@ -38,6 +38,12 @@ const ApplicationViews = props => {
                     return <DesignForm {...props}/>
                 }
             }} />
+
+            <Route path="/design/edit/:designId(\d+)" render={props => {
+                if(isAuthenticated()) {
+                    return <DesignForm {...props}/>
+                }
+            }} />
         </>
     )
 }
