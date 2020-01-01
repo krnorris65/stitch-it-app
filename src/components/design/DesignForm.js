@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
 import ApiManager from '../../modules/ApiManager'
-import './styles/DesignForm.css'
 
 import FabricForm from '../fabric/FabricForm'
 import SizeForm from '../size/SizeForm'
@@ -18,7 +17,6 @@ const DesignForm = props => {
 
     const title = useRef()
     const description = useRef()
-    const startDate = useRef()
     const completedDate = useRef()
     const fabricId = useRef()
     const finishedSizeId = useRef()
@@ -80,17 +78,14 @@ const DesignForm = props => {
         const design = {
             title: title.current.value,
             description: description.current.value,
-            startDate: startDate.current.value,
             completedDate: completedDate.current.value,
             fabricId: Number(fabricId.current.value),
             finishedSizeId: Number(finishedSizeId.current.value),
             userId: Number(localStorage.getItem("currUserId"))
         }
 
-        if (design.title === "" || design.startDate === "") {
-            alert("Please fill out a Title and Start Date")
-        } else if (design.completedDate !== "" && design.completedDate < design.startDate) {
-            alert("Completed date must be later than start date")
+        if (design.title === "") {
+            alert("Please fill out a Title")
         } else {
             setLoadingStatus(true)
             ApiManager.post("designs", design)
@@ -115,15 +110,6 @@ const DesignForm = props => {
                             placeholder="Design Title"
                         />
                         <label htmlFor="designTitle">Title</label>
-                    </div>
-
-                    <div className="formgrid">
-                        <input
-                            type="date"
-                            ref={startDate}
-                            id="designStarted"
-                        />
-                        <label htmlFor="designStarted">Started On:</label>
                     </div>
 
                     <div className="formgrid">

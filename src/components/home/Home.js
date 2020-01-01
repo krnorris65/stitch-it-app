@@ -3,6 +3,9 @@ import DesignList from '../design/DesignList'
 import useSimpleAuth from '../../hooks/ui/useSimpleAuth'
 import Login from '../auth/Login'
 
+import '../styles/DesignForm.css'
+import '../styles/Main.css'
+
 
 const Home = props => {
     const {isAuthenticated} = useSimpleAuth()
