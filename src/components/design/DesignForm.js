@@ -8,6 +8,7 @@ import SizeForm from '../size/SizeForm'
 
 const DesignForm = props => {
     const [loadingStatus, setLoadingStatus] = useState(true)
+    const [newDesign] = useState(props.match.path.includes('new'))
     const [fabrics, setFabrics] = useState([])
     const [finishedSizes, setFinishedSizes] = useState([])
 
@@ -48,24 +49,24 @@ const DesignForm = props => {
             })
     }
 
+
     const getDesignToEdit = () => {
         //if the route parameter doesn't include 'new" then it means it's a design to edit
-        if(!props.match.path.includes('new')){
-            console.log("Edit Design", props.match.params.designId)
+        if (!newDesign) {
             ApiManager.getOne("designs", props.match.params.designId)
-            .then(editDesign => {
-                setLoadingStatus(false)
+                .then(editDesign => {
+                    setLoadingStatus(false)
 
-                title.current.value = editDesign.title
-                description.current.value = editDesign.description
-                completedDate.current.value = editDesign.completedDate
-                fabricId.current.value = editDesign.fabricId
-                finishedSizeId.current.value = editDesign.finishedSizeId
+                    title.current.value = editDesign.title
+                    description.current.value = editDesign.description
+                    completedDate.current.value = editDesign.completedDate
+                    fabricId.current.value = editDesign.fabricId
+                    finishedSizeId.current.value = editDesign.finishedSizeId
 
-                setPhotoLink(editDesign.photoLink)
-                
-            })
-        } else{
+                    setPhotoLink(editDesign.photoLink)
+
+                })
+        } else {
             setLoadingStatus(false)
         }
     }
@@ -132,13 +133,13 @@ const DesignForm = props => {
             alert("Please fill out a Title")
         } else {
             setLoadingStatus(true)
-            if(props.match.path.includes('new')){
+            if (newDesign) {
                 ApiManager.post("designs", design)
-                .then(() => props.history.push("/"))
+                    .then(() => props.history.push("/"))
             } else {
                 design.id = Number(props.match.params.designId)
                 ApiManager.update("designs", design)
-                .then(() => props.history.push("/"))
+                    .then(() => props.history.push("/"))
             }
 
         }
@@ -149,6 +150,12 @@ const DesignForm = props => {
         <>
             <form>
                 <fieldset>
+
+                    {
+                        (newDesign) ?
+                            <h2>Create New Design</h2> :
+                            <h2>Update Design</h2>
+                    }
                     <div className="formgrid">
                         <input
                             type="text"
@@ -204,7 +211,13 @@ const DesignForm = props => {
                             type="button"
                             disabled={loadingStatus}
                             onClick={newOrUpdatedDesign}
-                        >Submit</button>
+                        >
+                            {
+                                (newDesign) ?
+                                    <>Create</> :
+                                    <>Update</>
+                            }
+                        </button>
                     </div>
                 </fieldset>
             </form>
@@ -213,9 +226,9 @@ const DesignForm = props => {
             <div className="alignRight">
                 {
                     (photoLink === "") ?
-                    <button onClick={uploadWidget} className="upload-button">Add Image</button>
-                    : 
-                    <button onClick={() => setPhotoLink("")} >Delete Photo</button>
+                        <button onClick={uploadWidget} className="upload-button">Add Image</button>
+                        :
+                        <button onClick={() => setPhotoLink("")} >Delete Photo</button>
                 }
             </div>
 
