@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 
-const UserCard = props => {
+const SearchCard = props => {
     const [currentUser] = localStorage.getItem("currUserId")
     const [followedStatus, setFollowedStatus] = useState(false)
     const [followPending, setPendingStatus] = useState(false)
@@ -47,4 +47,4 @@ const UserCard = props => {
     )
 }
 
-export default UserCard
+export default SearchCard

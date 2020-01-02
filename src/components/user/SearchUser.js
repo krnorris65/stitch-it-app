@@ -3,7 +3,7 @@ import ApiManager from '../../modules/ApiManager'
 
 import SearchCard from './SearchCard'
 
-const UserSearch = props => {
+const SearchUser = props => {
     const [searchedUsers, setSearched] = useState([])
 
     const searchedName = useRef()
@@ -46,4 +46,4 @@ const UserSearch = props => {
 
 }
 
-export default UserSearch
+export default SearchUser
