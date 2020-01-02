@@ -7,8 +7,6 @@ const DesignList = props => {
     const [currentUser] = localStorage.getItem("currUserId")
 
     const getDesigns = () => {
-        // const currentUser = localStorage.getItem("currUserId")
-        console.log(currentUser)
         ApiManager.getAll("designs", `userId=${currentUser}`)
         .then(allDesigns => {
             setDesigns(allDesigns)
@@ -16,6 +14,7 @@ const DesignList = props => {
     }
     
     const deleteDesign = id => {
+        //confirm returns true or false depending on what the user clicks
         const deleteThis = window.confirm("Are you sure you want to delete this design?")
         
         if (deleteThis) {
