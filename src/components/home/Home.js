@@ -15,7 +15,7 @@ const Home = props => {
         {
             (isAuthenticated()) ? 
             <DesignList {...props}/>
-            : <Login />
+            : <Login {...props}/>
         }
         </>
     )
