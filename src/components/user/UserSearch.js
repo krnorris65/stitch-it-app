@@ -1,17 +1,17 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import ApiManager from '../../modules/ApiManager'
 
 import UserCard from './UserCard'
 
 const UserSearch = props => {
-    const [searchedUsers, setUsers] = useState([])
+    const [searchedUsers, setSearched] = useState([])
 
     const searchedName = useRef()
 
 
     const findUser = () => {
         const searched = searchedName.current.value.toLowerCase()
-        ApiManager.getAll("users")
+        ApiManager.getAll("users", "_embed=follows")
             .then(allUsers => {
                 console.log(allUsers)
                 console.log(searched)
@@ -20,13 +20,14 @@ const UserSearch = props => {
                     // concats first and last name into one string and converts it to lower case
                     const fullName = `${user.firstName} ${user.lastName}`.toLowerCase()
                     // if the user's full name includes what was searched for return that user
+
                     return fullName.includes(searched)
                 })
 
-
-                setUsers(filteredUsers)
+                setSearched(filteredUsers)
             })
     }
+
 
     return (
         <>

@@ -18,6 +18,10 @@ export default {
         if(resource === "fabrics") {
             parameters += "&_sort=type,count"
         }
+        if(resource === "follows"){
+            parameters += "&_expand=user"
+        }
+        
         return fetch(`${remoteURL}/${resource}?${parameters}`)
             .then(response => response.json())
     },
