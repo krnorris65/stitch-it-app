@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import ApiManager from '../../modules/ApiManager'
 
-import UserCard from './UserCard'
+import SearchCard from './SearchCard'
 
 const UserSearch = props => {
     const [searchedUsers, setSearched] = useState([])
@@ -11,18 +11,21 @@ const UserSearch = props => {
 
     const findUser = () => {
         const searched = searchedName.current.value.toLowerCase()
-        ApiManager.getAll("users", "_embed=follows")
-            .then(allUsers => {
-                const filteredUsers = allUsers.filter(user => {
-                    // concats first and last name into one string and converts it to lower case
-                    const fullName = `${user.firstName} ${user.lastName}`.toLowerCase()
-                    // if the user's full name includes what was searched for return that user
+        //will only search users if the user enters something in the input
+        if (searched !== "") {
+            ApiManager.getAll("users", "_embed=follows")
+                .then(allUsers => {
+                    const filteredUsers = allUsers.filter(user => {
+                        // concats first and last name into one string and converts it to lower case
+                        const fullName = `${user.firstName} ${user.lastName}`.toLowerCase()
+                        // if the user's full name includes what was searched for return that user
 
-                    return fullName.includes(searched)
+                        return fullName.includes(searched)
+                    })
+
+                    setSearched(filteredUsers)
                 })
-
-                setSearched(filteredUsers)
-            })
+        }
     }
 
 
@@ -35,7 +38,7 @@ const UserSearch = props => {
 
             <div>
                 {
-                    searchedUsers.map(user => <UserCard key={user.id} user={user} />)
+                    searchedUsers.map(user => <SearchCard key={user.id} user={user} />)
                 }
             </div>
         </>
