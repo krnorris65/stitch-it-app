@@ -1,7 +1,8 @@
-import React, {useRef} from 'react'
+import React, { useState, useRef } from 'react'
 import ApiManager from '../../modules/ApiManager'
 
 const UserSearch = props => {
+    const [searchedUsers, setUsers] = useState([])
 
     const searchedName = useRef()
 
@@ -9,28 +10,34 @@ const UserSearch = props => {
     const findUser = () => {
         const searched = searchedName.current.value.toLowerCase()
         ApiManager.getAll("users")
-        .then(allUsers => {
-            console.log(allUsers)
-            console.log(searched)
+            .then(allUsers => {
+                console.log(allUsers)
+                console.log(searched)
 
-            const filteredUsers = allUsers.filter(user => {
-                // concats first and last name into one string and converts it to lower case
-                const fullName = `${user.firstName} ${user.lastName}`.toLowerCase()
-                // if the user's full name includes what was searched for return that user
-                return fullName.includes(searched)
+                const filteredUsers = allUsers.filter(user => {
+                    // concats first and last name into one string and converts it to lower case
+                    const fullName = `${user.firstName} ${user.lastName}`.toLowerCase()
+                    // if the user's full name includes what was searched for return that user
+                    return fullName.includes(searched)
+                })
+
+
+                setUsers(filteredUsers)
             })
-
-
-            console.log(filteredUsers)
-        })
     }
 
     return (
         <>
-        <h2>Find Users</h2>
+            <h2>Find Users</h2>
 
-        <input type="text" ref={searchedName} placeholder="Search for a user"/>
-        <button onClick={findUser}>Search</button>
+            <input type="text" ref={searchedName} placeholder="Search for a user" />
+            <button onClick={findUser}>Search</button>
+
+            <div>
+                {
+                    searchedUsers.map(user => <p>{user.firstName} {user.lastName}</p>)
+                }
+            </div>
         </>
     )
 
