@@ -13,9 +13,6 @@ const UserSearch = props => {
         const searched = searchedName.current.value.toLowerCase()
         ApiManager.getAll("users", "_embed=follows")
             .then(allUsers => {
-                console.log(allUsers)
-                console.log(searched)
-
                 const filteredUsers = allUsers.filter(user => {
                     // concats first and last name into one string and converts it to lower case
                     const fullName = `${user.firstName} ${user.lastName}`.toLowerCase()
