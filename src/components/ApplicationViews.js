@@ -9,6 +9,7 @@ import Home from './home/Home'
 import DesignForm from './design/DesignForm'
 
 import UserSearch from './user/UserSearch'
+import UserHome from './user/UserHome'
 
 
 const ApplicationViews = props => {
@@ -50,6 +51,12 @@ const ApplicationViews = props => {
             <Route path="/user/search" render={props => {
                 if(isAuthenticated()) {
                     return <UserSearch />
+                }
+            }}/>
+
+            <Route path="/following/" render={props => {
+                if(isAuthenticated()) {
+                    return <UserHome />
                 }
             }}/>
         </>
