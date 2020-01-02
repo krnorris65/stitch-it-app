@@ -8,6 +8,8 @@ import useSimpleAuth from '../hooks/ui/useSimpleAuth'
 import Home from './home/Home'
 import DesignForm from './design/DesignForm'
 
+import UserSearch from './user/UserSearch'
+
 
 const ApplicationViews = props => {
     const { isAuthenticated } = useSimpleAuth()
@@ -44,6 +46,12 @@ const ApplicationViews = props => {
                     return <DesignForm {...props}/>
                 }
             }} />
+
+            <Route path="/user/search" render={props => {
+                if(isAuthenticated()) {
+                    return <UserSearch />
+                }
+            }}/>
         </>
     )
 }
