@@ -12,6 +12,16 @@ const UserSearch = props => {
         .then(allUsers => {
             console.log(allUsers)
             console.log(searched)
+
+            const filteredUsers = allUsers.filter(user => {
+                // concats first and last name into one string and converts it to lower case
+                const fullName = `${user.firstName} ${user.lastName}`.toLowerCase()
+                // if the user's full name includes what was searched for return that user
+                return fullName.includes(searched)
+            })
+
+
+            console.log(filteredUsers)
         })
     }
 
