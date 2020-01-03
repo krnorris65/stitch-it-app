@@ -25,6 +25,8 @@ const SearchUser = props => {
 
                     setSearched(filteredUsers)
                 })
+        } else {
+            setSearched([])
         }
     }
 
