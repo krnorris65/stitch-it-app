@@ -36,7 +36,6 @@ const SizeForm = props => {
             .then(response => {
                 console.log(response)
                 if(response.length > 0){
-                    alert("Design Size already exists!")
                     props.updateSizesDropdown(response[0].id)
                 } else {
                     ApiManager.post("finishedSizes", sizeObj)
