@@ -1,10 +1,7 @@
 import React from 'react'
 
-import SearchUser from './SearchUser'
+import UserSearch from './UserSearch'
 import UserList from './UserList'
-
-
-
 
 
 const UserHome = props => {
@@ -12,7 +9,7 @@ const UserHome = props => {
         <>
             <h2>User Home Page</h2>
 
-            <SearchUser />
+            <UserSearch />
             <UserList />
 
         </>
