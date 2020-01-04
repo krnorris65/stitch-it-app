@@ -5,6 +5,8 @@ const UserCard = props => {
     const [currentUser] = localStorage.getItem("currUserId")
     const [followedStatus, setFollowedStatus] = useState(false)
     const [followPending, setPendingStatus] = useState(false)
+    //when updating the follow status this will hold the needed id
+    const [followId, setFollowId] = useState()
 
     const currentlyFollowed = () => {
         //logic used for when a user searches for users
@@ -15,20 +17,20 @@ const UserCard = props => {
                 const followObj = ifCurrUserFollows[0]
                 setFollowedStatus(true)
                 setPendingStatus(followObj.pending)
+                setFollowId(followObj.id)
             }
         }
     }
 
     const pendingApproval = () => {
         //logic used for the users that are followed or the user still needs to approve their follow request
-        console.log(props.user)
-        console.log(props.pendingApproval)
-        if (props.pendingApproval !== undefined) {
+        if (props.followObj !== undefined) {
 
-            if (!props.pendingApproval) {
+            if (!props.followObj.pending) {
                 setFollowedStatus(true)
             }
-            setPendingStatus(props.pendingApproval)
+            setPendingStatus(props.followObj.pending)
+            setFollowId(props.followObj.id)
         }
     }
 
@@ -39,7 +41,6 @@ const UserCard = props => {
         <div className="card">
             <div className="card-content">
                 <h4>{props.user.firstName} {props.user.lastName}</h4>
-
 
                 {
                     // conditional that checks if the user is the one that's logged in

@@ -29,6 +29,13 @@ const UserList = props => {
             })
     }
 
+    const approveFollow = obj => {
+        obj.pending = false
+        console.log(obj)
+        // ApiManager.update("follows", obj)
+
+    }
+
 
     useEffect(getFollowedUsers, [])
     useEffect(getUnapprovedRequests, [])
@@ -38,12 +45,12 @@ const UserList = props => {
         <>
             <h2>Following</h2>
             {
-                following.map(followObj => <UserCard key={followObj.id} user={followObj.user} pendingApproval={followObj.pending}/>)
+                following.map(followObj => <UserCard key={followObj.id} user={followObj.user} followObj={followObj}/>)
             }
 
             <h2>Unapproved Requests</h2>
             {
-                unapproved.map(unapprovedObj => <UserCard key={unapprovedObj.id} user={unapprovedObj.requestingUser} pendingApproval={unapprovedObj.pending}/>)
+                unapproved.map(unapprovedObj => <UserCard key={unapprovedObj.id} user={unapprovedObj.requestingUser} followObj={unapprovedObj} approveFollow={approveFollow}/>)
             }
         </>
     )

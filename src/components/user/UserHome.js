@@ -5,6 +5,19 @@ import UserList from './UserList'
 
 
 const UserHome = props => {
+
+    const followUser = () => {
+
+    }
+
+    const deleteFollow = () => {
+
+    }
+
+
+
+
+
     return (
         <>
             <h2>User Home Page</h2>
