@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import ApiManager from '../../modules/ApiManager'
 
-import SearchCard from './SearchCard'
+import UserCard from './UserCard'
 
 const SearchUser = props => {
     const [searchedUsers, setSearched] = useState([])
@@ -40,7 +40,7 @@ const SearchUser = props => {
 
             <div>
                 {
-                    searchedUsers.map(user => <SearchCard key={user.id} user={user} />)
+                    searchedUsers.map(user => <UserCard key={user.id} user={user} />)
                 }
             </div>
         </>

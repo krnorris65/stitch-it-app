@@ -1,0 +1,73 @@
+import React, { useState, useEffect } from 'react'
+
+
+const UserCard = props => {
+    const [currentUser] = localStorage.getItem("currUserId")
+    const [followedStatus, setFollowedStatus] = useState(false)
+    const [followPending, setPendingStatus] = useState(false)
+
+    const currentlyFollowed = () => {
+        //logic used for when a user searches for users
+        if (props.user.follows) {
+            const ifCurrUserFollows = props.user.follows.filter(follow => follow.currentUserId === Number(currentUser))
+
+            if (ifCurrUserFollows.length > 0) {
+                const followObj = ifCurrUserFollows[0]
+                setFollowedStatus(true)
+                setPendingStatus(followObj.pending)
+            }
+        }
+    }
+
+    const pendingApproval = () => {
+        //logic used for the users that are followed or the user still needs to approve their follow request
+        console.log(props.user)
+        console.log(props.pendingApproval)
+        if (props.pendingApproval !== undefined) {
+
+            if (!props.pendingApproval) {
+                setFollowedStatus(true)
+            }
+            setPendingStatus(props.pendingApproval)
+        }
+    }
+
+    useEffect(currentlyFollowed, [])
+    useEffect(pendingApproval, [])
+
+    return (
+        <div className="card">
+            <div className="card-content">
+                <h4>{props.user.firstName} {props.user.lastName}</h4>
+
+
+                {
+                    // conditional that checks if the user is the one that's logged in
+                    (Number(currentUser) === props.user.id) ?
+                        <p>current user</p>
+                        // if the current user is currently following the user
+                        : (followedStatus && !followPending) ?
+                            <button>Unfollow</button>
+                            // if the current user has requested to follow the user but it hasn't been approved
+                            : (followedStatus && followPending) ?
+                                <button>Delete Follow Request</button>
+                                // if the current user needs to approve any follow requests from other users
+                                : (!followedStatus && followPending) ?
+                                    <>
+                                        <button>Approve</button>
+                                        <button>Decline</button>
+                                    </>
+                                    // if the current user isn't following the user and the user's profile is public
+                                    : (props.user.publicProfile) ?
+                                        <button>Follow</button>
+                                        // if the current user isn't following the user and the user's profile is private
+                                        : <button>Request to Follow</button>
+                }
+
+
+            </div>
+        </div>
+    )
+}
+
+export default UserCard
