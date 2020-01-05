@@ -8,7 +8,7 @@ fieldset {
     background: cornsilk;
 }
 
-.sub--form fieldset {
+fieldset.sub--form  {
     background: lightblue;
 }
 
