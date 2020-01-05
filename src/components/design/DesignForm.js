@@ -194,7 +194,7 @@ const DesignForm = props => {
                         <label htmlFor="designFabric">Fabric:</label>
 
                     </div>
-                    <h5>I don't see my fabric : <span onClick={() => toggleForm("fabric")}>Click here to add</span></h5>
+                    <span className="add--new" onClick={() => toggleForm("fabric")}>Add new fabric</span>
                     {
                         (form === "fabric") ?
 
@@ -212,7 +212,7 @@ const DesignForm = props => {
                     </div>
 
 
-                    <h5>I don't see my finished size: <span onClick={() => toggleForm("size")}>Click here to add</span></h5>
+                    <span className="add--new" onClick={() => toggleForm("size")}>Add new size</span>
                     {
                         (form === "size") ?
 
