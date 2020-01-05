@@ -194,6 +194,14 @@ const DesignForm = props => {
                         <label htmlFor="designFabric">Fabric:</label>
 
                     </div>
+                    <h5>I don't see my fabric : <span onClick={() => toggleForm("fabric")}>Click here to add</span></h5>
+                    {
+                        (form === "fabric") ?
+
+                            <FabricForm updateFabricDropdown={updateFabricDropdown} />
+                            :
+                            null
+                    }
                     <div className="formgrid">
                         <select id="designSize" ref={finishedSizeId}>
                             {
@@ -203,8 +211,15 @@ const DesignForm = props => {
                         <label htmlFor="designSize">Finished Size:</label>
                     </div>
 
-                    <h5>I don't see my fabric : <span onClick={() => toggleForm("fabric")}>Click here to add</span></h5>
+
                     <h5>I don't see my finished size: <span onClick={() => toggleForm("size")}>Click here to add</span></h5>
+                    {
+                        (form === "size") ?
+
+                            <SizeForm updateSizesDropdown={updateSizesDropdown} />
+                            :
+                            null
+                    }
 
                     <div className="alignRight">
                         <button
@@ -232,22 +247,8 @@ const DesignForm = props => {
                 }
             </div>
 
-            {
-                (toggle && form === "fabric") ?
-                    <>
-                        <h4>Fabric Form</h4>
-                        <FabricForm updateFabricDropdown={updateFabricDropdown} />
-                    </> :
-                    null
-            }
-            {
-                (toggle && form === "size") ?
-                    <>
-                        <h4>Size Form</h4>
-                        <SizeForm updateSizesDropdown={updateSizesDropdown} />
-                    </> :
-                    null
-            }
+
+
 
             <button onClick={() => props.history.push("/")}>Back</button>
         </>
