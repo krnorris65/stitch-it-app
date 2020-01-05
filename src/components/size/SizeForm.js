@@ -52,8 +52,7 @@ const SizeForm = props => {
     }
 
     return (
-        <form onSubmit={handleSize}>
-            <fieldset>
+            <fieldset className="sub--form">
                 <h3>New Size</h3>
                 <div className="formgrid">
                     <input type="checkbox"
@@ -82,10 +81,8 @@ const SizeForm = props => {
                     </select>
                 </div>
 
-                <button type="submit">Add New Size</button>
+                <button type="submit" onClick={handleSize}>Add New Size</button>
             </fieldset>
-
-        </form>
     )
 
 }

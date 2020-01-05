@@ -12,7 +12,6 @@ const DesignForm = props => {
     const [fabrics, setFabrics] = useState([])
     const [finishedSizes, setFinishedSizes] = useState([])
 
-    const [toggle, setToggle] = useState(false)
     const [form, setForm] = useState("")
 
 
@@ -26,15 +25,16 @@ const DesignForm = props => {
 
     // toggleForm takes an arguement to distinguish between fabric and size forms
     const toggleForm = (formType) => {
-        if (toggle) {
-            setToggle(false)
+        //if the state of form is the same as the formType OR equal to updated then close the form and reset state
+        //else change the form that is open
+        if(form === formType || formType === "updated"){
             setForm("")
             setLoadingStatus(false)
-        } else {
-            setToggle(true)
+        } else{
             setForm(formType)
             setLoadingStatus(true)
         }
+
     }
 
     const getFabricsAndSizes = () => {
@@ -86,7 +86,7 @@ const DesignForm = props => {
                 .then(() => fabricId.current.value = id)
         }
         //close form
-        toggleForm()
+        toggleForm("updated")
     }
 
     const updateSizesDropdown = (id, status) => {
@@ -100,7 +100,7 @@ const DesignForm = props => {
                 .then(() => finishedSizeId.current.value = id)
         }
         //close form
-        toggleForm()
+        toggleForm("updated")
     }
 
     //method that opens the cloudinary widget and sets the secure_url from the result as the photoLink
@@ -194,6 +194,14 @@ const DesignForm = props => {
                         <label htmlFor="designFabric">Fabric:</label>
 
                     </div>
+                    <span className="add--new" onClick={() => toggleForm("fabric")}>Add new fabric</span>
+                    {
+                        (form === "fabric") ?
+
+                            <FabricForm updateFabricDropdown={updateFabricDropdown} />
+                            :
+                            null
+                    }
                     <div className="formgrid">
                         <select id="designSize" ref={finishedSizeId}>
                             {
@@ -203,8 +211,15 @@ const DesignForm = props => {
                         <label htmlFor="designSize">Finished Size:</label>
                     </div>
 
-                    <h5>I don't see my fabric : <span onClick={() => toggleForm("fabric")}>Click here to add</span></h5>
-                    <h5>I don't see my finished size: <span onClick={() => toggleForm("size")}>Click here to add</span></h5>
+
+                    <span className="add--new" onClick={() => toggleForm("size")}>Add new size</span>
+                    {
+                        (form === "size") ?
+
+                            <SizeForm updateSizesDropdown={updateSizesDropdown} />
+                            :
+                            null
+                    }
 
                     <div className="alignRight">
                         <button
@@ -232,22 +247,8 @@ const DesignForm = props => {
                 }
             </div>
 
-            {
-                (toggle && form === "fabric") ?
-                    <>
-                        <h4>Fabric Form</h4>
-                        <FabricForm updateFabricDropdown={updateFabricDropdown} />
-                    </> :
-                    null
-            }
-            {
-                (toggle && form === "size") ?
-                    <>
-                        <h4>Size Form</h4>
-                        <SizeForm updateSizesDropdown={updateSizesDropdown} />
-                    </> :
-                    null
-            }
+
+
 
             <button onClick={() => props.history.push("/")}>Back</button>
         </>
