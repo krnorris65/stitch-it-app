@@ -17,15 +17,12 @@ const FabricForm = props => {
 
         // checks to see if the fields are filled out and that the count is a valid number
         if(fabric.type === "" || fabric.count === 0){
-            alert("Please add type and fabric count")
-        }else if(isNaN(fabric.count) || fabric.count < 0) {
-            alert("Please enter a valid number")
+            alert("Please add type and fabric count (must be greater than 0)")
         } else {
             //make a get request to see if a fabric with that type and count exist
             ApiManager.getAll("fabrics", `type=${fabric.type}&count=${fabric.count}`)
             .then(response => {
                 if(response.length > 0){
-                    alert("Fabric already exists!")
                     //set the existing fabric that was entered as the selected option
                     props.updateFabricDropdown(response[0].id, "update")
                 } else{
@@ -41,8 +38,7 @@ const FabricForm = props => {
     }
 
     return (
-        <form onSubmit={handleFabric}>
-            <fieldset>
+            <fieldset className="sub--form">
                 <h3>New Fabric</h3>
                 <div className="formgrid">
                     <input ref={type} type="text"
@@ -51,15 +47,14 @@ const FabricForm = props => {
                         required=""/>
                     <label htmlFor="inputType">Fabric Type</label>
 
-                    <input ref={count} type="count"
+                    <input ref={count} type="number" min="0"
                         id="count"
                         placeholder="Fabric Count"
                         required="" />
                     <label htmlFor="inputCount">Fabric Count</label>
                 </div>
-                <button type="submit">Add New Fabric</button>
+                <button type="submit" onClick={handleFabric}>Add New Fabric</button>
             </fieldset>
-        </form>
     )
 }
 
