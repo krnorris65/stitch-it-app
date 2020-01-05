@@ -12,7 +12,6 @@ const DesignForm = props => {
     const [fabrics, setFabrics] = useState([])
     const [finishedSizes, setFinishedSizes] = useState([])
 
-    const [toggle, setToggle] = useState(false)
     const [form, setForm] = useState("")
 
 
@@ -26,15 +25,16 @@ const DesignForm = props => {
 
     // toggleForm takes an arguement to distinguish between fabric and size forms
     const toggleForm = (formType) => {
-        if (toggle) {
-            setToggle(false)
+        //if the state of form is the same as the formType OR equal to updated then close the form and reset state
+        //else change the form that is open
+        if(form === formType || formType === "updated"){
             setForm("")
             setLoadingStatus(false)
-        } else {
-            setToggle(true)
+        } else{
             setForm(formType)
             setLoadingStatus(true)
         }
+
     }
 
     const getFabricsAndSizes = () => {
@@ -86,7 +86,7 @@ const DesignForm = props => {
                 .then(() => fabricId.current.value = id)
         }
         //close form
-        toggleForm()
+        toggleForm("updated")
     }
 
     const updateSizesDropdown = (id, status) => {
@@ -100,7 +100,7 @@ const DesignForm = props => {
                 .then(() => finishedSizeId.current.value = id)
         }
         //close form
-        toggleForm()
+        toggleForm("updated")
     }
 
     //method that opens the cloudinary widget and sets the secure_url from the result as the photoLink
