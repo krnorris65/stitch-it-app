@@ -38,7 +38,7 @@ const FabricForm = props => {
     }
 
     return (
-        <form onSubmit={handleFabric}>
+        <form class="sub--form" onSubmit={handleFabric}>
             <fieldset>
                 <h3>New Fabric</h3>
                 <div className="formgrid">

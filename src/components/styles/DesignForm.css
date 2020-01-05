@@ -8,6 +8,10 @@ fieldset {
     background: cornsilk;
 }
 
+.sub--form fieldset {
+    background: lightblue;
+}
+
 fieldset input, fieldset button, fieldset select{
     box-sizing: border-box;
     padding: .2em .4em;

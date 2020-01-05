@@ -52,7 +52,7 @@ const SizeForm = props => {
     }
 
     return (
-        <form onSubmit={handleSize}>
+        <form class="sub--form" onSubmit={handleSize}>
             <fieldset>
                 <h3>New Size</h3>
                 <div className="formgrid">
