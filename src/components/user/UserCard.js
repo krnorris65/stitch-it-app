@@ -48,7 +48,7 @@ const UserCard = props => {
                         <p>current user</p>
                         // if the current user is currently following the user
                         : (followedStatus && !followPending) ?
-                            <button>Unfollow</button>
+                            <button onClick={() => props.unfollowUser(followId)}>Unfollow</button>
                             // if the current user has requested to follow the user but it hasn't been approved
                             : (followedStatus && followPending) ?
                                 <button>Delete Follow Request</button>
@@ -56,7 +56,7 @@ const UserCard = props => {
                                 : (!followedStatus && followPending) ?
                                     <>
                                         <button onClick={() => props.approveFollow(props.followObj)}>Approve</button>
-                                        <button>Decline</button>
+                                        <button onClick={() => props.declineFollow(followId)}>Decline</button>
                                     </>
                                     // if the current user isn't following the user and the user's profile is public
                                     : (props.user.publicProfile) ?

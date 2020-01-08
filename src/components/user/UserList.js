@@ -36,9 +36,16 @@ const UserList = props => {
             userId: obj.userId,
             pending: false
         }
-        console.log(updateObj)
         ApiManager.update("follows", updateObj)
         .then(getUnapprovedRequests)
+    }
+
+    const declineFollow = (id) => {
+        props.deleteFollow(id, getUnapprovedRequests)
+    }
+    
+    const unfollowUser = (id) => {
+        props.deleteFollow(id, getFollowedUsers)
     }
 
 
@@ -50,12 +57,12 @@ const UserList = props => {
         <>
             <h2>Following</h2>
             {
-                following.map(followObj => <UserCard key={followObj.id} user={followObj.user} followObj={followObj}/>)
+                following.map(followObj => <UserCard key={followObj.id} user={followObj.user} followObj={followObj} unfollowUser={unfollowUser}/>)
             }
 
             <h2>Unapproved Requests</h2>
             {
-                unapproved.map(unapprovedObj => <UserCard key={unapprovedObj.id} user={unapprovedObj.requestingUser} followObj={unapprovedObj} approveFollow={approveFollow}/>)
+                unapproved.map(unapprovedObj => <UserCard key={unapprovedObj.id} user={unapprovedObj.requestingUser} followObj={unapprovedObj} approveFollow={approveFollow} declineFollow={declineFollow}/>)
             }
         </>
     )
