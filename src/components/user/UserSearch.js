@@ -31,6 +31,13 @@ const UserSearch
         }
     }
 
+    const followUser = (id) => {
+        console.log("follow this user", id)
+        // if a user wants to follow a user, create a data point in the follows resource. 
+        // if their profile is public then pending = false
+        // if their private is public then pending = true
+
+    }
 
     return (
         <>
@@ -41,7 +48,7 @@ const UserSearch
 
             <div>
                 {
-                    searchedUsers.map(user => <UserCard key={user.id} user={user} />)
+                    searchedUsers.map(user => <UserCard key={user.id} user={user} followUser={followUser}/>)
                 }
             </div>
         </>

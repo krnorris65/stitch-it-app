@@ -55,14 +55,14 @@ const UserCard = props => {
                                 // if the current user needs to approve any follow requests from other users
                                 : (!followedStatus && followPending) ?
                                     <>
-                                        <button>Approve</button>
+                                        <button onClick={() => props.approveFollow(props.followObj)}>Approve</button>
                                         <button>Decline</button>
                                     </>
                                     // if the current user isn't following the user and the user's profile is public
                                     : (props.user.publicProfile) ?
-                                        <button>Follow</button>
+                                        <button onClick={() => props.followUser(props.user.id)}>Follow</button>
                                         // if the current user isn't following the user and the user's profile is private
-                                        : <button>Request to Follow</button>
+                                        : <button onClick={() => props.followUser(props.user.id)}>Request to Follow</button>
                 }
 
 
