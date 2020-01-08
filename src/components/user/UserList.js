@@ -30,11 +30,15 @@ const UserList = props => {
     }
 
     const approveFollow = obj => {
-        obj.pending = false
-        console.log(obj)
-        ApiManager.update("follows", obj)
+        const updateObj = {
+            id: obj.id,
+            currentUserId: obj.currentUserId,
+            userId: obj.userId,
+            pending: false
+        }
+        console.log(updateObj)
+        ApiManager.update("follows", updateObj)
         .then(getUnapprovedRequests)
-
     }
 
 
