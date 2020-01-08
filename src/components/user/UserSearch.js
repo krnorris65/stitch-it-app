@@ -9,6 +9,11 @@ const UserSearch = props => {
 
     const searchedName = useRef()
 
+    const didUpdate = () => {
+        setSearched([])
+        props.updated(true)
+    }
+
 
     const findUser = () => {
         const searched = searchedName.current.value.toLowerCase()
@@ -43,16 +48,13 @@ const UserSearch = props => {
         }
 
         ApiManager.post("follows", followObj)
-        .then(() => {
-            setSearched([])
-            props.updated(true)
-        })
+        .then(didUpdate)
 
-   
     }
     
     const unfollowUser = (id) => {
         console.log("unfollow this user", id)
+        props.deleteFollow(id, didUpdate)
         
     }
     
