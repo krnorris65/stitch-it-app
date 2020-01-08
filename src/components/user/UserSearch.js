@@ -39,7 +39,7 @@ const UserSearch = props => {
     const followUser = (id, publicProfile) => {
         // if a user wants to follow a user, create a data point in the follows resource. 
         // if publicProfile = true then pending = false
-        // if privpublicProfile = false then pending = true
+        // if publicProfile = false then pending = true
 
         const followObj = {
             currentUserId: Number(currentUser),
@@ -53,13 +53,8 @@ const UserSearch = props => {
     }
     
     const unfollowUser = (id) => {
-        console.log("unfollow this user", id)
         props.deleteFollow(id, didUpdate)
         
-    }
-    
-    const deleteFollowRequest = (id) => {
-        console.log("delete follow request", id)
     }
     
 
@@ -72,7 +67,7 @@ const UserSearch = props => {
 
             <div>
                 {
-                    searchedUsers.map(user => <UserCard key={user.id} user={user} followUser={followUser} unfollowUser={unfollowUser} deleteFollowRequest={deleteFollowRequest}/>)
+                    searchedUsers.map(user => <UserCard key={user.id} user={user} followUser={followUser} unfollowUser={unfollowUser}/>)
                 }
             </div>
         </>
