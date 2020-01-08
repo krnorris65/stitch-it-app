@@ -6,11 +6,19 @@ const UserList = props => {
     const [currentUser] = localStorage.getItem("currUserId")
     const [following, setFollowing] = useState([])
     const [unapproved, setUnapproved] = useState([])
+    const [pending, setPending] = useState([])
 
 
     const getFollowedUsers = () => {
-        ApiManager.getAll("follows", `currentUserId=${currentUser}&pending=false`)
-            .then(followedUsers => setFollowing(followedUsers))
+        ApiManager.getAll("follows", `currentUserId=${currentUser}`)
+            .then(follows => {
+
+                const followedUsers = follows.filter(follow => follow.pending === false)
+                setFollowing(followedUsers)
+
+                const pendingFollows = follows.filter(follow => follow.pending === true)
+                setPending(pendingFollows)
+            })
     }
 
 
@@ -60,6 +68,11 @@ const UserList = props => {
             {
                 following.map(followObj => <UserCard key={followObj.id} user={followObj.user} followObj={followObj} unfollowUser={unfollowUser}/>)
             }
+
+            {/* <h2>Pending</h2>
+            {
+                pending.map(followObj => <UserCard key={followObj.id} user={followObj.user} followObj={followObj} unfollowUser={unfollowUser}/>)
+            } */}
 
             <h2>Unapproved Requests</h2>
             {
