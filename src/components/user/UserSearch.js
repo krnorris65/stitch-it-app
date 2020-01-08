@@ -3,9 +3,9 @@ import ApiManager from '../../modules/ApiManager'
 
 import UserCard from './UserCard'
 
-const UserSearch
- = props => {
+const UserSearch = props => {
     const [searchedUsers, setSearched] = useState([])
+    const [currentUser] = localStorage.getItem("currUserId")
 
     const searchedName = useRef()
 
@@ -31,13 +31,35 @@ const UserSearch
         }
     }
 
-    const followUser = (id) => {
-        console.log("follow this user", id)
+    const followUser = (id, publicProfile) => {
         // if a user wants to follow a user, create a data point in the follows resource. 
-        // if their profile is public then pending = false
-        // if their private is public then pending = true
+        // if publicProfile = true then pending = false
+        // if privpublicProfile = false then pending = true
 
+        const followObj = {
+            currentUserId: Number(currentUser),
+            userId: id,
+            pending: !publicProfile
+        }
+
+        ApiManager.post("follows", followObj)
+        .then(() => {
+            setSearched([])
+            props.updated(true)
+        })
+
+   
     }
+    
+    const unfollowUser = (id) => {
+        console.log("unfollow this user", id)
+        
+    }
+    
+    const deleteFollowRequest = (id) => {
+        console.log("delete follow request", id)
+    }
+    
 
     return (
         <>
@@ -48,7 +70,7 @@ const UserSearch
 
             <div>
                 {
-                    searchedUsers.map(user => <UserCard key={user.id} user={user} followUser={followUser}/>)
+                    searchedUsers.map(user => <UserCard key={user.id} user={user} followUser={followUser} unfollowUser={unfollowUser} deleteFollowRequest={deleteFollowRequest}/>)
                 }
             </div>
         </>

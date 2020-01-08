@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import UserSearch from './UserSearch'
 import UserList from './UserList'
@@ -6,7 +6,7 @@ import ApiManager from '../../modules/ApiManager'
 
 
 const UserHome = props => {
-
+    const [updated, setUpdated] = useState(false)
 
 
     const deleteFollow = (id, method) => {
@@ -23,14 +23,16 @@ const UserHome = props => {
 
     }
 
+    console.log(updated)
+
 
 
     return (
         <>
             <h2>User Home Page</h2>
 
-            <UserSearch deleteFollow={deleteFollow}/>
-            <UserList deleteFollow={deleteFollow}/>
+            <UserSearch deleteFollow={deleteFollow} updated={setUpdated}/>
+            <UserList deleteFollow={deleteFollow} update={updated}/>
 
         </>
     )

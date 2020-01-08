@@ -50,6 +50,7 @@ const UserList = props => {
 
 
     useEffect(getFollowedUsers, [])
+    useEffect(getFollowedUsers, [props.update])
     useEffect(getUnapprovedRequests, [])
 
 
