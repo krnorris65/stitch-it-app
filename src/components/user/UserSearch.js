@@ -10,6 +10,7 @@ const UserSearch = props => {
     const searchedName = useRef()
 
     const didUpdate = () => {
+        searchedName.current.value = ""
         setSearched([])
         props.followedUser()
     }
@@ -62,7 +63,7 @@ const UserSearch = props => {
         <>
             <h2>Find Users</h2>
 
-            <input type="text" ref={searchedName} placeholder="Search for a user" />
+            <input id="searchInput" type="text" ref={searchedName} placeholder="Search for a user" />
             <button onClick={findUser}>Search</button>
 
             <div>
