@@ -8,6 +8,10 @@ import ApiManager from '../../modules/ApiManager'
 const UserHome = props => {
     const [updated, setUpdated] = useState(false)
 
+    const followedUser = () => {
+        setUpdated(!updated)
+    }
+
 
     const deleteFollow = (id, method) => {
         //delete a data point in the follows resource
@@ -31,7 +35,7 @@ const UserHome = props => {
         <>
             <h2>User Home Page</h2>
 
-            <UserSearch deleteFollow={deleteFollow} updated={setUpdated}/>
+            <UserSearch deleteFollow={deleteFollow} followedUser={followedUser}/>
             <UserList deleteFollow={deleteFollow} update={updated}/>
 
         </>

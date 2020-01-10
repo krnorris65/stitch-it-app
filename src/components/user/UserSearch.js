@@ -11,7 +11,7 @@ const UserSearch = props => {
 
     const didUpdate = () => {
         setSearched([])
-        props.updated(true)
+        props.followedUser()
     }
 
 
