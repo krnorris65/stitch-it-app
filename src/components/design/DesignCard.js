@@ -1,7 +1,9 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import {DesignContext} from '../providers/DesignProvider'
 
 
 const DesignCard = props => {
+    const {deleteDesign} = useContext(DesignContext)
     return (
         <div className="card">
             <div className="card-content">
@@ -21,9 +23,7 @@ const DesignCard = props => {
                 <p>Finished Size: {props.design.finishedSize.size}</p>
 
                 <button onClick={() => props.history.push(`/design/edit/${props.design.id}`)}>Edit</button>
-                <button onClick={() => props.deleteDesign(props.design.id)}>Delete</button>
-
-
+                <button onClick={() => deleteDesign(props.design.id)}>Delete</button>
 
             </div>
         </div>
