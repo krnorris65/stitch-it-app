@@ -1,11 +1,16 @@
-import React, {useRef} from 'react'
+import React, {useRef, useContext} from 'react'
 import ApiManager from '../../modules/ApiManager'
 import helper from '../../modules/helper'
+
+import { FabricContext } from '../providers/FabricProvider'
+
 
 const FabricForm = props => {
     const {firstLetterCase} = helper()
     const type = useRef()
     const count = useRef()
+
+    const {findFabric, addFabric} = useContext(FabricContext)
 
     const handleFabric = evt => {
         evt.preventDefault()
@@ -20,15 +25,15 @@ const FabricForm = props => {
             alert("Please add type and fabric count (must be greater than 0)")
         } else {
             //make a get request to see if a fabric with that type and count exist
-            ApiManager.getAll("fabrics", `type=${fabric.type}&count=${fabric.count}`)
-            .then(response => {
-                if(response.length > 0){
+            findFabric(fabric.type, fabric.count)
+            .then(found => {
+                if(found.length > 0){
                     //set the existing fabric that was entered as the selected option
-                    props.updateFabricDropdown(response[0].id, "update")
+                    props.updateFabricDropdown(found[0].id, "update")
                 } else{
                     //if the fabric doesn't exist, add it to the database
                     //and get all the fabrics for the drop down
-                    ApiManager.post("fabrics", fabric)
+                    addFabric(fabric)
                     .then( newFabric => {
                         props.updateFabricDropdown(newFabric.id)
                     })

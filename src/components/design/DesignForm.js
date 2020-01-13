@@ -14,8 +14,6 @@ import { SizeContext } from '../providers/SizeProvider'
 const DesignForm = props => {
     const [loadingStatus, setLoadingStatus] = useState(true)
     const [newDesign] = useState(props.match.path.includes('new'))
-    // const [fabrics, setFabrics] = useState([])
-    // const [finishedSizes, setFinishedSizes] = useState([])
 
     const { fabrics } = useContext(FabricContext)
     const { sizes } = useContext(SizeContext)
@@ -53,7 +51,6 @@ const DesignForm = props => {
         if (!newDesign) {
             getOneDesign(props.match.params.designId)
                 .then(editDesign => {
-                    console.log(editDesign)
                     setLoadingStatus(false)
 
                     title.current.value = editDesign.title
@@ -77,6 +74,7 @@ const DesignForm = props => {
     const updateFabricDropdown = (id, status) => {
         // if the status is update then the fabric already exists so a new fabric wasn't added to the database
         //a getAll only needs to be done when a new fabric has been added
+
         fabricId.current.value = id
         // if (status === "update") {
         // } else {

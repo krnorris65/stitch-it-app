@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 
 const remoteURL = "http://localhost:5002"
 
@@ -7,10 +7,10 @@ export const FabricContext = React.createContext()
 export const FabricProvider = props => {
     const [fabrics, setFabrics] = useState([])
 
-    const getFabrics = () => {
+    const getFabrics = (fabId) => {
         return fetch(`${remoteURL}/fabrics?_sort=type,count`)
-        .then(res => res.json())
-        .then(setFabrics)
+            .then(res => res.json())
+            .then(setFabrics)
     }
 
     const addFabric = newFabric => {
@@ -21,7 +21,15 @@ export const FabricProvider = props => {
             },
             body: JSON.stringify(newFabric)
         })
-        .then(getFabrics)
+            .then(newFab => {
+                getFabrics()
+                return newFab
+            })
+    }
+
+    const findFabric = (type, count) => {
+        return fetch(`${remoteURL}/fabrics?type=${type}&count=${count}`)
+            .then(res => res.json())
     }
 
     useEffect(() => {
@@ -30,7 +38,7 @@ export const FabricProvider = props => {
 
     return (
         <FabricContext.Provider value={{
-            fabrics, addFabric
+            fabrics, addFabric, findFabric
         }}>
             {props.children}
         </FabricContext.Provider>
