@@ -10,6 +10,7 @@ import DesignForm from './design/DesignForm'
 
 import { FabricProvider } from "./providers/FabricProvider"
 import { SizeProvider } from "./providers/SizeProvider"
+import { DesignProvider } from "./providers/DesignProvider"
 
 
 const ApplicationViews = props => {
@@ -36,25 +37,29 @@ const ApplicationViews = props => {
                 }
             }} />
 
-            <FabricProvider>
-                <SizeProvider>
-                    <Route path="/design/new" render={props => {
-                        if (isAuthenticated()) {
-                            return <DesignForm {...props} />
-                        }
-                    }} />
-                </SizeProvider>
-            </FabricProvider>
+            <DesignProvider>
+                <FabricProvider>
+                    <SizeProvider>
+                        <Route path="/design/new" render={props => {
+                            if (isAuthenticated()) {
+                                return <DesignForm {...props} />
+                            }
+                        }} />
+                    </SizeProvider>
+                </FabricProvider>
+            </DesignProvider>
 
-            <FabricProvider>
-                <SizeProvider>
-                    <Route path="/design/edit/:designId(\d+)" render={props => {
-                        if (isAuthenticated()) {
-                            return <DesignForm {...props} />
-                        }
-                    }} />
-                </SizeProvider>
-            </FabricProvider>
+            <DesignProvider>
+                <FabricProvider>
+                    <SizeProvider>
+                        <Route path="/design/edit/:designId(\d+)" render={props => {
+                            if (isAuthenticated()) {
+                                return <DesignForm {...props} />
+                            }
+                        }} />
+                    </SizeProvider>
+                </FabricProvider>
+            </DesignProvider>
 
         </>
     )

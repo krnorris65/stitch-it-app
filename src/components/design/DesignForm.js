@@ -19,6 +19,7 @@ const DesignForm = props => {
 
     const { fabrics } = useContext(FabricContext)
     const { sizes } = useContext(SizeContext)
+    const { getOneDesign } = useContext(DesignContext)
 
     const [form, setForm] = useState("")
 
@@ -50,8 +51,9 @@ const DesignForm = props => {
     const getDesignToEdit = () => {
         //if the route parameter doesn't include 'new" then it means it's a design to edit
         if (!newDesign) {
-            ApiManager.getOne("designs", props.match.params.designId)
+            getOneDesign(props.match.params.designId)
                 .then(editDesign => {
+                    console.log(editDesign)
                     setLoadingStatus(false)
 
                     title.current.value = editDesign.title
