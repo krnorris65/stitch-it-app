@@ -59,10 +59,6 @@ export const DesignProvider = props => {
         getDesigns()
     }, [])
 
-    useEffect(() => {
-        console.log("***Design state changed***")
-    }, [designs])
-
     return (
         <DesignContext.Provider value={{
             designs, addDesign, editDesign, deleteDesign, getOneDesign}}>
