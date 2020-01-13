@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useContext, useState, useRef, useEffect } from 'react'
 import ApiManager from '../../modules/ApiManager'
 
 import CloudinaryInfo from './CloudinaryInfo'
@@ -6,14 +6,19 @@ import CloudinaryInfo from './CloudinaryInfo'
 import FabricForm from '../fabric/FabricForm'
 import SizeForm from '../size/SizeForm'
 
-import {DesignContext} from '../providers/DesignProvider'
+import { DesignContext } from '../providers/DesignProvider'
+import { FabricContext } from '../providers/FabricProvider'
+import { SizeContext } from '../providers/SizeProvider'
 
 
 const DesignForm = props => {
     const [loadingStatus, setLoadingStatus] = useState(true)
     const [newDesign] = useState(props.match.path.includes('new'))
-    const [fabrics, setFabrics] = useState([])
-    const [finishedSizes, setFinishedSizes] = useState([])
+    // const [fabrics, setFabrics] = useState([])
+    // const [finishedSizes, setFinishedSizes] = useState([])
+
+    const { fabrics } = useContext(FabricContext)
+    const { sizes } = useContext(SizeContext)
 
     const [form, setForm] = useState("")
 
@@ -26,30 +31,19 @@ const DesignForm = props => {
     const fabricId = useRef()
     const finishedSizeId = useRef()
 
+
     // toggleForm takes an arguement to distinguish between fabric and size forms
     const toggleForm = (formType) => {
         //if the state of form is the same as the formType OR equal to updated then close the form and reset state
         //else change the form that is open
-        if(form === formType || formType === "updated"){
+        if (form === formType || formType === "updated") {
             setForm("")
             setLoadingStatus(false)
-        } else{
+        } else {
             setForm(formType)
             setLoadingStatus(true)
         }
 
-    }
-
-    const getFabricsAndSizes = () => {
-        ApiManager.getAll("fabrics")
-            .then(fabrics => setFabrics(fabrics))
-        ApiManager.getAll("finishedSizes")
-            .then(finishedSizes => {
-                setFinishedSizes(finishedSizes)
-                //default value of the dropdown is the unknown size
-                const unknownId = finishedSizes.find(size => size.size === "unknown").id
-                finishedSizeId.current.value = unknownId
-            })
     }
 
 
@@ -70,24 +64,24 @@ const DesignForm = props => {
 
                 })
         } else {
+            finishedSizeId.current.value = 1;
             setLoadingStatus(false)
         }
     }
 
-    useEffect(getFabricsAndSizes, [])
     useEffect(getDesignToEdit, [])
 
     //pass into the Fabric Form and the Sizes Form so the new fabric/size will get added to the drop down after the form closes
     const updateFabricDropdown = (id, status) => {
         // if the status is update then the fabric already exists so a new fabric wasn't added to the database
         //a getAll only needs to be done when a new fabric has been added
-        if (status === "update") {
-            fabricId.current.value = id
-        } else {
-            ApiManager.getAll("fabrics")
-                .then(fabrics => setFabrics(fabrics))
-                .then(() => fabricId.current.value = id)
-        }
+        fabricId.current.value = id
+        // if (status === "update") {
+        // } else {
+        //     // ApiManager.getAll("fabrics")
+        //     //     .then(fabrics => setFabrics(fabrics))
+        //     //     .then(() => fabricId.current.value = id)
+        // }
         //close form
         toggleForm("updated")
     }
@@ -98,9 +92,9 @@ const DesignForm = props => {
         if (status === "update") {
             finishedSizeId.current.value = id
         } else {
-            ApiManager.getAll("finishedSizes")
-                .then(finishedSizes => setFinishedSizes(finishedSizes))
-                .then(() => finishedSizeId.current.value = id)
+            // ApiManager.getAll("finishedSizes")
+            //     .then(finishedSizes => setFinishedSizes(finishedSizes))
+            //     .then(() => finishedSizeId.current.value = id)
         }
         //close form
         toggleForm("updated")
@@ -208,7 +202,7 @@ const DesignForm = props => {
                     <div className="formgrid">
                         <select id="designSize" ref={finishedSizeId}>
                             {
-                                finishedSizes.map(fSize => <option key={fSize.id} value={fSize.id}>{fSize.size}</option>)
+                                sizes.map(fSize => <option key={fSize.id} value={fSize.id}>{fSize.size}</option>)
                             }
                         </select>
                         <label htmlFor="designSize">Finished Size:</label>
