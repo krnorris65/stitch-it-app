@@ -6,6 +6,8 @@ import CloudinaryInfo from './CloudinaryInfo'
 import FabricForm from '../fabric/FabricForm'
 import SizeForm from '../size/SizeForm'
 
+import {DesignContext} from '../providers/DesignProvider'
+
 const DesignForm = props => {
     const [loadingStatus, setLoadingStatus] = useState(true)
     const [newDesign] = useState(props.match.path.includes('new'))
