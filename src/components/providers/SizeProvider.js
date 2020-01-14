@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 
 const remoteURL = "http://localhost:5002"
 
@@ -9,8 +9,8 @@ export const SizeProvider = props => {
 
     const getSizes = () => {
         return fetch(`${remoteURL}/finishedSizes?_sort=size`)
-        .then(res => res.json())
-        .then(setSizes)
+            .then(res => res.json())
+            .then(setSizes)
     }
 
     const addSize = newSize => {
@@ -21,7 +21,16 @@ export const SizeProvider = props => {
             },
             body: JSON.stringify(newSize)
         })
-        .then(getSizes)
+            .then(res => res.json())
+            .then(newSize => {
+                return getSizes()
+                    .then(() => newSize)
+            })
+    }
+
+    const findSize = (size) => {
+        return fetch(`${remoteURL}/finishedSizes?size=${size}`)
+            .then(res => res.json())
     }
 
     useEffect(() => {
@@ -30,7 +39,7 @@ export const SizeProvider = props => {
 
     return (
         <SizeContext.Provider value={{
-            sizes, addSize
+            sizes, addSize, findSize
         }}>
             {props.children}
         </SizeContext.Provider>
