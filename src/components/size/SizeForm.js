@@ -1,5 +1,7 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useContext } from 'react'
 import ApiManager from '../../modules/ApiManager'
+
+import {SizeContext} from '../providers/SizeProvider'
 
 const SizeForm = props => {
 
@@ -9,6 +11,8 @@ const SizeForm = props => {
     const width = useRef()
     const height = useRef()
     const unit = useRef()
+
+    const {findSizeId, addSize} = useContext(SizeContext)
 
     const handleSize = evt => {
         evt.preventDefault()
@@ -22,67 +26,64 @@ const SizeForm = props => {
             height: height.current
         }
 
-        if(specs.width.value ==="" || (specs.height !== null && specs.height.value === "")) {
+        if (specs.width.value === "" || (specs.height !== null && specs.height.value === "")) {
             alert("Enter Measurement")
         } else {
 
-            if(round){
+            if (round) {
                 sizeObj.size = `${specs.width.value} ${specs.unit.value} round`
-            } else{
+            } else {
                 sizeObj.size = `${specs.width.value}x${specs.height.value} ${specs.unit.value}`
             }
 
-            ApiManager.getAll("finishedSizes", `size=${sizeObj.size}`)
-            .then(response => {
-                console.log(response)
-                if(response.length > 0){
-                    props.updateSizesDropdown(response[0].id)
-                } else {
-                    ApiManager.post("finishedSizes", sizeObj)
-                    .then(newSize => {
-                        props.updateSizesDropdown(newSize.id)
-                    })
-                }
-            })
+            findSizeId(sizeObj.size)
+                .then(foundId => {
+                    if (foundId !== undefined) {
+                        props.updateSizesDropdown(foundId)
+                    } else {
+                        addSize(sizeObj)
+                            .then(newSize => {
+                                props.updateSizesDropdown(newSize.id)
+                            })
+                    }
+                })
 
         }
-        
+
 
 
     }
 
     return (
-            <fieldset className="sub--form">
-                <h3>New Size</h3>
-                <div className="formgrid">
-                    <input type="checkbox"
-                        checked={round}
-                        onChange={() => round ? setRound(false) : setRound(true)} />
-                    <label htmlFor="sizeUnit">Round Design</label>
-                    {/* <span>If your design is oval do not check</span> */}
-                </div>
-                <div className="formgrid">
+        <fieldset className="sub--form">
+            <h3>New Size</h3>
+            <div className="formgrid">
+                <input type="checkbox" checked={round} onChange={() => round ? setRound(false) : setRound(true)} />
+                <label htmlFor="sizeUnit">Round Design</label>
+                {/* <span>If your design is oval do not check</span> */}
+            </div>
+            <div className="formgrid">
 
-                    <input ref={width} type="number" min="0" />
-                    {
-                        (!round) ?
+                <input ref={width} type="number" min="0" />
+                {
+                    (!round) ?
                         <>
-                        <input ref={height} type="number" min="0" />
-                        <label htmlFor="sizeNums">Width x Height</label>
+                            <input ref={height} type="number" min="0" />
+                            <label htmlFor="sizeNums">Width x Height</label>
                         </>
-                            :                         <label htmlFor="sizeNums">Width</label>
+                        : <label htmlFor="sizeNums">Width</label>
 
-                            
 
-                    }
-                    <select ref={unit}>
-                        <option value="in">inches</option>
-                        <option value="cm">centimeters</option>
-                    </select>
-                </div>
 
-                <button type="submit" onClick={handleSize}>Add New Size</button>
-            </fieldset>
+                }
+                <select ref={unit}>
+                    <option value="in">inches</option>
+                    <option value="cm">centimeters</option>
+                </select>
+            </div>
+
+            <button type="submit" onClick={handleSize}>Add New Size</button>
+        </fieldset>
     )
 
 }

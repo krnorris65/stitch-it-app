@@ -1,5 +1,4 @@
 import React, {useRef, useContext} from 'react'
-import ApiManager from '../../modules/ApiManager'
 import helper from '../../modules/helper'
 
 import { FabricContext } from '../providers/FabricProvider'

@@ -32,7 +32,6 @@ export const FabricProvider = props => {
         return fetch(`${remoteURL}/fabrics?type=${type}&count=${count}`)
             .then(res => res.json())
             .then(result => {
-                console.log(result)
                 if(result.length > 0){
                     return result[0].id
                 } else {

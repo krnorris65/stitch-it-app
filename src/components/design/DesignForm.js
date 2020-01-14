@@ -81,14 +81,8 @@ const DesignForm = props => {
 
     const updateSizesDropdown = (id, status) => {
         // if the status is update then the size already exists so a new size wasn't added to the database
-        //a getAll only needs to be done when a new size has been added
-        if (status === "update") {
-            finishedSizeId.current.value = id
-        } else {
-            // ApiManager.getAll("finishedSizes")
-            //     .then(finishedSizes => setFinishedSizes(finishedSizes))
-            //     .then(() => finishedSizeId.current.value = id)
-        }
+
+        finishedSizeId.current.value = id
         //close form
         toggleForm("updated")
     }
