@@ -71,17 +71,10 @@ const DesignForm = props => {
     useEffect(getDesignToEdit, [])
 
     //pass into the Fabric Form and the Sizes Form so the new fabric/size will get added to the drop down after the form closes
-    const updateFabricDropdown = (id) => {
-        // if the status is update then the fabric already exists so a new fabric wasn't added to the database
-        //a getAll only needs to be done when a new fabric has been added
-        console.log(id)
+    const updateFabricDropdownValue = (id) => {
+        // update the fabricId to the one that was just added
         fabricId.current.value = id
-        // if (status === "update") {
-        // } else {
-        //     // ApiManager.getAll("fabrics")
-        //     //     .then(fabrics => setFabrics(fabrics))
-        //     //     .then(() => fabricId.current.value = id)
-        // }
+
         //close form
         toggleForm("updated")
     }
@@ -186,7 +179,7 @@ const DesignForm = props => {
                     {
                         (form === "fabric") ?
 
-                            <FabricForm updateFabricDropdown={updateFabricDropdown} />
+                            <FabricForm updateFabricDropdownValue={updateFabricDropdownValue} />
                             :
                             null
                     }
