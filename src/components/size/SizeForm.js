@@ -1,6 +1,4 @@
 import React, { useRef, useState, useContext } from 'react'
-import ApiManager from '../../modules/ApiManager'
-
 import {SizeContext} from '../providers/SizeProvider'
 
 const SizeForm = props => {

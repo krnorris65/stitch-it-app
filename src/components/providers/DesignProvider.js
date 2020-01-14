@@ -33,7 +33,7 @@ export const DesignProvider = props => {
             },
             body: JSON.stringify(newDesign)
         })
-        .then(getDesigns)
+        // .then(getDesigns)
     }
 
     const editDesign = (editedDesign) => {
@@ -44,7 +44,7 @@ export const DesignProvider = props => {
             },
             body: JSON.stringify(editedDesign)
         })
-        .then(getDesigns)
+        // .then(getDesigns)
     }
 
     const deleteDesign = (id) => {

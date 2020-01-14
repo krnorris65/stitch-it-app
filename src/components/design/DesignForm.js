@@ -1,6 +1,4 @@
 import React, { useContext, useState, useRef, useEffect } from 'react'
-import ApiManager from '../../modules/ApiManager'
-
 import CloudinaryInfo from './CloudinaryInfo'
 
 import FabricForm from '../fabric/FabricForm'
@@ -17,7 +15,7 @@ const DesignForm = props => {
 
     const { fabrics } = useContext(FabricContext)
     const { sizes } = useContext(SizeContext)
-    const { getOneDesign } = useContext(DesignContext)
+    const { getOneDesign, addDesign, editDesign } = useContext(DesignContext)
 
     const [form, setForm] = useState("")
 
@@ -74,14 +72,13 @@ const DesignForm = props => {
     const updateFabricDropdownValue = (id) => {
         // update the fabricId to the one that was just added
         fabricId.current.value = id
-
+        
         //close form
         toggleForm("updated")
     }
-
-    const updateSizesDropdown = (id, status) => {
-        // if the status is update then the size already exists so a new size wasn't added to the database
-
+    
+    const updateSizesDropdown = (id) => {
+        // update the finishedSizeId to the one that was just added
         finishedSizeId.current.value = id
         //close form
         toggleForm("updated")
@@ -117,11 +114,11 @@ const DesignForm = props => {
         } else {
             setLoadingStatus(true)
             if (newDesign) {
-                ApiManager.post("designs", design)
+                addDesign(design)
                     .then(() => props.history.push("/"))
             } else {
                 design.id = Number(props.match.params.designId)
-                ApiManager.update("designs", design)
+                editDesign(design)
                     .then(() => props.history.push("/"))
             }
 
