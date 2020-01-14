@@ -59,6 +59,7 @@ export const DesignProvider = props => {
         getDesigns()
     }, [])
 
+
     return (
         <DesignContext.Provider value={{
             designs, addDesign, editDesign, deleteDesign, getOneDesign}}>
