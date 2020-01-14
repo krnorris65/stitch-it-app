@@ -28,9 +28,17 @@ export const FabricProvider = props => {
             })
     }
 
-    const findFabric = (type, count) => {
+    const findFabricId = (type, count) => {
         return fetch(`${remoteURL}/fabrics?type=${type}&count=${count}`)
             .then(res => res.json())
+            .then(result => {
+                console.log(result)
+                if(result.length > 0){
+                    return result[0].id
+                } else {
+                    return undefined
+                }
+            })
     }
 
     useEffect(() => {
@@ -39,7 +47,7 @@ export const FabricProvider = props => {
 
     return (
         <FabricContext.Provider value={{
-            fabrics, addFabric, findFabric
+            fabrics, addFabric, findFabricId
         }}>
             {props.children}
         </FabricContext.Provider>
