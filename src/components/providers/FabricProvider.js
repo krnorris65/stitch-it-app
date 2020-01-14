@@ -21,9 +21,10 @@ export const FabricProvider = props => {
             },
             body: JSON.stringify(newFabric)
         })
+        .then(res => res.json())
             .then(newFab => {
-                getFabrics()
-                return newFab
+                return getFabrics()
+                .then(() => newFab)
             })
     }
 

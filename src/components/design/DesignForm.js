@@ -74,7 +74,7 @@ const DesignForm = props => {
     const updateFabricDropdown = (id) => {
         // if the status is update then the fabric already exists so a new fabric wasn't added to the database
         //a getAll only needs to be done when a new fabric has been added
-
+        console.log(id)
         fabricId.current.value = id
         // if (status === "update") {
         // } else {
@@ -112,7 +112,6 @@ const DesignForm = props => {
                 }
             });
     }
-
 
 
     const newOrUpdatedDesign = () => {
