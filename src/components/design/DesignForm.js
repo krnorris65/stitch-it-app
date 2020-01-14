@@ -1,16 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react'
-import ApiManager from '../../modules/ApiManager'
-
+import React, { useContext, useState, useRef, useEffect } from 'react'
 import CloudinaryInfo from './CloudinaryInfo'
 
 import FabricForm from '../fabric/FabricForm'
 import SizeForm from '../size/SizeForm'
 
+import { DesignContext } from '../providers/DesignProvider'
+import { FabricContext } from '../providers/FabricProvider'
+import { SizeContext } from '../providers/SizeProvider'
+
+
 const DesignForm = props => {
     const [loadingStatus, setLoadingStatus] = useState(true)
     const [newDesign] = useState(props.match.path.includes('new'))
-    const [fabrics, setFabrics] = useState([])
-    const [finishedSizes, setFinishedSizes] = useState([])
+
+    const { fabrics } = useContext(FabricContext)
+    const { sizes } = useContext(SizeContext)
+    const { getOneDesign, addDesign, editDesign } = useContext(DesignContext)
 
     const [form, setForm] = useState("")
 
@@ -23,37 +28,26 @@ const DesignForm = props => {
     const fabricId = useRef()
     const finishedSizeId = useRef()
 
+
     // toggleForm takes an arguement to distinguish between fabric and size forms
     const toggleForm = (formType) => {
         //if the state of form is the same as the formType OR equal to updated then close the form and reset state
         //else change the form that is open
-        if(form === formType || formType === "updated"){
+        if (form === formType || formType === "updated") {
             setForm("")
             setLoadingStatus(false)
-        } else{
+        } else {
             setForm(formType)
             setLoadingStatus(true)
         }
 
     }
 
-    const getFabricsAndSizes = () => {
-        ApiManager.getAll("fabrics")
-            .then(fabrics => setFabrics(fabrics))
-        ApiManager.getAll("finishedSizes")
-            .then(finishedSizes => {
-                setFinishedSizes(finishedSizes)
-                //default value of the dropdown is the unknown size
-                const unknownId = finishedSizes.find(size => size.size === "unknown").id
-                finishedSizeId.current.value = unknownId
-            })
-    }
-
 
     const getDesignToEdit = () => {
         //if the route parameter doesn't include 'new" then it means it's a design to edit
         if (!newDesign) {
-            ApiManager.getOne("designs", props.match.params.designId)
+            getOneDesign(props.match.params.designId)
                 .then(editDesign => {
                     setLoadingStatus(false)
 
@@ -67,38 +61,25 @@ const DesignForm = props => {
 
                 })
         } else {
+            finishedSizeId.current.value = 1;
             setLoadingStatus(false)
         }
     }
 
-    useEffect(getFabricsAndSizes, [])
     useEffect(getDesignToEdit, [])
 
     //pass into the Fabric Form and the Sizes Form so the new fabric/size will get added to the drop down after the form closes
-    const updateFabricDropdown = (id, status) => {
-        // if the status is update then the fabric already exists so a new fabric wasn't added to the database
-        //a getAll only needs to be done when a new fabric has been added
-        if (status === "update") {
-            fabricId.current.value = id
-        } else {
-            ApiManager.getAll("fabrics")
-                .then(fabrics => setFabrics(fabrics))
-                .then(() => fabricId.current.value = id)
-        }
+    const updateFabricDropdownValue = (id) => {
+        // update the fabricId to the one that was just added
+        fabricId.current.value = id
+        
         //close form
         toggleForm("updated")
     }
-
-    const updateSizesDropdown = (id, status) => {
-        // if the status is update then the size already exists so a new size wasn't added to the database
-        //a getAll only needs to be done when a new size has been added
-        if (status === "update") {
-            finishedSizeId.current.value = id
-        } else {
-            ApiManager.getAll("finishedSizes")
-                .then(finishedSizes => setFinishedSizes(finishedSizes))
-                .then(() => finishedSizeId.current.value = id)
-        }
+    
+    const updateSizesDropdown = (id) => {
+        // update the finishedSizeId to the one that was just added
+        finishedSizeId.current.value = id
         //close form
         toggleForm("updated")
     }
@@ -117,7 +98,6 @@ const DesignForm = props => {
     }
 
 
-
     const newOrUpdatedDesign = () => {
         const design = {
             title: title.current.value,
@@ -134,11 +114,11 @@ const DesignForm = props => {
         } else {
             setLoadingStatus(true)
             if (newDesign) {
-                ApiManager.post("designs", design)
+                addDesign(design)
                     .then(() => props.history.push("/"))
             } else {
                 design.id = Number(props.match.params.designId)
-                ApiManager.update("designs", design)
+                editDesign(design)
                     .then(() => props.history.push("/"))
             }
 
@@ -152,35 +132,27 @@ const DesignForm = props => {
                 <fieldset>
 
                     {
-                        (newDesign) ?
-                            <h2>Create New Design</h2> :
-                            <h2>Update Design</h2>
+                        (newDesign) ? <h2>Create New Design</h2> : <h2>Update Design</h2>
                     }
                     <div className="formgrid">
-                        <input
-                            type="text"
-                            required
+                        <input type="text" required id="designTitle"
                             ref={title}
-                            id="designTitle"
                             placeholder="Design Title"
                         />
                         <label htmlFor="designTitle">Title</label>
                     </div>
 
                     <div className="formgrid">
-                        <textarea
+                        <textarea id="designDescription"
                             ref={description}
-                            id="designDescription"
                             placeholder="Add information pertaining to floss used, color of fabric, helpful notes, etc."
                         ></textarea>
                         <label htmlFor="designDescription">Description</label>
                     </div>
 
                     <div className="formgrid">
-                        <input
-                            type="date"
+                        <input type="date" id="designCompleted"
                             ref={completedDate}
-                            id="designCompleted"
                         />
                         <label htmlFor="designCompleted">Completed On:</label>
                     </div>
@@ -198,14 +170,14 @@ const DesignForm = props => {
                     {
                         (form === "fabric") ?
 
-                            <FabricForm updateFabricDropdown={updateFabricDropdown} />
+                            <FabricForm updateFabricDropdownValue={updateFabricDropdownValue} />
                             :
                             null
                     }
                     <div className="formgrid">
                         <select id="designSize" ref={finishedSizeId}>
                             {
-                                finishedSizes.map(fSize => <option key={fSize.id} value={fSize.id}>{fSize.size}</option>)
+                                sizes.map(fSize => <option key={fSize.id} value={fSize.id}>{fSize.size}</option>)
                             }
                         </select>
                         <label htmlFor="designSize">Finished Size:</label>
@@ -222,15 +194,9 @@ const DesignForm = props => {
                     }
 
                     <div className="alignRight">
-                        <button
-                            type="button"
-                            disabled={loadingStatus}
-                            onClick={newOrUpdatedDesign}
-                        >
+                        <button type="button" disabled={loadingStatus} onClick={newOrUpdatedDesign}>
                             {
-                                (newDesign) ?
-                                    <>Create</> :
-                                    <>Update</>
+                                (newDesign) ? <>Create</> : <>Update</>
                             }
                         </button>
                     </div>
@@ -246,9 +212,6 @@ const DesignForm = props => {
                         <button onClick={() => setPhotoLink("")} >Delete Photo</button>
                 }
             </div>
-
-
-
 
             <button onClick={() => props.history.push("/")}>Back</button>
         </>

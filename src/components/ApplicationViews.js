@@ -9,6 +9,9 @@ import Home from './home/Home'
 import DesignForm from './design/DesignForm'
 
 import UserHome from './user/UserHome'
+import { FabricProvider } from "./providers/FabricProvider"
+import { SizeProvider } from "./providers/SizeProvider"
+import { DesignProvider } from "./providers/DesignProvider"
 
 
 const ApplicationViews = props => {
@@ -16,7 +19,7 @@ const ApplicationViews = props => {
     return (
         <>
             <Route exact path="/" render={props => {
-                return <Home {...props}/>
+                return <Home {...props} />
             }} />
 
             {/* if the user is already logged in they they will not be able to access the login or register pages */}
@@ -35,17 +38,29 @@ const ApplicationViews = props => {
                 }
             }} />
 
-            <Route path="/design/new" render={props => {
-                if(isAuthenticated()) {
-                    return <DesignForm {...props}/>
-                }
-            }} />
+            <DesignProvider>
+                <FabricProvider>
+                    <SizeProvider>
+                        <Route path="/design/new" render={props => {
+                            if (isAuthenticated()) {
+                                return <DesignForm {...props} />
+                            }
+                        }} />
+                    </SizeProvider>
+                </FabricProvider>
+            </DesignProvider>
 
-            <Route path="/design/edit/:designId(\d+)" render={props => {
-                if(isAuthenticated()) {
-                    return <DesignForm {...props}/>
-                }
-            }} />
+            <DesignProvider>
+                <FabricProvider>
+                    <SizeProvider>
+                        <Route path="/design/edit/:designId(\d+)" render={props => {
+                            if (isAuthenticated()) {
+                                return <DesignForm {...props} />
+                            }
+                        }} />
+                    </SizeProvider>
+                </FabricProvider>
+            </DesignProvider>
 
             <Route path="/following/" render={props => {
                 if(isAuthenticated()) {

@@ -1,29 +1,30 @@
-import React from 'react'
+import React, {useContext, useState} from 'react'
+import {DesignContext} from '../providers/DesignProvider'
 
 
 const DesignCard = props => {
+    const {deleteDesign} = useContext(DesignContext)
+    const [currentDesign] = useState(props.design)
     return (
         <div className="card">
             <div className="card-content">
-                <h4>{props.design.title}</h4>
+                <h4>{currentDesign.title}</h4>
                 {
-                (props.design.completedDate !== "") ?
-                <p>Completed On: {props.design.completedDate} </p>:
+                (currentDesign.completedDate !== "") ?
+                <p>Completed On: {currentDesign.completedDate} </p>:
                 <p>Work In Progress</p>
                 }
                 {
-                    (props.design.photoLink) ?
-                        <img src={`${props.design.photoLink}`} alt={`${props.design.title}`} /> :
+                    (currentDesign.photoLink) ?
+                        <img src={`${currentDesign.photoLink}`} alt={`${currentDesign.title}`} /> :
                         <img src={require('./defaultDesign.png')} alt="default design" />
                 }
-                <p>{props.design.description}</p>
-                <p>Fabric: {`${props.design.fabric.type} ${props.design.fabric.count} count`}</p>
-                <p>Finished Size: {props.design.finishedSize.size}</p>
+                <p>{currentDesign.description}</p>
+                <p>Fabric: {`${currentDesign.fabric.type} ${currentDesign.fabric.count} count`}</p>
+                <p>Finished Size: {currentDesign.finishedSize.size}</p>
 
-                <button onClick={() => props.history.push(`/design/edit/${props.design.id}`)}>Edit</button>
-                <button onClick={() => props.deleteDesign(props.design.id)}>Delete</button>
-
-
+                <button onClick={() => props.history.push(`/design/edit/${currentDesign.id}`)}>Edit</button>
+                <button onClick={() => deleteDesign(currentDesign.id)}>Delete</button>
 
             </div>
         </div>
