@@ -71,7 +71,7 @@ const DesignForm = props => {
     useEffect(getDesignToEdit, [])
 
     //pass into the Fabric Form and the Sizes Form so the new fabric/size will get added to the drop down after the form closes
-    const updateFabricDropdown = (id, status) => {
+    const updateFabricDropdown = (id) => {
         // if the status is update then the fabric already exists so a new fabric wasn't added to the database
         //a getAll only needs to be done when a new fabric has been added
 
@@ -149,35 +149,27 @@ const DesignForm = props => {
                 <fieldset>
 
                     {
-                        (newDesign) ?
-                            <h2>Create New Design</h2> :
-                            <h2>Update Design</h2>
+                        (newDesign) ? <h2>Create New Design</h2> : <h2>Update Design</h2>
                     }
                     <div className="formgrid">
-                        <input
-                            type="text"
-                            required
+                        <input type="text" required id="designTitle"
                             ref={title}
-                            id="designTitle"
                             placeholder="Design Title"
                         />
                         <label htmlFor="designTitle">Title</label>
                     </div>
 
                     <div className="formgrid">
-                        <textarea
+                        <textarea id="designDescription"
                             ref={description}
-                            id="designDescription"
                             placeholder="Add information pertaining to floss used, color of fabric, helpful notes, etc."
                         ></textarea>
                         <label htmlFor="designDescription">Description</label>
                     </div>
 
                     <div className="formgrid">
-                        <input
-                            type="date"
+                        <input type="date" id="designCompleted"
                             ref={completedDate}
-                            id="designCompleted"
                         />
                         <label htmlFor="designCompleted">Completed On:</label>
                     </div>
@@ -219,15 +211,9 @@ const DesignForm = props => {
                     }
 
                     <div className="alignRight">
-                        <button
-                            type="button"
-                            disabled={loadingStatus}
-                            onClick={newOrUpdatedDesign}
-                        >
+                        <button type="button" disabled={loadingStatus} onClick={newOrUpdatedDesign}>
                             {
-                                (newDesign) ?
-                                    <>Create</> :
-                                    <>Update</>
+                                (newDesign) ? <>Create</> : <>Update</>
                             }
                         </button>
                     </div>
@@ -243,9 +229,6 @@ const DesignForm = props => {
                         <button onClick={() => setPhotoLink("")} >Delete Photo</button>
                 }
             </div>
-
-
-
 
             <button onClick={() => props.history.push("/")}>Back</button>
         </>

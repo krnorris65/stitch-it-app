@@ -29,10 +29,10 @@ const FabricForm = props => {
             .then(found => {
                 if(found.length > 0){
                     //set the existing fabric that was entered as the selected option
-                    props.updateFabricDropdown(found[0].id, "update")
+                    props.updateFabricDropdown(found[0].id)
                 } else{
                     //if the fabric doesn't exist, add it to the database
-                    //and get all the fabrics for the drop down
+                    //and pass the new fabric id to the parent component
                     addFabric(fabric)
                     .then( newFabric => {
                         props.updateFabricDropdown(newFabric.id)
