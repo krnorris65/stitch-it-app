@@ -16,10 +16,24 @@ export const UserProvider = props => {
         .then(setFollowedUsers)
     }
 
+    const getSingleUser = (id) => {
+        return fetch(`${remoteURL}/users/${id}?pending=true`)
+        .then(res => res.json())
+    }
+
     const getUnapprovedRequests = () => {
+        //need to have an additional request for each user to expand upon the requesting user's information
         return fetch(`${remoteURL}/follows?userId=${currentUser}&pending=true`)
         .then(res => res.json())
-        .then(setUnapprovedUsers)
+        .then(async unapprovedReq => {
+            await Promise.all(
+                unapprovedReq.map(async requestObj => {
+                    await getSingleUser( requestObj.currentUserId)
+                        .then(userInfo => requestObj.requestingUser = userInfo)
+                })
+            )
+            setUnapprovedUsers(unapprovedReq)
+        })
     }
 
     //creates new follow 
@@ -61,7 +75,9 @@ export const UserProvider = props => {
 
     useEffect(() => {
         getFollowedUsers()
+        getUnapprovedRequests()
     }, [])
+
 
     return (
         <UserContext.Provider value={{

@@ -64,16 +64,20 @@ const UserList = props => {
 
     return (
         <>
+            {/* <h2>Following</h2>
+            {
+                following.map(followObj => <UserCard key={followObj.id} user={followObj.user} followObj={followObj} unfollowUser={unfollowUser}/>)
+            } */}
 
             {/* <h2>Pending</h2>
             {
                 pending.map(followObj => <UserCard key={followObj.id} user={followObj.user} followObj={followObj} unfollowUser={unfollowUser}/>)
             } */}
 
-            <h2>Unapproved Requests</h2>
+            {/* <h2>Unapproved Requests</h2>
             {
                 unapproved.map(unapprovedObj => <UserCard key={unapprovedObj.id} user={unapprovedObj.requestingUser} followObj={unapprovedObj} approveFollow={approveFollow} declineFollow={declineFollow}/>)
-            }
+            } */}
         </>
     )
 }
