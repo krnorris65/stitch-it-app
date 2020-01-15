@@ -35,7 +35,7 @@ export const UserProvider = props => {
             await Promise.all(
                 unapprovedReq.map(async requestObj => {
                     await getSingleUser( requestObj.currentUserId)
-                        .then(userInfo => requestObj.requestingUser = userInfo)
+                        .then(userInfo => requestObj.user = userInfo)
                 })
             )
             setUnapprovedUsers(unapprovedReq)

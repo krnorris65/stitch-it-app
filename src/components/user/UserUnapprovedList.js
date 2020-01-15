@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import UserCard from './UserCard'
+import UserApprovalCard from './UserApprovalCard'
 import {UserContext} from '../providers/UserProvider'
 
 const UserUnapprovedList = props => {
@@ -10,7 +10,7 @@ const UserUnapprovedList = props => {
         <>
         <h2>Reply To These Requests</h2>
             <div className="container-cards">
-                {unapprovedUsers.map(unapprovedObj => <UserCard key={unapprovedObj.id} user={unapprovedObj.requestingUser} followObj={unapprovedObj} />)}
+                {unapprovedUsers.map(followRequest => <UserApprovalCard key={followRequest.id} followRequest={followRequest}/>)}
             </div>
         </>
     )

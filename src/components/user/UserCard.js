@@ -14,18 +14,19 @@ const UserCard = props => {
     const currentlyFollowed = () => {
         //logic used for when a user searches for users
         if (props.user.follows) {
-            const ifCurrUserFollows = props.user.follows.filter(follow => follow.currentUserId === Number(currentUser))
-
-            if (ifCurrUserFollows.length > 0) {
-                const followObj = ifCurrUserFollows[0]
+            const doesFollow = props.user.follows.find(follow => follow.currentUserId === Number(currentUser))
+            console.log("find if followed", doesFollow)
+            if (doesFollow !== undefined) {
+                const followObj = doesFollow
                 setFollowedStatus(true)
                 setPendingStatus(followObj.pending)
                 setFollowId(followObj.id)
             }
         }
     }
-
+    
     const pendingApproval = () => {
+        // console.log("pending approval", props.user)
         //logic used for the users that are followed or the user still needs to approve their follow request
         if (props.followObj !== undefined) {
 

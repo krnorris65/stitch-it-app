@@ -1,9 +1,8 @@
-import React, {useState} from 'react'
+import React from 'react'
 
 import UserSearch from './UserSearch'
 import UserFollowList from "./UserFollowList"
 import UserUnapprovedList from "./UserUnapprovedList"
-import ApiManager from '../../modules/ApiManager'
 
 
 const UserHome = props => {
