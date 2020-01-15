@@ -7,6 +7,7 @@ export const UserContext = React.createContext()
 export const UserProvider = props => {
     const [followedUsers, setFollowedUsers] = useState([])
     const [unapprovedUsers, setUnapprovedUsers] = useState([])
+    const [searchResults, setSearchResult] = useState([])
     
     const [currentUser] = localStorage.getItem("currUserId")
 
@@ -18,6 +19,11 @@ export const UserProvider = props => {
 
     const getSingleUser = (id) => {
         return fetch(`${remoteURL}/users/${id}?pending=true`)
+        .then(res => res.json())
+    }
+
+    const getAllUsersWithFollows = () => {
+        return fetch(`${remoteURL}/users?_embed=follows`)
         .then(res => res.json())
     }
 
@@ -46,6 +52,7 @@ export const UserProvider = props => {
             body: JSON.stringify(newFollow)
         })
         .then(getFollowedUsers)
+        .then(() => setSearchResult([]))
     }
 
     //updates existing follow request to approve request
@@ -71,6 +78,26 @@ export const UserProvider = props => {
         })
         .then(getFollowedUsers)
         .then(getUnapprovedRequests)
+        .then(() => setSearchResult([]))
+    }
+
+    const findUsers = (searched) => {
+        if (searched !== "") {
+            getAllUsersWithFollows()
+                .then(allUsers => {
+                    const filteredUsers = allUsers.filter(user => {
+                        // concats first and last name into one string and converts it to lower case
+                        const fullName = `${user.firstName} ${user.lastName}`.toLowerCase()
+                        // if the user's full name includes what was searched for return that user
+
+                        return fullName.includes(searched)
+                    })
+
+                    setSearchResult(filteredUsers)
+                })
+        } else {
+            setSearchResult([])
+        }
     }
 
     useEffect(() => {
@@ -81,7 +108,7 @@ export const UserProvider = props => {
 
     return (
         <UserContext.Provider value={{
-            followedUsers, unapprovedUsers, followUser, approveFollow, deleteFollow
+            followedUsers, unapprovedUsers, followUser, approveFollow, deleteFollow, findUsers, searchResults
         }}>
             {props.children}
         </UserContext.Provider>

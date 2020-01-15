@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import {UserContext} from '../providers/UserProvider'
 
 
 const UserCard = props => {
@@ -7,6 +8,8 @@ const UserCard = props => {
     const [followPending, setPendingStatus] = useState(false)
     //when updating the follow status this will hold the needed id
     const [followId, setFollowId] = useState()
+
+    const {deleteFollow, approveFollow, followUser} = useContext(UserContext)
 
     const currentlyFollowed = () => {
         //logic used for when a user searches for users
@@ -34,6 +37,16 @@ const UserCard = props => {
         }
     }
 
+    const submitFollow = (id, publicProfile) => {
+        const followObj = {
+            currentUserId: Number(currentUser),
+            userId: id,
+            pending: !publicProfile
+        }
+
+        followUser(followObj)
+    }
+
     useEffect(currentlyFollowed, [])
     useEffect(pendingApproval, [])
 
@@ -48,21 +61,21 @@ const UserCard = props => {
                         <p>current user</p>
                         // if the current user is currently following the user
                         : (followedStatus && !followPending) ?
-                            <button onClick={() => props.unfollowUser(followId)}>Unfollow</button>
+                            <button onClick={() => deleteFollow(followId)}>Unfollow</button>
                             // if the current user has requested to follow the user but it hasn't been approved
                             : (followedStatus && followPending) ?
-                                <button onClick={() => props.unfollowUser(followId)}>Delete Follow Request</button>
+                                <button onClick={() => deleteFollow(followId)}>Delete Follow Request</button>
                                 // if the current user needs to approve any follow requests from other users
                                 : (!followedStatus && followPending) ?
                                     <>
-                                        <button onClick={() => props.approveFollow(props.followObj)}>Approve</button>
-                                        <button onClick={() => props.declineFollow(followId)}>Decline</button>
+                                        <button onClick={() => approveFollow(followId)}>Approve</button>
+                                        <button onClick={() => deleteFollow(followId)}>Decline</button>
                                     </>
                                     // if the current user isn't following the user and the user's profile is public
                                     : (props.user.publicProfile) ?
-                                        <button onClick={() => props.followUser(props.user.id, props.user.publicProfile)}>Follow</button>
+                                        <button onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Follow</button>
                                         // if the current user isn't following the user and the user's profile is private
-                                        : <button onClick={() => props.followUser(props.user.id, props.user.publicProfile)}>Request to Follow</button>
+                                        : <button onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Request to Follow</button>
                 }
 
 
