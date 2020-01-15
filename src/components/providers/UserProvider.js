@@ -5,7 +5,7 @@ const remoteURL = 'http://localhost:5002'
 export const UserContext = React.createContext()
 
 export const UserProvider = props => {
-    const [followedUsers, setFollowedUsers] = userState([])
+    const [followedUsers, setFollowedUsers] = useState([])
     const [unapprovedUsers, setUnapprovedUsers] = userState([])
     
     const [currentUser] = localStorage.getItem("currUserId")
@@ -24,12 +24,30 @@ export const UserProvider = props => {
 
     //creates new follow 
     const followUser = (newFollow) => {
-
+        return fetch(`${remoteURL}/follows`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newFollow)
+        })
+        .then(getFollowedUsers)
     }
 
     //updates existing follow request to approve request
     const approveFollow = (id) => {
-
+        const approveObj = {
+            pending: false
+        }
+        return fetch(`${remoteURL}/follows/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(approveObj)
+        })
+        .then(getFollowedUsers)
+        .then(getUnapprovedRequests)
     }
 
     //deletes follow
@@ -40,5 +58,17 @@ export const UserProvider = props => {
         .then(getFollowedUsers)
         .then(getUnapprovedRequests)
     }
+
+    useEffect(() => {
+        getFollowedUsers()
+    }, [])
+
+    return (
+        <UserContext.Provider value={{
+            followedUsers, unapprovedUsers, followUser, approveFollow, deleteFollow
+        }}>
+            {props.children}
+        </UserContext.Provider>
+    )
 
 }
