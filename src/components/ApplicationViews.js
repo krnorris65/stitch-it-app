@@ -7,11 +7,13 @@ import useSimpleAuth from '../hooks/ui/useSimpleAuth'
 
 import Home from './home/Home'
 import DesignForm from './design/DesignForm'
-
 import UserHome from './user/UserHome'
+
 import { FabricProvider } from "./providers/FabricProvider"
 import { SizeProvider } from "./providers/SizeProvider"
 import { DesignProvider } from "./providers/DesignProvider"
+import { UserProvider } from "./providers/UserProvider"
+
 
 
 const ApplicationViews = props => {
@@ -62,11 +64,13 @@ const ApplicationViews = props => {
                 </FabricProvider>
             </DesignProvider>
 
-            <Route path="/following/" render={props => {
-                if(isAuthenticated()) {
-                    return <UserHome />
-                }
-            }}/>
+            <UserProvider>
+                <Route path="/following/" render={props => {
+                    if (isAuthenticated()) {
+                        return <UserHome />
+                    }
+                }} />
+            </UserProvider>
         </>
     )
 }

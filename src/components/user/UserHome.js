@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 
 import UserSearch from './UserSearch'
 import UserList from './UserList'
+import UserFollowList from "./UserFollowList"
 import ApiManager from '../../modules/ApiManager'
 
 
@@ -35,8 +36,11 @@ const UserHome = props => {
         <>
             <h2>User Home Page</h2>
 
+            <UserFollowList />
+            
             <UserSearch deleteFollow={deleteFollow} followedUser={followedUser}/>
             <UserList deleteFollow={deleteFollow} update={updated}/>
+            
 
         </>
     )

@@ -64,10 +64,6 @@ const UserList = props => {
 
     return (
         <>
-            <h2>Following</h2>
-            {
-                following.map(followObj => <UserCard key={followObj.id} user={followObj.user} followObj={followObj} unfollowUser={unfollowUser}/>)
-            }
 
             {/* <h2>Pending</h2>
             {

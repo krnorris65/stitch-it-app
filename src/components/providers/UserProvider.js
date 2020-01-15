@@ -6,7 +6,7 @@ export const UserContext = React.createContext()
 
 export const UserProvider = props => {
     const [followedUsers, setFollowedUsers] = useState([])
-    const [unapprovedUsers, setUnapprovedUsers] = userState([])
+    const [unapprovedUsers, setUnapprovedUsers] = useState([])
     
     const [currentUser] = localStorage.getItem("currUserId")
 
