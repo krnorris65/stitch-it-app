@@ -1,24 +1,22 @@
-import React, { useState, useRef, useContext } from 'react'
+import React, {useRef, useContext } from 'react'
 import UserCard from './UserCard'
 import {UserContext} from '../providers/UserProvider'
 
 const UserSearch = props => {
-
     const {searchResults, findUsers} = useContext(UserContext)
     
-
     const searchedName = useRef()
 
     const submitSearch = () => {
         const searched = searchedName.current.value.toLowerCase()
         //will only search users if the user enters something in the input
         findUsers(searched)
-        searchedName.current.value = ""
 
+        //reset value of search
+        searchedName.current.value = ""
     }
 
     
-
     return (
         <>
             <h2>Find Users</h2>
