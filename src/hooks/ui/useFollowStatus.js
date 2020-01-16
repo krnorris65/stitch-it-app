@@ -6,29 +6,27 @@ const useFollowStatus = user => {
 
     const { followedUsers, unapprovedUsers, pendingRequests } = useContext(UserContext)
 
-    //status types
-    // current - user is the current user
-    // following - user is followed by the current user 
-    // notFollowing - user is not followed by the current user
-    // pending - user has private profile and has not approved current users follow request
-
-
+    //status types: current, following, notFollowing, pending
+    
     const findStatus = () => {
-        // console.log("follow hook user", user)
         //checks to see if the user is followed by the current user
         const found = followedUsers.find(followInfo => followInfo.userId === user.id)
-
+        
         //checks to see if the user has an unresolved follow request from the current user
         const pending = pendingRequests.find(pendingInfo => pendingInfo.userId === user.id)
-
+        
         if (user.id === Number(currentUser)) {
+            // current - user is the current user
             return "current"
         } else if (found !== undefined) {
-            return "followed"
+            // following - user is followed by the current user 
+            return "following"
         } else if (pending !== undefined) {
+            // pending - user has private profile and has not approved current users follow request
             return "pending"
         } else {
-            return "unfollowed"
+            // notFollowing - user is not followed by the current user
+            return "notFollowing"
         }
 
     }
