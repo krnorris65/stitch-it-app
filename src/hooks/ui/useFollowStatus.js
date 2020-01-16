@@ -4,7 +4,7 @@ import { UserContext } from '../../components/providers/UserProvider'
 const useFollowStatus = user => {
     const [currentUser] = localStorage.getItem("currUserId")
 
-    const { followedUsers, unapprovedUsers, pendingRequests } = useContext(UserContext)
+    const { followedUsers, pendingRequests } = useContext(UserContext)
 
     //status types: current, following, notFollowing, pending
     
@@ -17,25 +17,30 @@ const useFollowStatus = user => {
         
         if (user.id === Number(currentUser)) {
             // current - user is the current user
-            return "current"
+            return {
+                status: "current"
+            }
         } else if (found !== undefined) {
             // following - user is followed by the current user 
-            return "following"
+            return {
+                status: "following",
+                followId: found.id
+        }
         } else if (pending !== undefined) {
             // pending - user has private profile and has not approved current users follow request
-            return "pending"
+            return {
+                status: "pending",
+                followId: pending.id
+        }
         } else {
             // notFollowing - user is not followed by the current user
-            return "notFollowing"
+            return {
+                status: "notFollowing"
+        }
         }
 
     }
 
-        // unapproved - user sent current user a follow request and the current user hasn't approved (or declined) it yet
-    const findUnapproved = () => {
-        //checks to see if the user is in the list of followedUsers
-        const unapproved = unapprovedUsers.find(unapprovedInfo => unapprovedInfo.currentUserId === user.id)
-    }
 
     return { findStatus }
 }

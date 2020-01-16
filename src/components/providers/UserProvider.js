@@ -59,6 +59,7 @@ export const UserProvider = props => {
             body: JSON.stringify(newFollow)
         })
         .then(getFollowedUsers)
+        .then(getPendingRequests)
         .then(() => setSearchResult([]))
     }
 
@@ -85,6 +86,7 @@ export const UserProvider = props => {
         })
         .then(getFollowedUsers)
         .then(getUnapprovedRequests)
+        .then(getPendingRequests)
         .then(() => setSearchResult([]))
     }
 
