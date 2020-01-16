@@ -7,6 +7,7 @@ export const UserContext = React.createContext()
 export const UserProvider = props => {
     const [followedUsers, setFollowedUsers] = useState([])
     const [unapprovedUsers, setUnapprovedUsers] = useState([])
+    const [pendingRequests, setPendingRequests] =useState([])
     const [searchResults, setSearchResult] = useState([])
     
     const [currentUser] = localStorage.getItem("currUserId")
@@ -15,6 +16,12 @@ export const UserProvider = props => {
         return fetch(`${remoteURL}/follows?_expand=user&currentUserId=${currentUser}&pending=false`)
         .then(res => res.json())
         .then(setFollowedUsers)
+    }
+
+    const getPendingRequests = () => {
+        return fetch(`${remoteURL}/follows?_expand=user&currentUserId=${currentUser}&pending=true`)
+        .then(res => res.json())
+        .then(setPendingRequests)
     }
 
     const getSingleUser = (id) => {
@@ -103,12 +110,13 @@ export const UserProvider = props => {
     useEffect(() => {
         getFollowedUsers()
         getUnapprovedRequests()
+        getPendingRequests()
     }, [])
 
 
     return (
         <UserContext.Provider value={{
-            followedUsers, unapprovedUsers, followUser, approveFollow, deleteFollow, findUsers, searchResults
+            followedUsers, unapprovedUsers, followUser, approveFollow, deleteFollow, findUsers, searchResults, pendingRequests
         }}>
             {props.children}
         </UserContext.Provider>

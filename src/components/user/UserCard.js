@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {UserContext} from '../providers/UserProvider'
+import useFollowStatus from '../../hooks/ui/useFollowStatus'
 
 
 const UserCard = props => {
@@ -11,11 +12,15 @@ const UserCard = props => {
 
     const {deleteFollow, approveFollow, followUser} = useContext(UserContext)
 
+    const {findStatus} = useFollowStatus(props.user)
+
     const currentlyFollowed = () => {
+        const userStatus = findStatus()
+        console.log("user Status", props.user.firstName, userStatus)
         //logic used for when a user searches for users
         if (props.user.follows) {
             const doesFollow = props.user.follows.find(follow => follow.currentUserId === Number(currentUser))
-            console.log("find if followed", doesFollow)
+            // console.log("find if followed", doesFollow)
             if (doesFollow !== undefined) {
                 const followObj = doesFollow
                 setFollowedStatus(true)
@@ -37,6 +42,7 @@ const UserCard = props => {
             setFollowId(props.followObj.id)
         }
     }
+
 
     const submitFollow = (id, publicProfile) => {
         const followObj = {
