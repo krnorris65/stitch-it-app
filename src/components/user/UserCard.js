@@ -32,7 +32,6 @@ const UserCard = props => {
     }
 
     const viewDesigns = (userInfo) => {
-        console.log("view user profile")
         props.history.push({
                 pathname: `/following/designs/${userInfo.id}`,
                 state: userInfo

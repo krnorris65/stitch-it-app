@@ -22,7 +22,6 @@ export const DesignProvider = props => {
     }
 
     const getOtherUserDesigns = (userId) => {
-        console.log(userId)
         return fetch(`${remoteURL}/designs?_expand=fabric&_expand=finishedSize&userId=${userId}`)
         .then(res => res.json())
     }
