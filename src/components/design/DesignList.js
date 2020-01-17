@@ -16,7 +16,7 @@ const DesignList = props => {
         }
     }
 
-    useEffect(checkIfOtherUser, [props.location.state])
+    useEffect(checkIfOtherUser, [props.location.pathname])
 
     return (
         <>
