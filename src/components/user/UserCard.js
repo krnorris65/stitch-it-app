@@ -9,7 +9,7 @@ const UserCard = props => {
     //when updating the follow status this will hold the needed id
     const [followId, setFollowId] = useState()
 
-    const { deleteFollow, approveFollow, followUser } = useContext(UserContext)
+    const { deleteFollow, followUser } = useContext(UserContext)
 
     const { findStatus } = useFollowStatus(props.user)
 
@@ -31,6 +31,10 @@ const UserCard = props => {
         followUser(newFollow)
     }
 
+    const viewDesigns = (userId) => {
+        console.log("view user profile")
+    }
+
     useEffect(updateStatusAndId, [])
 
 
@@ -45,7 +49,10 @@ const UserCard = props => {
                         <p>current user</p>
                         // if the current user is currently following the user
                         : (followedStatus === "following") ?
-                            <button onClick={() => deleteFollow(followId)}>Unfollow</button>
+                            <>
+                            <button onClick={() => viewDesigns(props.user.id)}>View Profile</button>
+                                <button onClick={() => deleteFollow(followId)}>Unfollow</button>
+                            </>
                             // if the current user has requested to follow the user but it hasn't been approved
                             : (followedStatus === "pending") ?
                                 <button onClick={() => deleteFollow(followId)}>Delete Follow Request</button>

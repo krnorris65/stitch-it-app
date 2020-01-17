@@ -21,6 +21,12 @@ export const DesignProvider = props => {
         .then(setDesigns)
     }
 
+    const getOtherUserDesigns = (userId) => {
+        console.log(userId)
+        return fetch(`${remoteURL}/designs?_expand=fabric&_expand=finishedSize&userId=${userId}`)
+        .then(res => res.json())
+    }
+
     const getOneDesign = (id) => {
         return fetch(`${remoteURL}/designs/${id}?_expand=fabric&_expand=finishedSize`)
         .then(res => res.json())
@@ -62,7 +68,7 @@ export const DesignProvider = props => {
 
     return (
         <DesignContext.Provider value={{
-            designs, addDesign, editDesign, deleteDesign, getOneDesign}}>
+            designs, addDesign, editDesign, deleteDesign, getOneDesign, getOtherUserDesigns}}>
                 {props.children}
             </DesignContext.Provider>
     )

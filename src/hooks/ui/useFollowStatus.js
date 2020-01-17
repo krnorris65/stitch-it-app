@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import { useContext } from 'react'
 import { UserContext } from '../../components/providers/UserProvider'
 
 const useFollowStatus = user => {

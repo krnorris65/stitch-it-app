@@ -1,0 +1,7 @@
+#userContainer {
+    display: flex;
+}
+
+.userSection {
+    padding: 10px;
+}
