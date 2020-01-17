@@ -10,7 +10,7 @@ const UserFollowList = props => {
         <h2>Following These Users</h2>
 
             <div className="container-cards">
-                {followedUsers.map(followObj => <UserCard key={followObj.id} user={followObj.user} followObj={followObj} />)}
+                {followedUsers.map(followObj => <UserCard key={followObj.id} user={followObj.user} followObj={followObj} {...props}/>)}
             </div>
         </>
     )

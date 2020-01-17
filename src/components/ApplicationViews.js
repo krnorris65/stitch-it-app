@@ -65,7 +65,14 @@ const ApplicationViews = props => {
             </DesignProvider>
 
             <UserProvider>
-                <Route path="/following" render={props => {
+                <Route exact path="/following" render={props => {
+                    if (isAuthenticated()) {
+                        return <UserHome {...props}/>
+                    }
+                }} />
+            </UserProvider>
+            <UserProvider>
+                <Route path="/following/designs/:userId(\d)" render={props => {
                     if (isAuthenticated()) {
                         return <UserHome {...props}/>
                     }

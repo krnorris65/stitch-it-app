@@ -17,6 +17,7 @@ const UserHome = props => {
 
     const selectSection = (section) => {
         setSection(section)
+        props.history.push("/following")
     }
 
     return (
@@ -28,20 +29,20 @@ const UserHome = props => {
             <div id="userContainer">
 
                 <div className="userSection">
-                    <UserFollowList />
+                    <UserFollowList {...props}/>
                 </div>
 
                 <div className="userSection">
 
                     {
                         (showSection === "unapproved") ?
-                        <UserUnapprovedList />
-                        : <UserSearch />
+                            <UserUnapprovedList />
+                            : (props.match.path.includes('designs')) ? <DesignProvider>
+                                <DesignList {...props} />
+                            </DesignProvider>
+                                : <UserSearch />
                     }
 
-                    {/* <DesignProvider>
-                        <DesignList {...props} />
-                    </DesignProvider> */}
                 </div>
             </div>
 

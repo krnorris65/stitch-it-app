@@ -50,7 +50,7 @@ const UserCard = props => {
                         // if the current user is currently following the user
                         : (followedStatus === "following") ?
                             <>
-                            <button onClick={() => viewDesigns(props.user.id)}>View Profile</button>
+                            <button onClick={() => props.history.push(`/following/designs/${props.user.id}`)}>View Profile</button>
                                 <button onClick={() => deleteFollow(followId)}>Unfollow</button>
                             </>
                             // if the current user has requested to follow the user but it hasn't been approved
