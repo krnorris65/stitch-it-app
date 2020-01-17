@@ -26,7 +26,7 @@ const UserSearch = props => {
 
             <div>
                 {
-                    searchResults.map(user => <UserCard key={user.id} user={user}/>)
+                    searchResults.map(user => <UserCard key={user.id} user={user} {...props}/>)
                 }
             </div>
         </>

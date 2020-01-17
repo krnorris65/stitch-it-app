@@ -6,18 +6,17 @@ const DesignList = props => {
     const [otherUser] = useState(props.match.path.includes('following'))
     const [otherDesigns, setOtherDesigns] = useState([])
 
+
     let {designs, getOtherUserDesigns} = useContext(DesignContext)
 
     const checkIfOtherUser = () => {
         if(otherUser){
-            getOtherUserDesigns(2)
-            .then(setOtherDesigns)
-            
+            getOtherUserDesigns(props.match.params.userId)
+            .then(setOtherDesigns)  
         }
     }
 
-    useEffect(checkIfOtherUser, [])
-
+    useEffect(checkIfOtherUser, [props.location.state])
 
     return (
         <>

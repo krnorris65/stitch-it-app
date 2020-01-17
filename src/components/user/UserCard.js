@@ -31,11 +31,16 @@ const UserCard = props => {
         followUser(newFollow)
     }
 
-    const viewDesigns = (userId) => {
+    const viewDesigns = (userInfo) => {
         console.log("view user profile")
+        props.history.push({
+                pathname: `/following/designs/${userInfo.id}`,
+                state: userInfo
+            })
     }
 
     useEffect(updateStatusAndId, [])
+
 
 
     return (
@@ -50,7 +55,7 @@ const UserCard = props => {
                         // if the current user is currently following the user
                         : (followedStatus === "following") ?
                             <>
-                            <button onClick={() => props.history.push(`/following/designs/${props.user.id}`)}>View Profile</button>
+                            <button onClick={() => viewDesigns(props.user)}>View Profile</button>
                                 <button onClick={() => deleteFollow(followId)}>Unfollow</button>
                             </>
                             // if the current user has requested to follow the user but it hasn't been approved

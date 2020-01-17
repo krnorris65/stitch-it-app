@@ -29,7 +29,7 @@ const UserHome = props => {
             <div id="userContainer">
 
                 <div className="userSection">
-                    <UserFollowList {...props}/>
+                    <UserFollowList {...props} />
                 </div>
 
                 <div className="userSection">
@@ -37,10 +37,11 @@ const UserHome = props => {
                     {
                         (showSection === "unapproved") ?
                             <UserUnapprovedList />
-                            : (props.match.path.includes('designs')) ? <DesignProvider>
-                                <DesignList {...props} />
-                            </DesignProvider>
-                                : <UserSearch />
+                            : (props.match.path.includes('designs')) ?
+                                <DesignProvider>
+                                    <DesignList {...props} />
+                                </DesignProvider>
+                                : <UserSearch {...props}/>
                     }
 
                 </div>
