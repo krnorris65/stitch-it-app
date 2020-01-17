@@ -22,7 +22,7 @@ const UserHome = props => {
     return (
         <>
             <h2>User Home Page</h2>
-            <button onClick={() => selectSection("search")}>Search Users</button>
+            <button onClick={() => selectSection("")}>Search Users</button>
             <button onClick={() => selectSection("unapproved")}>View Unapproved Requests</button>
 
             <div id="userContainer">
@@ -34,11 +34,9 @@ const UserHome = props => {
                 <div className="userSection">
 
                     {
-                        (showSection === "search") ?
-                        <UserSearch />
-                        : (showSection === "unapproved") ?
+                        (showSection === "unapproved") ?
                         <UserUnapprovedList />
-                        : null
+                        : <UserSearch />
                     }
 
                     {/* <DesignProvider>
