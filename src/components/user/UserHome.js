@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
 import UserSearch from './UserSearch'
 import UserFollowList from "./UserFollowList"
 import UserUnapprovedList from "./UserUnapprovedList"
+import { UserContext } from '../providers/UserProvider'
 
 import DesignList from "../design/DesignList"
-import { DesignProvider } from "../providers/DesignProvider"
 
 import '../styles/UserHome.css'
 
@@ -15,11 +15,19 @@ const UserHome = props => {
 
     const [showSection, setSection] = useState()
 
+    const { deleteFollow } = useContext(UserContext)
+
+
     const selectSection = (section) => {
         setSection(section)
         props.history.push("/following")
     }
-
+    
+    
+    const unfollowFromDesign = (followId) => {
+        // deleteFollow(followId)
+        props.history.push("/following")
+    }
     return (
         <>
             <h2>User Home Page</h2>
@@ -38,10 +46,12 @@ const UserHome = props => {
                         (showSection === "unapproved") ?
                             <UserUnapprovedList />
                             : (props.match.path.includes('designs')) ?
-                                <DesignProvider>
+                                <>
+                                    <h2>{props.location.state.firstName} {props.location.state.lastName}'s Designs</h2>
+                                    {/* <button onClick={() => unfollowFromDesign(props.location.state.followId)}>Unfollow</button> */}
                                     <DesignList {...props} />
-                                </DesignProvider>
-                                : <UserSearch {...props}/>
+                                </>
+                                : <UserSearch {...props} />
                     }
 
                 </div>

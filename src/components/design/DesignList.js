@@ -4,23 +4,20 @@ import { DesignContext } from "../providers/DesignProvider"
 
 const DesignList = props => {
     const followedUser = props.match.path.includes('following')
-    const [followedUserInfo, setFollowedInfo] = useState()
     const [followedDesigns, setFollowedDesigns] = useState([])
 
 
     let { designs, getOtherUserDesigns } = useContext(DesignContext)
 
-    const checkIfOtherUser = () => {
+    const getFollowedUserDesigns = () => {
         if (followedUser) {
-            //change user info when toggling between followed users profiles
-            setFollowedInfo(props.location.state)
             //get the other users designs
             getOtherUserDesigns(props.match.params.userId)
                 .then(setFollowedDesigns)
         }
     }
 
-    useEffect(checkIfOtherUser, [props.location.pathname])
+    useEffect(getFollowedUserDesigns, [props.location.pathname])
 
     return (
         <>
@@ -34,9 +31,8 @@ const DesignList = props => {
                             {designs.map(design => <DesignCard key={design.id} design={design} {...props} />)}
                         </div>
                     </>
-                    : (followedUserInfo) &&
+                    :
                     <>
-                        <h2>{followedUserInfo.firstName}'s Designs</h2>
                         <div className="container-cards">
                             {followedDesigns.map(design => <DesignCard key={design.id} design={design} {...props} />)}
                         </div>

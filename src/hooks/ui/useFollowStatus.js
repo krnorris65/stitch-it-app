@@ -9,12 +9,13 @@ const useFollowStatus = user => {
     //status types: current, following, notFollowing, pending
     
     const findStatus = () => {
+        console.log(followedUsers)
         //checks to see if the user is followed by the current user
         const found = followedUsers.find(followInfo => followInfo.userId === user.id)
         
         //checks to see if the user has an unresolved follow request from the current user
         const pending = pendingRequests.find(pendingInfo => pendingInfo.userId === user.id)
-        
+
         if (user.id === Number(currentUser)) {
             // current - user is the current user
             return {

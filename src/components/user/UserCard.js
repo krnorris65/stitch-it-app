@@ -15,7 +15,6 @@ const UserCard = props => {
 
     const updateStatusAndId = () => {
         const statusInfo = findStatus()
-
         setFollowId(statusInfo.followId)
         setFollowedStatus(statusInfo.status)
     }
@@ -31,11 +30,13 @@ const UserCard = props => {
         followUser(newFollow)
     }
 
-    const viewDesigns = (userInfo) => {
+    const viewDesigns = (userInfo, followId) => {
+        //pass the followId so that the user can unfollow
+        userInfo.followId = followId
         props.history.push({
-                pathname: `/following/designs/${userInfo.id}`,
-                state: userInfo
-            })
+            pathname: `/following/designs/${userInfo.id}`,
+            state: userInfo
+        })
     }
 
     useEffect(updateStatusAndId, [])
@@ -49,22 +50,23 @@ const UserCard = props => {
 
                 {
                     // conditional that checks if the user is the one that's logged in
+
                     (followedStatus === "current") ?
                         <p>current user</p>
                         // if the current user is currently following the user
-                        : (followedStatus === "following") ?
-                            <>
-                            <button onClick={() => viewDesigns(props.user)}>View Profile</button>
-                                <button onClick={() => deleteFollow(followId)}>Unfollow</button>
-                            </>
-                            // if the current user has requested to follow the user but it hasn't been approved
-                            : (followedStatus === "pending") ?
-                                <button onClick={() => deleteFollow(followId)}>Delete Follow Request</button>
-                                // if the current user isn't following the user and the user's profile is public
-                                : (props.user.publicProfile) ?
-                                    <button onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Follow</button>
-                                    // if the current user isn't following the user and the user's profile is private
-                                    : <button onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Request to Follow</button>
+                        // if the current user isn't following the user and the user's profile is public
+                            : (followedStatus === "following") ?
+                                <>
+                                    <button onClick={() => viewDesigns(props.user, followId)}>View Profile</button>
+                                    <button onClick={() => deleteFollow(followId)}>Unfollow</button>
+                                </>
+                                // if the current user has requested to follow the user but it hasn't been approved
+                                : (followedStatus === "pending") ?
+                                    <button onClick={() => deleteFollow(followId)}>Delete Follow Request</button>
+                                    : (props.user.publicProfile) ?
+                                        <button onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Follow</button>
+                                        // if the current user isn't following the user and the user's profile is private
+                                        : <button onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Request to Follow</button>
                 }
 
 
