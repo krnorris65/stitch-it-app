@@ -49,7 +49,50 @@
     {
       "id": 1,
       "currentUserId": 2,
-      "userId": 1
+      "userId": 1,
+      "pending": true
+    },
+    {
+      "id": 4,
+      "currentUserId": 2,
+      "pending": true,
+      "userId": 4
+    },
+    {
+      "currentUserId": 1,
+      "userId": 3,
+      "pending": true,
+      "id": 5
+    },
+    {
+      "currentUserId": 6,
+      "userId": 1,
+      "pending": false,
+      "id": 6
+    },
+    {
+      "currentUserId": 6,
+      "userId": 2,
+      "pending": false,
+      "id": 7
+    },
+    {
+      "currentUserId": 6,
+      "userId": 4,
+      "pending": false,
+      "id": 8
+    },
+    {
+      "currentUserId": 1,
+      "userId": 5,
+      "pending": false,
+      "id": 9
+    },
+    {
+      "currentUserId": 1,
+      "userId": 4,
+      "pending": false,
+      "id": 10
     }
   ],
   "fabrics": [

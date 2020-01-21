@@ -1,43 +1,45 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import DesignCard from './DesignCard'
-import ApiManager from '../../modules/ApiManager'
+import { DesignContext } from "../providers/DesignProvider"
 
 const DesignList = props => {
-    const [designs, setDesigns] = useState([])
-    const [currentUser] = localStorage.getItem("currUserId")
+    const followedUser = props.match.path.includes('following')
+    const [followedDesigns, setFollowedDesigns] = useState([])
 
-    const getDesigns = () => {
-        ApiManager.getAll("designs", `userId=${currentUser}`)
-        .then(allDesigns => {
-            setDesigns(allDesigns)
-        })
-    }
-    
-    const deleteDesign = id => {
-        //confirm returns true or false depending on what the user clicks
-        const deleteThis = window.confirm("Are you sure you want to delete this design?")
-        
-        if (deleteThis) {
-            ApiManager.delete("designs", id)
-            .then(() => {
-                    ApiManager.getAll("designs", `userId=${currentUser}`)
-                        .then(allDesigns => {
-                            setDesigns(allDesigns)
-                        })
-                })
+
+    let { designs, getOtherUserDesigns } = useContext(DesignContext)
+
+    const getFollowedUserDesigns = () => {
+        if (followedUser) {
+            //get the other users designs
+            getOtherUserDesigns(props.match.params.userId)
+                .then(setFollowedDesigns)
         }
     }
 
-    useEffect(getDesigns, [])
+    useEffect(getFollowedUserDesigns, [props.location.pathname])
 
     return (
         <>
-            <section>
-                <button onClick={() => props.history.push("/design/new")}>Add New Design</button>
-            </section>
-            <div className="container-cards">
-                {designs.map(design => <DesignCard key={design.id} design={design} deleteDesign={deleteDesign} {...props} />)}
-            </div>
+            {
+                (!followedUser) ?
+                    <>
+                        <section>
+                            <button onClick={() => props.history.push("/design/new")}>Add New Design</button>
+                        </section>
+                        <div className="container-cards">
+                            {designs.map(design => <DesignCard key={design.id} design={design} {...props} />)}
+                        </div>
+                    </>
+                    :
+                    <>
+                        <div className="container-cards">
+                            {followedDesigns.map(design => <DesignCard key={design.id} design={design} {...props} />)}
+                        </div>
+                    </>
+
+            }
+
         </>
     )
 }

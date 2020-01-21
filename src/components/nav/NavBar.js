@@ -17,7 +17,7 @@ const NavBar = props => {
                 <li> <Link className="nav-link" to="/">Home</Link></li>
                 {isAuthenticated() ?
                     <>
-                        <li>Designs</li>
+                        <li><Link className="nav-link" to="/following">Find Users</Link></li>
                         <li>Messages</li>
                         <li><span onClick={handleLogout}>Logout</span></li>
                     </>
