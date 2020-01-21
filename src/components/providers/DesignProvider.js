@@ -56,7 +56,7 @@ export const DesignProvider = props => {
         return fetch(`${remoteURL}/designs/${id}`, {
             method: "DELETE",
         })
-        .then(getDesigns)
+        // .then(getDesigns)
     }
 
     // Load all designs when component is mounted

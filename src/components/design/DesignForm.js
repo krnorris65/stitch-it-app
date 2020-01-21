@@ -45,6 +45,8 @@ const DesignForm = props => {
 
 
     const getDesignToEdit = () => {
+        console.log(newDesign)
+        console.log(fabrics)
         //if the route parameter doesn't include 'new" then it means it's a design to edit
         if (!newDesign) {
             getOneDesign(props.match.params.designId)

@@ -48,13 +48,7 @@ const ApplicationViews = props => {
                                 return <DesignForm {...props} />
                             }
                         }} />
-                    </SizeProvider>
-                </FabricProvider>
-            </DesignProvider>
 
-            <DesignProvider>
-                <FabricProvider>
-                    <SizeProvider>
                         <Route path="/design/edit/:designId(\d+)" render={props => {
                             if (isAuthenticated()) {
                                 return <DesignForm {...props} />

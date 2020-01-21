@@ -24,10 +24,10 @@ const UserHome = props => {
     }
     
     
-    const unfollowFromDesign = (followId) => {
-        // deleteFollow(followId)
-        props.history.push("/following")
-    }
+    // const unfollowFromDesign = (followId) => {
+    //     // deleteFollow(followId)
+    //     props.history.push("/following")
+    // }
     return (
         <>
             <h2>User Home Page</h2>
