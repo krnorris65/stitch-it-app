@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import DesignCard from './DesignCard'
 import { DesignContext } from "../providers/DesignProvider"
+import '../styles/Design.css'
 
 const DesignList = props => {
     const followedUser = props.match.path.includes('following')
@@ -27,13 +28,13 @@ const DesignList = props => {
                         <section>
                             <button onClick={() => props.history.push("/design/new")}>Add New Design</button>
                         </section>
-                        <div className="container-cards">
+                        <div className="design-container">
                             {designs.map(design => <DesignCard key={design.id} design={design} {...props} />)}
                         </div>
                     </>
                     :
                     <>
-                        <div className="container-cards">
+                        <div className="design-container">
                             {followedDesigns.map(design => <DesignCard key={design.id} design={design} {...props} />)}
                         </div>
                     </>
