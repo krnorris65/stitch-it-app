@@ -58,7 +58,7 @@ const UserCard = props => {
                             : (followedStatus === "following") ?
                                 <>
                                     <button onClick={() => viewDesigns(props.user, followId)}>View Profile</button>
-                                    <button onClick={() => deleteFollow(followId)}>Unfollow</button>
+                                    {/* <button onClick={() => deleteFollow(followId)}>Unfollow</button> */}
                                 </>
                                 // if the current user has requested to follow the user but it hasn't been approved
                                 : (followedStatus === "pending") ?

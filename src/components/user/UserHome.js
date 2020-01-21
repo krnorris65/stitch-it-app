@@ -5,6 +5,8 @@ import UserFollowList from "./UserFollowList"
 import UserUnapprovedList from "./UserUnapprovedList"
 import { UserContext } from '../providers/UserProvider'
 
+import UserCard from './UserCard'
+
 import DesignList from "../design/DesignList"
 
 import '../styles/UserHome.css'
@@ -24,10 +26,11 @@ const UserHome = props => {
     }
     
     
-    // const unfollowFromDesign = (followId) => {
-    //     // deleteFollow(followId)
-    //     props.history.push("/following")
-    // }
+    const unfollowFromDesign = (followId) => {
+        deleteFollow(followId)
+        props.history.push("/following")
+        setSection("")
+    }
     return (
         <>
             <h2>User Home Page</h2>
@@ -48,7 +51,7 @@ const UserHome = props => {
                             : (props.match.path.includes('designs')) ?
                                 <>
                                     <h2>{props.location.state.firstName} {props.location.state.lastName}'s Designs</h2>
-                                    {/* <button onClick={() => unfollowFromDesign(props.location.state.followId)}>Unfollow</button> */}
+                                    <button onClick={() => unfollowFromDesign(props.location.state.followId)}>Unfollow</button>
                                     <DesignList {...props} />
                                 </>
                                 : <UserSearch {...props} />
