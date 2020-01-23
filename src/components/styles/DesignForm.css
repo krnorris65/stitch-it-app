@@ -1,17 +1,3 @@
-fieldset {
-    max-width: 40em;
-    padding: 4px;
-    margin: 2em auto;
-    border: 0 none;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    background: cornsilk;
-}
-
-/* fieldset.sub--form {
-    background: lightblue;
-} */
-
 .add--new {
     text-decoration: underline;
     cursor: pointer;
@@ -21,8 +7,17 @@ fieldset {
     color: darkred;
 }
 
+article {
+    max-width: 40em;
+    padding: 4px;
+    margin: 2em auto;
+    border: 0 none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    background: cornsilk;
+}
 
-fieldset input, fieldset button, fieldset select {
+article input, article textarea, article select {
     box-sizing: border-box;
     padding: .2em .4em;
     margin: .2em 0;
@@ -30,33 +25,33 @@ fieldset input, fieldset button, fieldset select {
     box-shadow: none;
 }
 
-fieldset button {
-    max-width: 9em;
-    padding: .5em;
-    margin: .3em auto;
+article button, article label {
     cursor: pointer;
 }
 
-fieldset label {
-    box-sizing: border-box;
-    user-select: none;
-    cursor: pointer;
+article .alignRight {
+    text-align: right;
 }
 
-fieldset .formgrid {
+/* article .formgrid {
     display: grid;
     grid-template-columns: 1fr 1em 2fr;
     grid-gap: .3em .6em;
     grid-auto-flow: dense;
     align-items: center;
+} */
+
+
+article .formgrid {
+    align-items: center;
+    display: flex;
 }
 
-fieldset input, fieldset button, fieldset select, fieldset textarea {
-    grid-column: 2 /4;
-    width: auto;
-    margin: 0
+article label {
+    flex-basis: 20%;
 }
 
-fieldset .alignRight {
-    text-align: right;
+article input, article select, article textarea {
+    flex-basis: 60%;
 }
+
