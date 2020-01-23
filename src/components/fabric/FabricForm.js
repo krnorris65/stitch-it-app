@@ -42,14 +42,14 @@ const FabricForm = props => {
     }
 
     return (
-            <fieldset className="sub--form">
+            <fieldset >
                 <h3>New Fabric</h3>
                 <div className="formgrid">
-                    <input ref={type} type="text" id="type" placeholder="Type of Fabric" required=""/>
                     <label htmlFor="inputType">Fabric Type</label>
+                    <input ref={type} type="text" id="type" placeholder="Type of Fabric" required=""/>
 
-                    <input ref={count} type="number" min="0" id="count" placeholder="Fabric Count" required="" />
                     <label htmlFor="inputCount">Fabric Count</label>
+                    <input ref={count} type="number" min="0" id="count" placeholder="Fabric Count" required="" />
                 </div>
                 <button type="submit" onClick={handleFabric}>Add New Fabric</button>
             </fieldset>

@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { DesignContext } from '../providers/DesignProvider'
 
 
+
 const DesignCard = props => {
     const { deleteDesign } = useContext(DesignContext)
     const [currentDesign] = useState(props.design)

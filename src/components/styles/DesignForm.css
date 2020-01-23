@@ -8,9 +8,9 @@ fieldset {
     background: cornsilk;
 }
 
-fieldset.sub--form {
+/* fieldset.sub--form {
     background: lightblue;
-}
+} */
 
 .add--new {
     text-decoration: underline;

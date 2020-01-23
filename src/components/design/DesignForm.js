@@ -1,6 +1,9 @@
 import React, { useContext, useState, useRef, useEffect } from 'react'
 import CloudinaryInfo from './CloudinaryInfo'
 
+import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+
 import FabricForm from '../fabric/FabricForm'
 import SizeForm from '../size/SizeForm'
 
@@ -9,16 +12,42 @@ import { FabricContext } from '../providers/FabricProvider'
 import { SizeContext } from '../providers/SizeProvider'
 
 
+
+function getModalStyle() {
+    const top = 30;
+    const left = 40;
+
+    return {
+        top: `${top}%`,
+        left: `${left}%`,
+        transform: `translate(-${top}%, -${left}%)`,
+    };
+}
+
+const useStyles = makeStyles(theme => ({
+    paper: {
+        position: 'absolute',
+        // width: 400,
+        // backgroundColor: `lightblue`,
+        // border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 2, 3),
+    },
+}));
+
 const DesignForm = props => {
+    //needed for Modals
+    const classes = useStyles();
+    const [modalStyle] = React.useState(getModalStyle);
+    const [openFabric, setFabricOpen] = React.useState(false);
+    const [openSize, setSizeOpen] = React.useState(false);
+
     const [loadingStatus, setLoadingStatus] = useState(true)
     const [newDesign] = useState(props.match.path.includes('new'))
 
     const { fabrics } = useContext(FabricContext)
     const { sizes } = useContext(SizeContext)
     const { getOneDesign, addDesign, editDesign } = useContext(DesignContext)
-
-    const [form, setForm] = useState("")
-
 
     const [photoLink, setPhotoLink] = useState("")
 
@@ -28,25 +57,20 @@ const DesignForm = props => {
     const fabricId = useRef()
     const finishedSizeId = useRef()
 
-
-    // toggleForm takes an arguement to distinguish between fabric and size forms
-    const toggleForm = (formType) => {
-        //if the state of form is the same as the formType OR equal to updated then close the form and reset state
-        //else change the form that is open
-        if (form === formType || formType === "updated") {
-            setForm("")
-            setLoadingStatus(false)
-        } else {
-            setForm(formType)
-            setLoadingStatus(true)
+    const handleOpen = (form) => {
+        if(form === "fabric") {
+            setFabricOpen(true);
+        }else if(form === "size"){
+            setSizeOpen(true);
         }
+    };
 
-    }
-
+    const handleClose = () => {
+        setFabricOpen(false);
+        setSizeOpen(false);
+    };
 
     const getDesignToEdit = () => {
-        console.log(newDesign)
-        console.log(fabrics)
         //if the route parameter doesn't include 'new" then it means it's a design to edit
         if (!newDesign) {
             getOneDesign(props.match.params.designId)
@@ -74,16 +98,16 @@ const DesignForm = props => {
     const updateFabricDropdownValue = (id) => {
         // update the fabricId to the one that was just added
         fabricId.current.value = id
-        
+
         //close form
-        toggleForm("updated")
+        handleClose()
     }
-    
+
     const updateSizesDropdown = (id) => {
         // update the finishedSizeId to the one that was just added
         finishedSizeId.current.value = id
         //close form
-        toggleForm("updated")
+        handleClose()
     }
 
     //method that opens the cloudinary widget and sets the secure_url from the result as the photoLink
@@ -168,14 +192,20 @@ const DesignForm = props => {
                         <label htmlFor="designFabric">Fabric:</label>
 
                     </div>
-                    <span className="add--new" onClick={() => toggleForm("fabric")}>Add new fabric</span>
-                    {
-                        (form === "fabric") ?
+                    <span className="add--new" onClick={() => handleOpen("fabric")}>Add new fabric</span>
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={openFabric}
+                        onClose={handleClose}
+                    >
+                        <div style={modalStyle} className={classes.paper}>
 
                             <FabricForm updateFabricDropdownValue={updateFabricDropdownValue} />
-                            :
-                            null
-                    }
+                        </div>
+
+                    </Modal>
+
                     <div className="formgrid">
                         <select id="designSize" ref={finishedSizeId}>
                             {
@@ -186,14 +216,18 @@ const DesignForm = props => {
                     </div>
 
 
-                    <span className="add--new" onClick={() => toggleForm("size")}>Add new size</span>
-                    {
-                        (form === "size") ?
+                    <span className="add--new" onClick={() => handleOpen("size")}>Add new size</span>
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={openSize}
+                        onClose={handleClose}
+                    >
+                        <div style={modalStyle} className={classes.paper}>
 
-                            <SizeForm updateSizesDropdown={updateSizesDropdown} />
-                            :
-                            null
-                    }
+                        <SizeForm updateSizesDropdown={updateSizesDropdown} />
+                        </div>
+                    </Modal>
 
                     <div className="alignRight">
                         <button type="button" disabled={loadingStatus} onClick={newOrUpdatedDesign}>
