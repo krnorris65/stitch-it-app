@@ -55,3 +55,13 @@ article input, article select, article textarea {
     flex-basis: 60%;
 }
 
+.sub-form {
+    min-width: 400px;
+}
+.size-form input {
+    max-width: 5em;
+}
+.size-form select {
+    max-width: 10em;
+}
+

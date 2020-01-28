@@ -1,5 +1,5 @@
 import React, { useRef, useState, useContext } from 'react'
-import {SizeContext} from '../providers/SizeProvider'
+import { SizeContext } from '../providers/SizeProvider'
 
 const SizeForm = props => {
 
@@ -10,7 +10,7 @@ const SizeForm = props => {
     const height = useRef()
     const unit = useRef()
 
-    const {findSizeId, addSize} = useContext(SizeContext)
+    const { findSizeId, addSize } = useContext(SizeContext)
 
     const handleSize = evt => {
         evt.preventDefault()
@@ -53,34 +53,36 @@ const SizeForm = props => {
     }
 
     return (
-        <article>
+        <article className="sub-form size-form">
             <h3>New Size</h3>
             <div className="formgrid">
-                <input type="checkbox" checked={round} onChange={() => round ? setRound(false) : setRound(true)} />
                 <label htmlFor="sizeUnit">Round Design</label>
+                <input type="checkbox" checked={round} onChange={() => round ? setRound(false) : setRound(true)} />
                 {/* <span>If your design is oval do not check</span> */}
             </div>
             <div className="formgrid">
-
-                <input ref={width} type="number" min="0" />
                 {
                     (!round) ?
-                        <>
-                            <input ref={height} type="number" min="0" />
+                    <>
                             <label htmlFor="sizeNums">Width x Height</label>
+                            <input ref={height} type="number" min="0" />
+                            <span>x</span>
                         </>
                         : <label htmlFor="sizeNums">Width</label>
-
-
-
-                }
+                        
+                        
+                        
+                    }
+                    <input ref={width} type="number" min="0" />
                 <select ref={unit}>
                     <option value="in">inches</option>
                     <option value="cm">centimeters</option>
                 </select>
             </div>
 
-            <button type="submit" onClick={handleSize}>Add New Size</button>
+            <div className="alignRight">
+                <button type="submit" onClick={handleSize}>Add New Size</button>
+            </div>
         </article>
     )
 

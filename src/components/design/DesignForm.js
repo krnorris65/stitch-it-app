@@ -27,8 +27,7 @@ function getModalStyle() {
 const useStyles = makeStyles(theme => ({
     paper: {
         position: 'absolute',
-        outline: 'none'
-        // width: 400,
+        outline: 'none',
         // backgroundColor: `cornsilk`,
         // border: '2px solid #000',
         // boxShadow: theme.shadows[5],
