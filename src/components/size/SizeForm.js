@@ -53,7 +53,7 @@ const SizeForm = props => {
     }
 
     return (
-        <fieldset className="sub--form">
+        <article>
             <h3>New Size</h3>
             <div className="formgrid">
                 <input type="checkbox" checked={round} onChange={() => round ? setRound(false) : setRound(true)} />
@@ -81,7 +81,7 @@ const SizeForm = props => {
             </div>
 
             <button type="submit" onClick={handleSize}>Add New Size</button>
-        </fieldset>
+        </article>
     )
 
 }
