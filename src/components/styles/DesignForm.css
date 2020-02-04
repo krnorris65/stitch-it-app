@@ -25,12 +25,20 @@ article input, article textarea, article select {
     box-shadow: none;
 }
 
-article button, article label {
+article button, article label, .iconRight {
     cursor: pointer;
 }
 
 article .alignRight {
     text-align: right;
+}
+
+article .alignCenter {
+    text-align: center;
+}
+
+.iconRight {
+    float: right;
 }
 
 /* article .formgrid {

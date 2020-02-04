@@ -1,5 +1,7 @@
 import React, { useRef, useState, useContext } from 'react'
 import { SizeContext } from '../providers/SizeProvider'
+import CloseIcon from '@material-ui/icons/Close';
+
 
 const SizeForm = props => {
 
@@ -54,6 +56,8 @@ const SizeForm = props => {
 
     return (
         <article className="sub-form size-form">
+            <CloseIcon className="iconRight" onClick={props.handleClose} />
+
             <h3>New Size</h3>
             <div className="formgrid">
                 <label htmlFor="sizeUnit">Round Design</label>
@@ -63,17 +67,17 @@ const SizeForm = props => {
             <div className="formgrid">
                 {
                     (!round) ?
-                    <>
+                        <>
                             <label htmlFor="sizeNums">Width x Height</label>
                             <input ref={height} type="number" min="0" />
                             <span>x</span>
                         </>
                         : <label htmlFor="sizeNums">Width</label>
-                        
-                        
-                        
-                    }
-                    <input ref={width} type="number" min="0" />
+
+
+
+                }
+                <input ref={width} type="number" min="0" />
                 <select ref={unit}>
                     <option value="in">inches</option>
                     <option value="cm">centimeters</option>

@@ -3,6 +3,7 @@ import CloudinaryInfo from './CloudinaryInfo'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+import CloseIcon from '@material-ui/icons/Close';
 
 import FabricForm from '../fabric/FabricForm'
 import SizeForm from '../size/SizeForm'
@@ -14,13 +15,13 @@ import { SizeContext } from '../providers/SizeProvider'
 
 
 function getModalStyle() {
-    const top = 30;
-    const left = 40;
+    const top = 40;
+    const left = 50;
 
     return {
         top: `${top}%`,
         left: `${left}%`,
-        transform: `translate(-${top}%, -${left}%)`,
+        transform: `translate(-50%, -50%)`,
     };
 }
 
@@ -154,6 +155,7 @@ const DesignForm = props => {
 
     return (
         <article>
+        <CloseIcon className="iconRight" onClick={() => props.history.push("/")}/>
             {
                 (newDesign) ? <h2>Create New Design</h2> : <h2>Update Design</h2>
             }
@@ -201,8 +203,7 @@ const DesignForm = props => {
                     onClose={handleClose}
                 >
                     <div style={modalStyle} className={classes.paper}>
-
-                        <FabricForm updateFabricDropdownValue={updateFabricDropdownValue} />
+                        <FabricForm updateFabricDropdownValue={updateFabricDropdownValue} handleClose={handleClose}/>
                     </div>
 
                 </Modal>
@@ -227,7 +228,7 @@ const DesignForm = props => {
                 >
                     <div style={modalStyle} className={classes.paper}>
 
-                        <SizeForm updateSizesDropdown={updateSizesDropdown} />
+                        <SizeForm updateSizesDropdown={updateSizesDropdown} handleClose={handleClose}/>
                     </div>
                 </Modal>
 
@@ -241,7 +242,7 @@ const DesignForm = props => {
             </form>
 
             <img className="uploadImage" src={photoLink} alt="" />
-            <div className="alignRight">
+            <div className="alignCenter">
                 {
                     (photoLink === "") ?
                         <button onClick={uploadWidget} className="upload-button">Add Image</button>
@@ -250,7 +251,6 @@ const DesignForm = props => {
                 }
             </div>
 
-            <button onClick={() => props.history.push("/")}>Back</button>
         </article>
     )
 
