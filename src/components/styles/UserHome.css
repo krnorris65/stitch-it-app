@@ -5,3 +5,12 @@
 .userSection {
     padding: 10px;
 }
+
+.userName{
+    display: inline-block;
+    padding-right: 1em;
+}
+
+.userIcon {
+    cursor: pointer;
+}

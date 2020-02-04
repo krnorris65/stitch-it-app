@@ -64,7 +64,7 @@ article input, article select, article textarea {
 }
 
 .sub-form {
-    min-width: 400px;
+    min-width: 500px;
 }
 .size-form input {
     max-width: 5em;
