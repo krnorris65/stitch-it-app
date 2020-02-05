@@ -4,6 +4,8 @@ import CloudinaryInfo from './CloudinaryInfo'
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import CloseIcon from '@material-ui/icons/Close';
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 
 import FabricForm from '../fabric/FabricForm'
 import SizeForm from '../size/SizeForm'
@@ -155,7 +157,7 @@ const DesignForm = props => {
 
     return (
         <article>
-        <CloseIcon className="iconRight" onClick={() => props.history.push("/")}/>
+            <CloseIcon className="iconRight" onClick={() => props.history.push("/")} />
             {
                 (newDesign) ? <h2>Create New Design</h2> : <h2>Update Design</h2>
             }
@@ -169,24 +171,24 @@ const DesignForm = props => {
                 </div>
 
                 <div className="formgrid">
-                <label htmlFor="designDescription">Description</label>
+                    <label htmlFor="designDescription">Description</label>
                     <textarea id="designDescription"
                         ref={description}
                         placeholder="Add information pertaining to floss used, color of fabric, helpful notes, etc."
                     ></textarea>
-                    
+
                 </div>
 
                 <div className="formgrid">
-                <label htmlFor="designCompleted">Completed On:</label>
+                    <label htmlFor="designCompleted">Completed On:</label>
                     <input type="date" id="designCompleted"
                         ref={completedDate}
                     />
-                    
+
                 </div>
 
                 <div className="formgrid">
-                <label htmlFor="designFabric">Fabric:</label>
+                    <label htmlFor="designFabric">Fabric:</label>
 
                     <select id="designFabric" ref={fabricId}>
                         {
@@ -203,13 +205,13 @@ const DesignForm = props => {
                     onClose={handleClose}
                 >
                     <div style={modalStyle} className={classes.paper}>
-                        <FabricForm updateFabricDropdownValue={updateFabricDropdownValue} handleClose={handleClose}/>
+                        <FabricForm updateFabricDropdownValue={updateFabricDropdownValue} handleClose={handleClose} />
                     </div>
 
                 </Modal>
 
                 <div className="formgrid">
-                <label htmlFor="designSize">Finished Size:</label>
+                    <label htmlFor="designSize">Finished Size:</label>
 
                     <select id="designSize" ref={finishedSizeId}>
                         {
@@ -228,7 +230,7 @@ const DesignForm = props => {
                 >
                     <div style={modalStyle} className={classes.paper}>
 
-                        <SizeForm updateSizesDropdown={updateSizesDropdown} handleClose={handleClose}/>
+                        <SizeForm updateSizesDropdown={updateSizesDropdown} handleClose={handleClose} />
                     </div>
                 </Modal>
 
@@ -241,14 +243,21 @@ const DesignForm = props => {
                 </div>
             </form>
 
-            <img className="uploadImage" src={photoLink} alt="" />
-            <div className="alignCenter">
+            <div id="photoSection">
                 {
                     (photoLink === "") ?
-                        <button onClick={uploadWidget} className="upload-button">Add Image</button>
+                        <section className="photoActions">
+                            <AddAPhotoIcon onClick={uploadWidget} className="upload-button" />
+                            <p>Add Photo</p>
+                        </section>
                         :
-                        <button onClick={() => setPhotoLink("")} >Delete Photo</button>
+                        <section className="photoActions">
+                            <RemoveCircleIcon onClick={() => setPhotoLink("")} />
+                            <p>Remove Photo</p>
+                        </section>
+
                 }
+                <img className="uploadImage" src={photoLink} alt="" />
             </div>
 
         </article>

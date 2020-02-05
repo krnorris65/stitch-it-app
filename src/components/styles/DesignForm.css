@@ -9,7 +9,7 @@
 
 article {
     max-width: 40em;
-    padding: 4px;
+    padding: 1em;
     margin: 2em auto;
     border: 0 none;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -36,6 +36,23 @@ article .alignRight {
 article .alignCenter {
     text-align: center;
 }
+
+.photoActions {
+    display: flex;
+    align-items: center;
+}
+ .photoActions svg {
+     padding-right: 5px;
+     margin: 1rem 0px;
+ }
+
+ .photoActions p {
+     display: none;
+ }
+
+ .photoActions svg:hover ~ p {
+    display: inline;
+ }
 
 .iconRight {
     float: right;
