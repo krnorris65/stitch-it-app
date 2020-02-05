@@ -20,7 +20,7 @@ const UserHome = props => {
 
     const [currentUser] = localStorage.getItem("currUserId")
 
-    const profilePublic = () => {
+    const isProfilePublic = () => {
         getSingleUser(currentUser).then(userInfo => {
             setProfile(userInfo.publicProfile)
         })
@@ -39,7 +39,7 @@ const UserHome = props => {
         setSection("")
     }
 
-    useEffect(profilePublic, [])
+    useEffect(isProfilePublic, [])
 
     return (
         <>
@@ -47,7 +47,7 @@ const UserHome = props => {
             <button onClick={() => selectSection("")}>Search Users</button>
             {
                 //only need to show unapproved request button if the current user doesn't have a public profile. if they have a public profile, then a user can follow them automatically so there won't be any pending requests
-                (!profilePublic) ?
+                (!publicProfile) ?
                 <button onClick={() => selectSection("unapproved")}>View Unapproved Requests</button> : null
             }
 
