@@ -243,22 +243,22 @@ const DesignForm = props => {
                 </div>
             </form>
 
-            <div id="photoSection">
-                {
-                    (photoLink === "") ?
-                        <section className="photoActions">
-                            <AddAPhotoIcon onClick={uploadWidget} className="upload-button" />
-                            <p>Add Photo</p>
-                        </section>
-                        :
+            {
+                (photoLink === "") ?
+                    <section className="photoActions">
+                        <AddAPhotoIcon onClick={uploadWidget} className="upload-button" />
+                        <p>Add Photo</p>
+                    </section>
+                    :
+                    <>
                         <section className="photoActions">
                             <RemoveCircleIcon onClick={() => setPhotoLink("")} />
                             <p>Remove Photo</p>
                         </section>
+                        <img className="uploadImage" src={photoLink} alt="" />
+                    </>
 
-                }
-                <img className="uploadImage" src={photoLink} alt="" />
-            </div>
+            }
 
         </article>
     )

@@ -3,7 +3,7 @@
     cursor: pointer;
 }
 
-.add--new:hover{
+.add--new:hover {
     color: darkred;
 }
 
@@ -41,30 +41,30 @@ article .alignCenter {
     display: flex;
     align-items: center;
 }
- .photoActions svg {
-     padding-right: 5px;
-     margin: 1rem 0px;
- }
 
- .photoActions p {
-     display: none;
- }
+.photoActions svg {
+    padding-right: 5px;
+    cursor: pointer;
+}
 
- .photoActions svg:hover ~ p {
+
+.photoActions p {
+    display: none;
+    margin: 0px;
+}
+
+.photoActions svg:hover~p {
     display: inline;
- }
+}
+
+.uploadImage {
+    margin-top: .5rem;
+
+}
 
 .iconRight {
     float: right;
 }
-
-/* article .formgrid {
-    display: grid;
-    grid-template-columns: 1fr 1em 2fr;
-    grid-gap: .3em .6em;
-    grid-auto-flow: dense;
-    align-items: center;
-} */
 
 
 article .formgrid {
@@ -83,10 +83,11 @@ article input, article select, article textarea {
 .sub-form {
     min-width: 500px;
 }
+
 .size-form input {
     max-width: 5em;
 }
+
 .size-form select {
     max-width: 10em;
 }
-
