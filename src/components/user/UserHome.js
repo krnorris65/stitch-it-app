@@ -1,11 +1,9 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 
 import UserSearch from './UserSearch'
 import UserFollowList from "./UserFollowList"
 import UserUnapprovedList from "./UserUnapprovedList"
 import { UserContext } from '../providers/UserProvider'
-
-import UserCard from './UserCard'
 
 import DesignList from "../design/DesignList"
 
@@ -16,8 +14,17 @@ import '../styles/UserHome.css'
 const UserHome = props => {
 
     const [showSection, setSection] = useState()
+    const [publicProfile, setProfile] = useState()
 
-    const { deleteFollow } = useContext(UserContext)
+    const { getSingleUser, deleteFollow } = useContext(UserContext)
+
+    const [currentUser] = localStorage.getItem("currUserId")
+
+    const profilePublic = () => {
+        getSingleUser(currentUser).then(userInfo => {
+            setProfile(userInfo.publicProfile)
+        })
+    }
 
 
     const selectSection = (section) => {
@@ -31,11 +38,18 @@ const UserHome = props => {
         props.history.push("/following")
         setSection("")
     }
+
+    useEffect(profilePublic, [])
+
     return (
         <>
             <h2>User Home Page</h2>
             <button onClick={() => selectSection("")}>Search Users</button>
-            <button onClick={() => selectSection("unapproved")}>View Unapproved Requests</button>
+            {
+                //only need to show unapproved request button if the current user doesn't have a public profile. if they have a public profile, then a user can follow them automatically so there won't be any pending requests
+                (!profilePublic) ?
+                <button onClick={() => selectSection("unapproved")}>View Unapproved Requests</button> : null
+            }
 
             <div id="userContainer">
 

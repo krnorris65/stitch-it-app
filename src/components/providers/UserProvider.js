@@ -118,7 +118,7 @@ export const UserProvider = props => {
 
     return (
         <UserContext.Provider value={{
-            followedUsers, unapprovedUsers, followUser, approveFollow, deleteFollow, findUsers, searchResults, pendingRequests
+            followedUsers, unapprovedUsers, followUser, approveFollow, deleteFollow, findUsers, searchResults, pendingRequests, getSingleUser
         }}>
             {props.children}
         </UserContext.Provider>

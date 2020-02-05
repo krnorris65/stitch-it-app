@@ -7,10 +7,14 @@
 }
 
 .userName{
-    display: inline-block;
     padding-right: 1em;
 }
 
 .userIcon {
     cursor: pointer;
+}
+
+.userCard .card-content {
+    display: flex;
+    align-items: center;
 }
