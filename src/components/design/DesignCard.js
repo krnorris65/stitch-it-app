@@ -1,12 +1,22 @@
 import React, { useContext, useState } from 'react'
 import { DesignContext } from '../providers/DesignProvider'
 
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 
 
 const DesignCard = props => {
     const { deleteDesign } = useContext(DesignContext)
     const [currentDesign] = useState(props.design)
     const [currentUser] = localStorage.getItem("currUserId")
+
+    const confirmDelete = (id) => {
+        const userConfirm = window.confirm("Are you sure you want to delete this design?")
+        if (userConfirm) {
+            deleteDesign(id)
+        }
+    }
 
 
     return (
@@ -28,10 +38,10 @@ const DesignCard = props => {
                 <p>Finished Size: {currentDesign.finishedSize.size}</p>
                 {
                     (currentDesign.userId === Number(currentUser)) ?
-                    <>
-                        <button onClick={() => props.history.push(`/design/edit/${currentDesign.id}`)}>Edit</button>
-                        <button onClick={() => deleteDesign(currentDesign.id)}>Delete</button>
-                    </> : null
+                        <>
+                            <EditIcon onClick={() => props.history.push(`/design/edit/${currentDesign.id}`)} />
+                            <DeleteIcon onClick={() => confirmDelete(currentDesign.id)} />
+                        </> : null
                 }
 
             </div>

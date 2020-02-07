@@ -11,15 +11,20 @@
     flex-basis: 28%;
     margin: 1em;
     padding: .5em;
-    /* max-width: 10%; */
+}
+
+.design-container button {
+    background-color: #C5283D;
 }
 
 .design-container img {
     width: 70%;
+    border-radius: 5%;
 }
  
 .defaultImg{
     width: 70%;
+    height: auto;
     background-color: white;
 }
 /*
