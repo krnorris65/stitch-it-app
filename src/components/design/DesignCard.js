@@ -20,8 +20,8 @@ const DesignCard = props => {
                 }
                 {
                     (currentDesign.photoLink) ?
-                        <img src={`${currentDesign.photoLink}`} alt={`${currentDesign.title}`} /> :
-                        <img src={require('./defaultDesign.png')} alt="default design" />
+                        <img className="uploadedImg" src={`${currentDesign.photoLink}`} alt={`${currentDesign.title}`} /> :
+                        <img className="defaultImg" src={require('./no-image.png')} alt="default design" />
                 }
                 <p>{currentDesign.description}</p>
                 <p>Fabric: {`${currentDesign.fabric.type} ${currentDesign.fabric.count} count`}</p>
