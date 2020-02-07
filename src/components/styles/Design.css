@@ -11,23 +11,37 @@
     flex-basis: 28%;
     margin: 1em;
     padding: .5em;
+    display: flex;
+    flex-direction: column;
 }
 
-.design-container button {
-    background-color: #C5283D;
+.designStatus {
+    text-align: right;
+    margin-top: .5em;
+    font-style: italic;
+    font-size: small;
 }
 
-.design-container img {
-    width: 70%;
-    border-radius: 5%;
-}
- 
-.defaultImg{
-    width: 70%;
-    height: auto;
-    background-color: white;
-}
-/*
-.uploadedImg{
+/* .design-container svg {
+    color: #C5283D;
 
 } */
+
+img {
+    width: 20em;
+    height: 15em;
+    border-radius: 5%;
+}
+
+.design-container .card-content {
+    height: 100%;
+}
+.designActions {
+    align-self: flex-end;
+}
+
+
+
+/* .designTitle */
+
+/* .designDetails */

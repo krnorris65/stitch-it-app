@@ -22,29 +22,35 @@ const DesignCard = props => {
     return (
         <div className="card">
             <div className="card-content">
-                <h4>{currentDesign.title}</h4>
-                {
-                    (currentDesign.completedDate !== "") ?
-                        <p>Completed On: {currentDesign.completedDate} </p> :
-                        <p>Work In Progress</p>
-                }
                 {
                     (currentDesign.photoLink) ?
                         <img className="uploadedImg" src={`${currentDesign.photoLink}`} alt={`${currentDesign.title}`} /> :
                         <img className="defaultImg" src={require('./no-image.png')} alt="default design" />
                 }
-                <p>{currentDesign.description}</p>
-                <p>Fabric: {`${currentDesign.fabric.type} ${currentDesign.fabric.count} count`}</p>
-                <p>Finished Size: {currentDesign.finishedSize.size}</p>
                 {
-                    (currentDesign.userId === Number(currentUser)) ?
-                        <>
-                            <EditIcon onClick={() => props.history.push(`/design/edit/${currentDesign.id}`)} />
-                            <DeleteIcon onClick={() => confirmDelete(currentDesign.id)} />
-                        </> : null
+                    (currentDesign.completedDate !== "") ?
+                        <p className="designStatus">{currentDesign.completedDate} </p> :
+                        <p className="designStatus">Work In Progress</p>
                 }
 
+                <h4 className="designTitle">{currentDesign.title}</h4>
+                <ul>
+
+                    <li>Fabric: {`${currentDesign.fabric.type} ${currentDesign.fabric.count} count`}</li>
+                    <li>Finished Size: {currentDesign.finishedSize.size}</li>
+
+                    <li>{currentDesign.description}</li>
+
+                </ul>
+
             </div>
+            {
+                (currentDesign.userId === Number(currentUser)) ?
+                    <div className="designActions">
+                        <EditIcon onClick={() => props.history.push(`/design/edit/${currentDesign.id}`)} />
+                        <DeleteIcon onClick={() => confirmDelete(currentDesign.id)} />
+                    </div> : null
+            }
         </div>
     )
 }
