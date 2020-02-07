@@ -32,16 +32,17 @@ const DesignCard = props => {
                         <p className="designStatus">{currentDesign.completedDate} </p> :
                         <p className="designStatus">Work In Progress</p>
                 }
+                <section className="designDetails">
+                    <h4 className="designTitle">{currentDesign.title}</h4>
+                    <ul>
 
-                <h4 className="designTitle">{currentDesign.title}</h4>
-                <ul>
+                        <li>Fabric: {`${currentDesign.fabric.type} ${currentDesign.fabric.count} count`}</li>
+                        <li>Finished Size: {currentDesign.finishedSize.size}</li>
 
-                    <li>Fabric: {`${currentDesign.fabric.type} ${currentDesign.fabric.count} count`}</li>
-                    <li>Finished Size: {currentDesign.finishedSize.size}</li>
+                        <li>{currentDesign.description}</li>
 
-                    <li>{currentDesign.description}</li>
-
-                </ul>
+                    </ul>
+                </section>
 
             </div>
             {

@@ -17,31 +17,50 @@
 
 .designStatus {
     text-align: right;
-    margin-top: .5em;
+    margin: .25em auto;
     font-style: italic;
     font-size: small;
 }
 
-/* .design-container svg {
-    color: #C5283D;
+.designTitle {
+    /* color: white; */
+    margin-top: .25em;
+    margin-bottom: .5em;
+    text-shadow: -1px -1px 0 #C5283D, 
+    1px -1px 0 #C5283D, 
+    -1px 1px 0 #C5283D, 
+    1px 1px 0 #C5283D;
+}
 
-} */
+.design-container svg {
+    /* color: #C5283D; */
+    margin: auto .25em;
+}
+
+.design-container svg:hover {
+    color: #C5283D;
+    cursor: pointer;
+}
 
 img {
     width: 20em;
     height: 15em;
-    border-radius: 5%;
+    border-radius: 1%;
 }
 
 .design-container .card-content {
     height: 100%;
+    background-color: rgba(250,250,250, .5);
+    border-radius: 1%;
+
 }
+
 .designActions {
+    margin-top: .5em;
     align-self: flex-end;
 }
 
+/* .designDetails {
 
-
-/* .designTitle */
-
-/* .designDetails */
+    
+} */
