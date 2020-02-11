@@ -39,40 +39,45 @@ const ApplicationViews = props => {
                     return <Redirect to="/" />
                 }
             }} />
+            {
+                (isAuthenticated()) ?
+                    <>
+                        <DesignProvider>
+                            <FabricProvider>
+                                <SizeProvider>
+                                    <Route path="/design/new" render={props => {
+                                        if (isAuthenticated()) {
+                                            return <DesignForm {...props} />
+                                        }
+                                    }} />
 
-            <DesignProvider>
-                <FabricProvider>
-                    <SizeProvider>
-                        <Route path="/design/new" render={props => {
-                            if (isAuthenticated()) {
-                                return <DesignForm {...props} />
-                            }
-                        }} />
+                                    <Route path="/design/edit/:designId(\d+)" render={props => {
+                                        if (isAuthenticated()) {
+                                            return <DesignForm {...props} />
+                                        }
+                                    }} />
+                                </SizeProvider>
+                            </FabricProvider>
+                        </DesignProvider>
 
-                        <Route path="/design/edit/:designId(\d+)" render={props => {
-                            if (isAuthenticated()) {
-                                return <DesignForm {...props} />
-                            }
-                        }} />
-                    </SizeProvider>
-                </FabricProvider>
-            </DesignProvider>
+                        <UserProvider>
+                            <DesignProvider>
+                                <Route exact path="/following" render={props => {
+                                    if (isAuthenticated()) {
+                                        return <UserHome {...props} />
+                                    }
+                                }} />
 
-            <UserProvider>
-                <DesignProvider>
-                    <Route exact path="/following" render={props => {
-                        if (isAuthenticated()) {
-                            return <UserHome {...props} />
-                        }
-                    }} />
-                    
-                    <Route path="/following/designs/:userId(\d)" render={props => {
-                        if (isAuthenticated()) {
-                            return <UserHome {...props} />
-                        }
-                    }} />
-                </DesignProvider>
-            </UserProvider>
+                                <Route path="/following/designs/:userId(\d)" render={props => {
+                                    if (isAuthenticated()) {
+                                        return <UserHome {...props} />
+                                    }
+                                }} />
+                            </DesignProvider>
+                        </UserProvider>
+                    </>
+                    : null
+            }
         </>
     )
 }

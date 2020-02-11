@@ -1,7 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import '../styles/NavBar.css'
 import useSimpleAuth from '../../hooks/ui/useSimpleAuth'
+
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
 
 const NavBar = props => {
     const { isAuthenticated, logout } = useSimpleAuth()
@@ -13,22 +17,21 @@ const NavBar = props => {
 
     return (
         <nav>
-            <ul className="container">
-                <li> <Link className="nav-link" to="/">Home</Link></li>
+            <Toolbar>
+                <Typography className="nav-link" variant="h6" onClick={() => props.history.push("/")}> Home</Typography>
                 {isAuthenticated() ?
                     <>
-                        <li><Link className="nav-link" to="/following">Find Users</Link></li>
-                        <li>Messages</li>
-                        <li><span onClick={handleLogout}>Logout</span></li>
+                        <Typography className="nav-link" variant="h6" onClick={() => props.history.push("/following")}>Find Users</Typography>
+                        <Typography className="nav-link" variant="h6">Messages</Typography>
+                        <Button color="inherit" onClick={handleLogout}>Logout</Button>
                     </>
                     :
                     <>
-                        <li> <Link className="nav-link" to="/login">Login</Link></li>
-                        <li> <Link className="nav-link" to="/register">Register</Link></li>
+                        <Button color="inherit" onClick={() => props.history.push("/login")}>Login</Button>
+                        <Button color="inherit" onClick={() => props.history.push("/register")}>Register</Button>
                     </>
                 }
-            </ul>
-
+            </Toolbar>
         </nav>
     )
 }

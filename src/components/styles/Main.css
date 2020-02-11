@@ -1,5 +1,6 @@
 @import './Design.css';
 @import './DesignForm.css';
+@import './NavBar.css';
 
 :root {
     --red-accent: #C5283D;
