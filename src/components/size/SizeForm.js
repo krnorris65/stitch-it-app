@@ -56,36 +56,38 @@ const SizeForm = props => {
 
     return (
         <article className="sub-form size-form">
-            <CloseIcon className="iconRight" onClick={props.handleClose} />
+            <div className="formBkgd">
+                <CloseIcon className="iconRight" onClick={props.handleClose} />
 
-            <h3>New Size</h3>
-            <div className="formgrid">
-                <label htmlFor="sizeUnit">Round Design</label>
-                <input type="checkbox" checked={round} onChange={() => round ? setRound(false) : setRound(true)} />
-                {/* <span>If your design is oval do not check</span> */}
-            </div>
-            <div className="formgrid">
-                {
-                    (!round) ?
-                        <>
-                            <label htmlFor="sizeNums">Width x Height</label>
-                            <input ref={height} type="number" min="0" />
-                            <span>x</span>
-                        </>
-                        : <label htmlFor="sizeNums">Width</label>
+                <h3>New Size</h3>
+                <div className="formgrid">
+                    <label htmlFor="sizeUnit">Round Design</label>
+                    <input type="checkbox" checked={round} onChange={() => round ? setRound(false) : setRound(true)} />
+                    {/* <span>If your design is oval do not check</span> */}
+                </div>
+                <div className="formgrid">
+                    {
+                        (!round) ?
+                            <>
+                                <label htmlFor="sizeNums">Width x Height</label>
+                                <input ref={height} type="number" min="0" />
+                                <span>x</span>
+                            </>
+                            : <label htmlFor="sizeNums">Width</label>
 
 
 
-                }
-                <input ref={width} type="number" min="0" />
-                <select ref={unit}>
-                    <option value="in">inches</option>
-                    <option value="cm">centimeters</option>
-                </select>
-            </div>
+                    }
+                    <input ref={width} type="number" min="0" />
+                    <select ref={unit}>
+                        <option value="in">inches</option>
+                        <option value="cm">centimeters</option>
+                    </select>
+                </div>
 
-            <div className="alignRight">
-                <button type="submit" onClick={handleSize}>Add New Size</button>
+                <div className="alignRight">
+                    <button type="submit" onClick={handleSize}>Add New Size</button>
+                </div>
             </div>
         </article>
     )

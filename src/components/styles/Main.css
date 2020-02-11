@@ -4,5 +4,5 @@
 :root {
     --red-accent: #C5283D;
     --dark-background: #255F85;
-    --light-background: rgba(250,250,250, .5);
+    --white-opacity: rgba(250,250,250, .5);
 }

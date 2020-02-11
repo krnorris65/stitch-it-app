@@ -9,12 +9,17 @@
 
 article {
     max-width: 40em;
-    padding: 1em;
     margin: 2em auto;
+    padding: .5em;
     border: 0 none;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 5px;
-    background: var(--light-background);
+    background: var(--dark-background);
+}
+
+.formBkgd{
+    padding: 1em;
+    background-color: var(--white-opacity);
 }
 
 article input, article textarea, article select {

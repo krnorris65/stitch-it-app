@@ -50,7 +50,7 @@ img {
 
 .design-container .card-content {
     height: 100%;
-    background-color: var(--light-background);
+    background-color: var(--white-opacity);
     border-radius: 1%;
     padding: .5em;
     text-align: center;
