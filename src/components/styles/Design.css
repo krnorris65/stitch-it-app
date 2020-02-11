@@ -37,7 +37,7 @@
     margin: auto .25em;
 }
 
-.design-container svg:hover {
+.designEl svg:hover {
     color: var(--red-accent);
     cursor: pointer;
 }

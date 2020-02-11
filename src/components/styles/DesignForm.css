@@ -4,7 +4,7 @@
 }
 
 .add--new:hover {
-    color: darkred;
+    color: var(--red-accent);
 }
 
 article {

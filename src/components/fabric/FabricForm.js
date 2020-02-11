@@ -44,7 +44,7 @@ const FabricForm = props => {
     }
 
     return (
-        <article className="sub-form">
+        <article className="sub-form designEl">
             <div className="formBkgd">
 
                 <CloseIcon className="iconRight" onClick={props.handleClose} />

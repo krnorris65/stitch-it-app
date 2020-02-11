@@ -27,7 +27,7 @@ const DesignList = props => {
                         <section>
                             <button onClick={() => props.history.push("/design/new")}>Add New Design</button>
                         </section>
-                        <div className="design-container">
+                        <div className="design-container designEl">
                             {designs.map(design => <DesignCard key={design.id} design={design} {...props} />)}
                         </div>
                     </>

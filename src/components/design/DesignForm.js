@@ -157,7 +157,7 @@ const DesignForm = props => {
     }
 
     return (
-        <article>
+        <article className="designEl">
             <div className="formBkgd">
                 <CloseIcon className="iconRight" onClick={() => props.history.push("/")} />
                 {

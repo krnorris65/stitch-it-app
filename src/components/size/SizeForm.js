@@ -55,7 +55,7 @@ const SizeForm = props => {
     }
 
     return (
-        <article className="sub-form size-form">
+        <article className="sub-form size-form designEl">
             <div className="formBkgd">
                 <CloseIcon className="iconRight" onClick={props.handleClose} />
 
