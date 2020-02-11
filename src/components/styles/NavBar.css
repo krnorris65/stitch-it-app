@@ -1,13 +1,15 @@
 nav {
-    color: white;
+    color: snow;
     background-color: var(--dark-background);
+    background-color: var(--red-accent);
 }
 
 .nav-link{
     flex-grow: 1;
 }
 .nav-link:hover{
-    color: var(--red-accent);
-    flex-grow: 1;
+    display: inline;
+    font-size: 1.5rem;
+    /* color: var(--red-accent); */
     cursor: pointer;
 }

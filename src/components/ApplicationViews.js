@@ -19,7 +19,7 @@ import { UserProvider } from "./providers/UserProvider"
 const ApplicationViews = props => {
     const { isAuthenticated } = useSimpleAuth()
     return (
-        <>
+        <div id="app-container">
             <Route exact path="/" render={props => {
                 return <Home {...props} />
             }} />
@@ -78,7 +78,7 @@ const ApplicationViews = props => {
                     </>
                     : null
             }
-        </>
+        </div>
     )
 }
 
