@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import DesignCard from './DesignCard'
 import { DesignContext } from "../providers/DesignProvider"
-import '../styles/Design.css'
 
 const DesignList = props => {
     const followedUser = props.match.path.includes('following')

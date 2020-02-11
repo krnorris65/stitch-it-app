@@ -16,6 +16,7 @@ import { SizeContext } from '../providers/SizeProvider'
 
 
 
+
 function getModalStyle() {
     const top = 40;
     const left = 50;
@@ -175,6 +176,8 @@ const DesignForm = props => {
                     <textarea id="designDescription"
                         ref={description}
                         placeholder="Add information pertaining to floss used, color of fabric, helpful notes, etc."
+                        maxLength="150"
+                        rows="3"
                     ></textarea>
 
                 </div>

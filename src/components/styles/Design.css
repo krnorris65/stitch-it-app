@@ -5,7 +5,7 @@
 }
 
 .design-container .card {
-    background-color: #255F85;
+    background-color: var(--dark-background);
     border: 1px solid black;
     border-radius: 1%;
     flex-basis: 28%;
@@ -26,19 +26,19 @@
     /* color: white; */
     margin-top: .25em;
     margin-bottom: .5em;
-    text-shadow: -1px -1px 0 #C5283D, 
-    1px -1px 0 #C5283D, 
-    -1px 1px 0 #C5283D, 
-    1px 1px 0 #C5283D;
+    text-shadow: -1px -1px 0 var(--red-accent), 
+    1px -1px 0 var(--red-accent), 
+    -1px 1px 0 var(--red-accent), 
+    1px 1px 0 var(--red-accent);
 }
 
 .design-container svg {
-    /* color: #C5283D; */
+    /* color: var(--red-accent); */
     margin: auto .25em;
 }
 
 .design-container svg:hover {
-    color: #C5283D;
+    color: var(--red-accent);
     cursor: pointer;
 }
 
@@ -50,9 +50,10 @@ img {
 
 .design-container .card-content {
     height: 100%;
-    background-color: rgba(250,250,250, .5);
+    background-color: var(--light-background);
     border-radius: 1%;
-
+    padding: .5em;
+    text-align: center;
 }
 
 .designActions {
@@ -60,7 +61,7 @@ img {
     align-self: flex-end;
 }
 
-/* .designDetails {
-
-    
-} */
+.designDetails {
+    text-align: left;
+    min-height: 9em;
+}
