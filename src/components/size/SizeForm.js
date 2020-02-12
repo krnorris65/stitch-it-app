@@ -61,8 +61,10 @@ const SizeForm = props => {
 
                 <h3>New Size</h3>
                 <div className="formgrid">
+                    <div className="dimensions">
                     <label htmlFor="round">Round Design</label>
-                    <input type="checkbox" checked={round} onChange={() => round ? setRound(false) : setRound(true)} />
+                        <input type="checkbox" checked={round} onChange={() => round ? setRound(false) : setRound(true)} />
+                    </div>
                     {/* <span>If your design is oval do not check</span> */}
                 </div>
                 <div className="formgrid">
@@ -110,7 +112,7 @@ const SizeForm = props => {
                     <button className="formBtn" type="submit" onClick={handleSize}>Add New</button>
                 </div>
             </div>
-        </article>
+        </article >
     )
 
 }
