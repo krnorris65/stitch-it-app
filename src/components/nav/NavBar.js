@@ -22,7 +22,7 @@ const NavBar = props => {
                 {isAuthenticated() ?
                     <>
                         <Typography className="nav-link" variant="h6" onClick={() => props.history.push("/following")}>Find Users</Typography>
-                        <Typography className="nav-link" variant="h6">Messages</Typography>
+                        {/* <Typography className="nav-link" variant="h6">Messages</Typography> */}
                         <Button color="inherit" onClick={handleLogout}>Logout</Button>
                     </>
                     :

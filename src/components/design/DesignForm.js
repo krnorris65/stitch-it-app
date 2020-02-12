@@ -165,7 +165,7 @@ const DesignForm = props => {
                 }
                 <form>
                     <div className="formgrid">
-                        <label htmlFor="designTitle">Title</label>
+                        <label htmlFor="designTitle">Title:</label>
                         <input type="text" required id="designTitle"
                             ref={title}
                             placeholder="Design Title"
@@ -173,7 +173,7 @@ const DesignForm = props => {
                     </div>
 
                     <div className="formgrid">
-                        <label htmlFor="designDescription">Description</label>
+                        <label htmlFor="designDescription">Description:</label>
                         <textarea id="designDescription"
                             ref={description}
                             placeholder="Add information pertaining to floss used, color of fabric, helpful notes, etc."
@@ -200,8 +200,8 @@ const DesignForm = props => {
                             }
                         </select>
 
+                        <span className="add--new" onClick={() => handleOpen("fabric")}>Add New Fabric</span>
                     </div>
-                    <span className="add--new" onClick={() => handleOpen("fabric")}>Add new fabric</span>
                     <Modal
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
@@ -222,10 +222,11 @@ const DesignForm = props => {
                                 sizes.map(fSize => <option key={fSize.id} value={fSize.id}>{fSize.size}</option>)
                             }
                         </select>
+                        
+                        <span className="add--new" onClick={() => handleOpen("size")}>Add New Size</span>
                     </div>
 
 
-                    <span className="add--new" onClick={() => handleOpen("size")}>Add new size</span>
                     <Modal
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"

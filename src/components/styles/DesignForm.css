@@ -1,12 +1,3 @@
-.add--new {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.add--new:hover {
-    color: var(--red-accent);
-}
-
 article {
     max-width: 40em;
     margin: 2em auto;
@@ -75,14 +66,30 @@ article .alignCenter {
 article .formgrid {
     align-items: center;
     display: flex;
+    flex-direction: column;
+    margin: 1em;
+
 }
 
 article label {
-    flex-basis: 20%;
+    width: 75%;
 }
 
 article input, article select, article textarea {
-    flex-basis: 60%;
+    width: 75%;
+}
+
+.add--new {
+    margin-top: .5em;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: .75em;
+    width: 75%;
+    text-align: right;
+}
+
+.add--new:hover {
+    color: var(--red-accent);
 }
 
 .sub-form {
