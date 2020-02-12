@@ -8,7 +8,7 @@ article {
     background: var(--dark-background);
 }
 
-.formBkgd{
+.formBkgd {
     padding: 1em;
     background-color: var(--white-opacity);
 }
@@ -29,46 +29,17 @@ article .alignRight {
     text-align: right;
 }
 
-article .alignCenter {
-    text-align: center;
-}
 
-.photoActions {
-    display: flex;
-    align-items: center;
-}
-
-.photoActions svg {
-    padding-right: 5px;
-    cursor: pointer;
-}
-
-
-.photoActions p {
-    display: none;
-    margin: 0px;
-}
-
-.photoActions svg:hover~p {
-    display: inline;
-}
-
-.uploadImage {
-    margin-top: .5rem;
-
-}
 
 .iconRight {
     float: right;
 }
-
 
 article .formgrid {
     align-items: center;
     display: flex;
     flex-direction: column;
     margin: 1em;
-
 }
 
 article label, article input, article select, article textarea, article span {
@@ -113,4 +84,9 @@ article label, article input, article select, article textarea, article span {
 
 .alignRight button:hover {
     background-color: var(--red-accent);
+}
+
+.photo--action {
+    text-align: left;
+    margin-bottom: .5em;
 }

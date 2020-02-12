@@ -4,9 +4,6 @@ import CloudinaryInfo from './CloudinaryInfo'
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import CloseIcon from '@material-ui/icons/Close';
-import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-import Button from '@material-ui/core/Button';
 
 import FabricForm from '../fabric/FabricForm'
 import SizeForm from '../size/SizeForm'
@@ -33,10 +30,6 @@ const useStyles = makeStyles(theme => ({
     paper: {
         position: 'absolute',
         outline: 'none',
-        // backgroundColor: `cornsilk`,
-        // border: '2px solid #000',
-        // boxShadow: theme.shadows[5],
-        // padding: theme.spacing(2, 2, 3),
     },
 }));
 
@@ -241,22 +234,20 @@ const DesignForm = props => {
 
 
 
-                {
-                    (photoLink === "") ?
-                        <section className="photoActions">
-                            <AddAPhotoIcon onClick={uploadWidget} className="upload-button" />
-                            <p>Add Photo</p>
-                        </section>
-                        :
-                        <>
-                            <section className="photoActions">
-                                <RemoveCircleIcon onClick={() => setPhotoLink("")} />
-                                <p>Remove Photo</p>
-                            </section>
-                            <img className="uploadImage" src={photoLink} alt="" />
-                        </>
+                <div className="formgrid">
+                    <label>Design Photo:</label>
+                    {
+                        (photoLink === "") ?
+                            <span className="add--new photo--action" onClick={uploadWidget}>Add Photo</span>
+                            :
+                            <>
+                                <span className="add--new photo--action" onClick={() => setPhotoLink("")}>Remove Photo</span>
+                                <img className="uploadImage" src={photoLink} alt="" />
+                            </>
 
-                }
+                    }
+                </div>
+
                 <div className="alignRight">
                     <button type="button" disabled={loadingStatus} onClick={newOrUpdatedDesign}>
                         {
