@@ -239,13 +239,7 @@ const DesignForm = props => {
                     </div>
                 </Modal>
 
-                <div className="alignRight">
-                    <button type="button" disabled={loadingStatus} onClick={newOrUpdatedDesign}>
-                        {
-                            (newDesign) ? <>Create</> : <>Update</>
-                        }
-                    </button>
-                </div>
+
 
                 {
                     (photoLink === "") ?
@@ -263,6 +257,13 @@ const DesignForm = props => {
                         </>
 
                 }
+                <div className="alignRight">
+                    <button type="button" disabled={loadingStatus} onClick={newOrUpdatedDesign}>
+                        {
+                            (newDesign) ? <>Create</> : <>Update</>
+                        }
+                    </button>
+                </div>
             </div>
         </article>
     )
