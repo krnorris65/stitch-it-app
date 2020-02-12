@@ -61,11 +61,32 @@ const SizeForm = props => {
 
                 <h3>New Size</h3>
                 <div className="formgrid">
-                    <label htmlFor="sizeUnit">Round Design</label>
+                    <label htmlFor="round">Round Design</label>
                     <input type="checkbox" checked={round} onChange={() => round ? setRound(false) : setRound(true)} />
                     {/* <span>If your design is oval do not check</span> */}
                 </div>
                 <div className="formgrid">
+                    <label htmlFor="size">Dimensions</label>
+                    <div className="dimensions">
+                        <input ref={width} type="number" min="0" placeholder="Width" />
+                        {
+                            (!round) ?
+                                <>
+                                    <span>x</span>
+                                    <input ref={height} type="number" min="0" placeholder="Height" />
+                                </>
+                                : null
+
+
+
+                        }
+                        <select ref={unit}>
+                            <option value="in">inches</option>
+                            <option value="cm">centimeters</option>
+                        </select>
+                    </div>
+                </div>
+                {/* <div className="formgrid">
                     {
                         (!round) ?
                             <>
@@ -83,10 +104,10 @@ const SizeForm = props => {
                         <option value="in">inches</option>
                         <option value="cm">centimeters</option>
                     </select>
-                </div>
+                </div> */}
 
                 <div className="alignRight">
-                    <button type="submit" onClick={handleSize}>Add New Size</button>
+                    <button className="formBtn" type="submit" onClick={handleSize}>Add New</button>
                 </div>
             </div>
         </article>

@@ -249,7 +249,7 @@ const DesignForm = props => {
                 </div>
 
                 <div className="alignRight">
-                    <button type="button" disabled={loadingStatus} onClick={newOrUpdatedDesign}>
+                    <button className="formBtn" type="button" disabled={loadingStatus} onClick={newOrUpdatedDesign}>
                         {
                             (newDesign) ? <>Create</> : <>Update</>
                         }

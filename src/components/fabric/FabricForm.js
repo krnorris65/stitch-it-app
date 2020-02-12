@@ -59,8 +59,7 @@ const FabricForm = props => {
                     <input ref={count} type="number" min="0" id="count" placeholder="Fabric Count" required="" />
                 </div>
                 <div className="alignRight">
-                    <button type="submit" onClick={handleFabric}>Add New Fabric</button>
-
+                    <button className="formBtn" type="submit" onClick={handleFabric}>Add New</button>
                 </div>
             </div>
         </article>
