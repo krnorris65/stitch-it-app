@@ -6,6 +6,7 @@ import Modal from '@material-ui/core/Modal';
 import CloseIcon from '@material-ui/icons/Close';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import Button from '@material-ui/core/Button';
 
 import FabricForm from '../fabric/FabricForm'
 import SizeForm from '../size/SizeForm'

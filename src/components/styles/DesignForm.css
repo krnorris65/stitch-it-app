@@ -71,12 +71,8 @@ article .formgrid {
 
 }
 
-article label {
-    width: 75%;
-}
-
-article input, article select, article textarea {
-    width: 75%;
+article label, article input, article select, article textarea, article span {
+    width: 90%;
 }
 
 .add--new {
@@ -84,7 +80,6 @@ article input, article select, article textarea {
     text-decoration: underline;
     cursor: pointer;
     font-size: .75em;
-    width: 75%;
     text-align: right;
 }
 
@@ -102,4 +97,16 @@ article input, article select, article textarea {
 
 .size-form select {
     max-width: 10em;
+}
+
+.alignRight button {
+    max-width: 7em;
+    padding: .5em;
+    margin: .5em auto auto;
+    background-color: var(--dark-background);
+    border: none;
+    color: snow;
+    font-size: 14px;
+    border-radius: 2px;
+    width: 100%;
 }
