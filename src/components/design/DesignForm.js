@@ -164,90 +164,88 @@ const DesignForm = props => {
                 {
                     (newDesign) ? <h2>Create New Design</h2> : <h2>Update Design</h2>
                 }
-                <form>
-                    <div className="formgrid">
-                        <label htmlFor="designTitle">Title:</label>
-                        <input type="text" required id="designTitle"
-                            ref={title}
-                            placeholder="Design Title"
-                        />
+                <div className="formgrid">
+                    <label htmlFor="designTitle">Title:</label>
+                    <input type="text" required id="designTitle"
+                        ref={title}
+                        placeholder="Design Title"
+                    />
+                </div>
+
+                <div className="formgrid">
+                    <label htmlFor="designDescription">Description:</label>
+                    <textarea id="designDescription"
+                        ref={description}
+                        placeholder="Add information pertaining to floss used, color of fabric, helpful notes, etc."
+                        maxLength="150"
+                        rows="3"
+                    ></textarea>
+
+                </div>
+
+                <div className="formgrid">
+                    <label htmlFor="designCompleted">Completed On:</label>
+                    <input type="date" id="designCompleted"
+                        ref={completedDate}
+                    />
+
+                </div>
+
+                <div className="formgrid">
+                    <label htmlFor="designFabric">Fabric:</label>
+
+                    <select id="designFabric" ref={fabricId}>
+                        {
+                            fabrics.map(fabric => <option key={fabric.id} value={fabric.id}>{fabric.type} {fabric.count} count</option>)
+                        }
+                    </select>
+
+                    <span className="add--new" onClick={() => handleOpen("fabric")}>Add New Fabric</span>
+                </div>
+                <Modal
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={openFabric}
+                    onClose={handleClose}
+                >
+                    <div style={modalStyle} className={classes.paper}>
+                        <FabricForm updateFabricDropdownValue={updateFabricDropdownValue} handleClose={handleClose} />
                     </div>
 
-                    <div className="formgrid">
-                        <label htmlFor="designDescription">Description:</label>
-                        <textarea id="designDescription"
-                            ref={description}
-                            placeholder="Add information pertaining to floss used, color of fabric, helpful notes, etc."
-                            maxLength="150"
-                            rows="3"
-                        ></textarea>
+                </Modal>
 
+                <div className="formgrid">
+                    <label htmlFor="designSize">Finished Size:</label>
+
+                    <select id="designSize" ref={finishedSizeId}>
+                        {
+                            sizes.map(fSize => <option key={fSize.id} value={fSize.id}>{fSize.size}</option>)
+                        }
+                    </select>
+
+                    <span className="add--new" onClick={() => handleOpen("size")}>Add New Size</span>
+                </div>
+
+
+                <Modal
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={openSize}
+                    onClose={handleClose}
+                >
+                    <div style={modalStyle} className={classes.paper}>
+
+                        <SizeForm updateSizesDropdown={updateSizesDropdown} handleClose={handleClose} />
                     </div>
+                </Modal>
 
-                    <div className="formgrid">
-                        <label htmlFor="designCompleted">Completed On:</label>
-                        <input type="date" id="designCompleted"
-                            ref={completedDate}
-                        />
-
-                    </div>
-
-                    <div className="formgrid">
-                        <label htmlFor="designFabric">Fabric:</label>
-
-                        <select id="designFabric" ref={fabricId}>
-                            {
-                                fabrics.map(fabric => <option key={fabric.id} value={fabric.id}>{fabric.type} {fabric.count} count</option>)
-                            }
-                        </select>
-
-                        <span className="add--new" onClick={() => handleOpen("fabric")}>Add New Fabric</span>
-                    </div>
-                    <Modal
-                        aria-labelledby="simple-modal-title"
-                        aria-describedby="simple-modal-description"
-                        open={openFabric}
-                        onClose={handleClose}
-                    >
-                        <div style={modalStyle} className={classes.paper}>
-                            <FabricForm updateFabricDropdownValue={updateFabricDropdownValue} handleClose={handleClose} />
-                        </div>
-
-                    </Modal>
-
-                    <div className="formgrid">
-                        <label htmlFor="designSize">Finished Size:</label>
-
-                        <select id="designSize" ref={finishedSizeId}>
-                            {
-                                sizes.map(fSize => <option key={fSize.id} value={fSize.id}>{fSize.size}</option>)
-                            }
-                        </select>
-                        
-                        <span className="add--new" onClick={() => handleOpen("size")}>Add New Size</span>
-                    </div>
-
-
-                    <Modal
-                        aria-labelledby="simple-modal-title"
-                        aria-describedby="simple-modal-description"
-                        open={openSize}
-                        onClose={handleClose}
-                    >
-                        <div style={modalStyle} className={classes.paper}>
-
-                            <SizeForm updateSizesDropdown={updateSizesDropdown} handleClose={handleClose} />
-                        </div>
-                    </Modal>
-
-                    <div className="alignRight">
-                        <button type="button" disabled={loadingStatus} onClick={newOrUpdatedDesign}>
-                            {
-                                (newDesign) ? <>Create</> : <>Update</>
-                            }
-                        </button>
-                    </div>
-                </form>
+                <div className="alignRight">
+                    <button type="button" disabled={loadingStatus} onClick={newOrUpdatedDesign}>
+                        {
+                            (newDesign) ? <>Create</> : <>Update</>
+                        }
+                    </button>
+                </div>
 
                 {
                     (photoLink === "") ?

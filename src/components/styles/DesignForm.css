@@ -110,3 +110,7 @@ article label, article input, article select, article textarea, article span {
     border-radius: 2px;
     width: 100%;
 }
+
+.alignRight button:hover {
+    background-color: var(--red-accent);
+}
