@@ -40,6 +40,11 @@ const UserCard = props => {
         })
     }
 
+    const unfollowFromDesign = (followId) => {
+        props.history.push("/following")
+        deleteFollow(followId)
+    }
+
     useEffect(updateStatusAndId, [])
 
 
@@ -47,25 +52,36 @@ const UserCard = props => {
     return (
         <div className="userCard">
             <div className="card-content">
-                <h4 className="userName">{props.user.firstName} {props.user.lastName}</h4>
-
                 {
-                    // conditional that checks if the user is the one that's logged in
-                    (followedStatus === "current") ?
-                        <PersonIcon className="userIcon" onClick={() => props.history.push("/")} />
-                        // if the current user is currently following the user
-                        // if the current user isn't following the user and the user's profile is public
-                        : (followedStatus === "following") ?
-                            <>
-                                <button onClick={() => viewDesigns(props.user, followId)}>View Profile</button>
-                            </>
-                            // if the current user has requested to follow the user but it hasn't been approved
-                            : (followedStatus === "pending") ?
-                                <button onClick={() => deleteFollow(followId)}>Delete Follow Request</button>
-                                : (props.user.publicProfile) ?
-                                    <button onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Follow</button>
-                                    // if the current user isn't following the user and the user's profile is private
-                                    : <button onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Request to Follow</button>
+                    //showDesign is only passed in when the user card is populated due to props.match.path.includes('designs') evaluating to true
+                    (props.showDesign === true) ?
+                        <>
+                            <h2>{props.location.state.firstName} {props.location.state.lastName}'s Designs</h2>
+                            <button onClick={() => unfollowFromDesign(props.location.state.followId)}>Unfollow</button>
+                        </>
+                        :
+                        <>
+                            <h4 className="userName">{props.user.firstName} {props.user.lastName}</h4>
+
+                            {
+                                // conditional that checks if the user is the one that's logged in
+                                (followedStatus === "current") ?
+                                    <PersonIcon className="userIcon" onClick={() => props.history.push("/")} />
+                                    // if the current user is currently following the user
+                                    // if the current user isn't following the user and the user's profile is public
+                                    : (followedStatus === "following") ?
+                                        <>
+                                            <button onClick={() => viewDesigns(props.user, followId)}>View Profile</button>
+                                        </>
+                                        // if the current user has requested to follow the user but it hasn't been approved
+                                        : (followedStatus === "pending") ?
+                                            <button onClick={() => deleteFollow(followId)}>Delete Follow Request</button>
+                                            : (props.user.publicProfile) ?
+                                                <button onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Follow</button>
+                                                // if the current user isn't following the user and the user's profile is private
+                                                : <button onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Request to Follow</button>
+                            }
+                        </>
                 }
 
 

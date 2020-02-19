@@ -60,8 +60,8 @@ const ApplicationViews = props => {
                             </FabricProvider>
                         </DesignProvider>
 
-                        <UserProvider>
-                            <DesignProvider>
+                        {/* <UserProvider> */}
+                            {/* <DesignProvider> */}
                                 <Route exact path="/following" render={props => {
                                     if (isAuthenticated()) {
                                         return <UserHome {...props} />
@@ -73,8 +73,8 @@ const ApplicationViews = props => {
                                         return <UserHome {...props} />
                                     }
                                 }} />
-                            </DesignProvider>
-                        </UserProvider>
+                            {/* </DesignProvider> */}
+                        {/* </UserProvider> */}
                     </>
                     : null
             }

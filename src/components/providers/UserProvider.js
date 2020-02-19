@@ -11,6 +11,8 @@ export const UserProvider = props => {
     const [searchResults, setSearchResult] = useState([])
     
     const [currentUser] = localStorage.getItem("currUserId")
+    console.log("UserProvider", currentUser)
+
 
     const getFollowedUsers = () => {
         return fetch(`${remoteURL}/follows?_expand=user&currentUserId=${currentUser}&pending=false`)
