@@ -1,28 +1,19 @@
-fieldset {
+article {
     max-width: 40em;
-    padding: 4px;
     margin: 2em auto;
+    padding: .5em;
     border: 0 none;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 5px;
-    background: cornsilk;
+    background: var(--dark-background);
 }
 
-fieldset.sub--form {
-    background: lightblue;
+.formBkgd {
+    padding: 1em;
+    background-color: var(--white-opacity);
 }
 
-.add--new {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.add--new:hover{
-    color: darkred;
-}
-
-
-fieldset input, fieldset button, fieldset select {
+article input, article textarea, article select {
     box-sizing: border-box;
     padding: .2em .4em;
     margin: .2em 0;
@@ -30,33 +21,78 @@ fieldset input, fieldset button, fieldset select {
     box-shadow: none;
 }
 
-fieldset button {
-    max-width: 9em;
-    padding: .5em;
-    margin: .3em auto;
+article button, article label, .iconRight {
     cursor: pointer;
 }
 
-fieldset label {
-    box-sizing: border-box;
-    user-select: none;
-    cursor: pointer;
-}
-
-fieldset .formgrid {
-    display: grid;
-    grid-template-columns: 1fr 1em 2fr;
-    grid-gap: .3em .6em;
-    grid-auto-flow: dense;
-    align-items: center;
-}
-
-fieldset input, fieldset button, fieldset select, fieldset textarea {
-    grid-column: 2 /4;
-    width: auto;
-    margin: 0
-}
-
-fieldset .alignRight {
+article .alignRight {
     text-align: right;
+}
+
+
+
+.iconRight {
+    float: right;
+}
+
+article .formgrid {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 1em;
+}
+
+article label, article input, article select, article textarea, article span {
+    width: 90%;
+}
+
+.add--new {
+    margin-top: .5em;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: .75em;
+    text-align: right;
+}
+
+.add--new:hover {
+    color: var(--red-accent);
+}
+
+.sub-form {
+    min-width: 500px;
+}
+
+.size-form .dimensions {
+    width: 90%;
+}
+
+.size-form input {
+    max-width: 8em;
+    margin: .5em;
+}
+
+.size-form select {
+    margin-left: .5em;
+    max-width: 10em;
+}
+
+.formBtn {
+    max-width: 7em;
+    padding: .5em;
+    margin: .5em auto auto;
+    background-color: var(--dark-background);
+    border: none;
+    color: snow;
+    font-size: 14px;
+    border-radius: 2px;
+    width: 100%;
+}
+
+.formBtn:hover {
+    background-color: var(--red-accent);
+}
+
+.photo--action {
+    text-align: left;
+    margin-bottom: .5em;
 }

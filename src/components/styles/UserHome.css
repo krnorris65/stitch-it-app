@@ -5,3 +5,16 @@
 .userSection {
     padding: 10px;
 }
+
+.userName{
+    padding-right: 1em;
+}
+
+.userIcon {
+    cursor: pointer;
+}
+
+.userCard .card-content {
+    display: flex;
+    align-items: center;
+}

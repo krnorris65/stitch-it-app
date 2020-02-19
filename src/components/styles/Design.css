@@ -1,0 +1,67 @@
+.design-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.design-container .card {
+    background-color: var(--dark-background);
+    border: 1px solid black;
+    border-radius: 1%;
+    flex-basis: 28%;
+    margin: 1em;
+    padding: .5em;
+    display: flex;
+    flex-direction: column;
+}
+
+.designStatus {
+    text-align: right;
+    margin: .25em auto;
+    font-style: italic;
+    font-size: small;
+}
+
+.designTitle {
+    /* color: white; */
+    margin-top: .25em;
+    margin-bottom: .5em;
+    text-shadow: -1px -1px 0 var(--red-accent), 
+    1px -1px 0 var(--red-accent), 
+    -1px 1px 0 var(--red-accent), 
+    1px 1px 0 var(--red-accent);
+}
+
+.design-container svg {
+    /* color: var(--red-accent); */
+    margin: auto .25em;
+}
+
+.designEl svg:hover {
+    color: var(--red-accent);
+    cursor: pointer;
+}
+
+img {
+    width: 20em;
+    height: 15em;
+    border-radius: 1%;
+}
+
+.design-container .card-content {
+    height: 100%;
+    background-color: var(--white-opacity);
+    border-radius: 1%;
+    padding: .5em;
+    text-align: center;
+}
+
+.designActions {
+    margin-top: .5em;
+    align-self: flex-end;
+}
+
+.designDetails {
+    text-align: left;
+    min-height: 9em;
+}

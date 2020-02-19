@@ -27,13 +27,13 @@ const DesignList = props => {
                         <section>
                             <button onClick={() => props.history.push("/design/new")}>Add New Design</button>
                         </section>
-                        <div className="container-cards">
+                        <div className="design-container designEl">
                             {designs.map(design => <DesignCard key={design.id} design={design} {...props} />)}
                         </div>
                     </>
                     :
                     <>
-                        <div className="container-cards">
+                        <div className="design-container">
                             {followedDesigns.map(design => <DesignCard key={design.id} design={design} {...props} />)}
                         </div>
                     </>
