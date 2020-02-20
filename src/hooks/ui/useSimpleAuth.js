@@ -51,10 +51,12 @@ const useSimpleAuth = () => {
                     //after verifying that the user entered in correct credentials, their id is stored in localStorage and state of loggedIn is set to true
                     localStorage.setItem("currUserId", res.user.id)
                     setLoggedIn(true)
-                    return "/"
+                    //return false if login was successful
+                    return false
                 } else {
                     alert(res)
-                    return "/login"
+                    //return true if login failed
+                    return true
                 }
             })
     }

@@ -11,7 +11,6 @@ const DesignList = props => {
     const getFollowedUserDesigns = () => {
         if (followedUser) {
             //get the other users designs
-            console.log(props.match.params.userId)
             getOtherUserDesigns(props.match.params.userId)
                 .then(setFollowedDesigns)
         }

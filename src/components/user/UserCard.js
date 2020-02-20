@@ -44,8 +44,6 @@ const UserCard = props => {
         deleteFollow(followId)
     }
 
-    console.log("UserCare", props.user)
-
     useEffect(updateStatusAndId, [])
 
     return (

@@ -27,7 +27,7 @@ const NavBar = props => {
                     </>
                     :
                     <>
-                        <Button color="inherit" onClick={() => props.history.push("/login")}>Login</Button>
+                        <Button color="inherit" onClick={() => props.history.push("/")}>Login</Button>
                         <Button color="inherit" onClick={() => props.history.push("/register")}>Register</Button>
                     </>
                 }
