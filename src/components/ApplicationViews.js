@@ -12,7 +12,6 @@ import UserHome from './user/UserHome'
 import { FabricProvider } from "./providers/FabricProvider"
 import { SizeProvider } from "./providers/SizeProvider"
 import { DesignProvider } from "./providers/DesignProvider"
-import { UserProvider } from "./providers/UserProvider"
 
 
 
@@ -24,14 +23,18 @@ const ApplicationViews = props => {
                 return <Home {...props} />
             }} />
 
+            <Route path="/following/:userId(\d)" render={props => {
+                return <UserHome {...props} />
+            }} />
+
             {/* if the user is already logged in they they will not be able to access the login or register pages */}
-            <Route path="/login" render={props => {
+            {/* <Route path="/login" render={props => {
                 if (!isAuthenticated()) {
                     return <Login {...props} />
                 } else {
                     return <Redirect to="/" />
                 }
-            }} />
+            }} /> */}
             <Route path="/register" render={props => {
                 if (!isAuthenticated()) {
                     return <Register {...props} />
@@ -59,22 +62,6 @@ const ApplicationViews = props => {
                                 </SizeProvider>
                             </FabricProvider>
                         </DesignProvider>
-
-                        <UserProvider>
-                            <DesignProvider>
-                                <Route exact path="/following" render={props => {
-                                    if (isAuthenticated()) {
-                                        return <UserHome {...props} />
-                                    }
-                                }} />
-
-                                <Route path="/following/designs/:userId(\d)" render={props => {
-                                    if (isAuthenticated()) {
-                                        return <UserHome {...props} />
-                                    }
-                                }} />
-                            </DesignProvider>
-                        </UserProvider>
                     </>
                     : null
             }

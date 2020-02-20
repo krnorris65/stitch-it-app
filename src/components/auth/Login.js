@@ -22,11 +22,11 @@ const Login = props => {
 
         //login returns where the app should redirect to depending on if login was successful
         login(userInfo)
-            .then(redirectTo => {
+            .then(loginFailed => {
  
-                props.history.push(redirectTo)
+                props.history.push("/")
                 //will reset login form if the user entered incorrect credentials and stays in the login page
-                if(redirectTo === '/login'){
+                if(loginFailed){
                     email.current.value = ""
                     password.current.value = ""
                 }

@@ -14,7 +14,6 @@ export const DesignProvider = props => {
     const [designs, setDesigns] = useState([])
     const [currentUser] = localStorage.getItem("currUserId")
 
-
     const getDesigns = () => {
         return fetch(`${remoteURL}/designs?_expand=fabric&_expand=finishedSize&userId=${currentUser}`)
         .then(res => res.json())
