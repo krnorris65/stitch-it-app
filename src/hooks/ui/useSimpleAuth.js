@@ -65,7 +65,6 @@ const useSimpleAuth = () => {
         //when the user logs out, state of loggedIn is set to false and their id is removed from localStorage
         setLoggedIn(false)
         localStorage.removeItem("currUserId")
-        sessionStorage.removeItem("followedUser")
     }
 
     return { isAuthenticated, logout, login, register }

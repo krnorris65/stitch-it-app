@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import useSimpleAuth from '../../hooks/ui/useSimpleAuth'
 import Login from '../auth/Login'
 
@@ -23,6 +23,13 @@ const UserHome = props => {
         setSection(section)
         props.history.push("/following/0")
     }
+
+    //when component unmounts, remove the followedUser info from session storage
+    useEffect(
+            () => {
+                return () => sessionStorage.removeItem("followedUser")
+            }, []
+        )
 
     return (
         <>
@@ -49,7 +56,7 @@ const UserHome = props => {
                                     {
                                         (showSection === "unapproved") ?
                                             <UserUnapprovedList />
-                                            : (props.match.params.userId > 0) ?
+                                            : (Number(props.match.params.userId) > 0 && sessionStorage.getItem("followedUser") !== null) ?
                                                 <>
                                                     <UserCard {...props} user={JSON.parse(sessionStorage.getItem("followedUser"))} showDesign={true} />
                                                     <DesignProvider>
