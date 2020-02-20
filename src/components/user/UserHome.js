@@ -34,20 +34,10 @@ const UserHome = props => {
 
     const selectSection = (section) => {
         setSection(section)
-        props.history.push("/following")
+        props.history.push("/following/0")
     }
 
-
-    // useEffect(isProfilePublic, [])
-    // useEffect(
-    //     () => {
-    //         console.log("trigger unmount")
-    //         if (props.match.path.includes('designs')) {
-    //             props.history.push("/following")
-    //         }
-
-    //     }, []
-    // )
+    console.log("UserHome", props.match.params.userId)
 
     return (
         <>
@@ -71,13 +61,13 @@ const UserHome = props => {
                         {
                             (showSection === "unapproved") ?
                                 <UserUnapprovedList />
-                                : (props.match.path.includes('designs')) ?
+                                : (props.match.params.userId > 0) ?
                                     <>
                                         {/* <h2>{props.location.state.firstName} {props.location.state.lastName}'s Designs</h2>
                                     <button onClick={() => unfollowFromDesign(props.location.state.followId)}>Unfollow</button> */}
                                         <UserCard key={props.location.state.id} user={props.location.state} {...props} showDesign={true} />
                                         <DesignProvider>
-                                            <DesignList {...props} followedUserId={props.location.state.id}/>
+                                            <DesignList {...props} />
                                         </DesignProvider>
 
                                     </>

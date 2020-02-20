@@ -10,6 +10,8 @@ const UserCard = props => {
     //when updating the follow status this will hold the needed id
     const [followId, setFollowId] = useState()
 
+    const [otherInfo, setOtherInfo] = useState({})
+
     const { deleteFollow, followUser } = useContext(UserContext)
 
     const { findStatus } = useFollowStatus(props.user)
@@ -34,18 +36,24 @@ const UserCard = props => {
     const viewDesigns = (userInfo, followId) => {
         //pass the followId so that the user can unfollow
         userInfo.followId = followId
+        sessionStorage.setItem("followedUser", JSON.stringify(userInfo))
         props.history.push({
-            pathname: `/following/designs/${userInfo.id}`,
+            pathname: `/following/${userInfo.id}`,
             state: userInfo
         })
     }
 
     const unfollowFromDesign = (followId) => {
-        props.history.push("/following")
+        props.history.push("/following/0")
         deleteFollow(followId)
     }
 
+    const getFollowedUserInfo = () => {
+        const userObj = JSON.parse(sessionStorage.getItem("followedUser"))
+        setOtherInfo(userObj)
+    }
     useEffect(updateStatusAndId, [])
+    useEffect(getFollowedUserInfo, [])
 
 
 
@@ -56,8 +64,8 @@ const UserCard = props => {
                     //showDesign is only passed in when the user card is populated due to props.match.path.includes('designs') evaluating to true
                     (props.showDesign === true) ?
                         <>
-                            <h2>{props.location.state.firstName} {props.location.state.lastName}'s Designs</h2>
-                            <button onClick={() => unfollowFromDesign(props.location.state.followId)}>Unfollow</button>
+                            <h2>{otherInfo.firstName} {otherInfo.lastName}'s Designs</h2>
+                            <button onClick={() => unfollowFromDesign(otherInfo.followId)}>Unfollow</button>
                         </>
                         :
                         <>
