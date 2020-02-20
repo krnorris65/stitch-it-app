@@ -12,7 +12,6 @@ import UserHome from './user/UserHome'
 import { FabricProvider } from "./providers/FabricProvider"
 import { SizeProvider } from "./providers/SizeProvider"
 import { DesignProvider } from "./providers/DesignProvider"
-import { UserProvider } from "./providers/UserProvider"
 
 
 
@@ -60,21 +59,13 @@ const ApplicationViews = props => {
                             </FabricProvider>
                         </DesignProvider>
 
-                        {/* <UserProvider> */}
-                            {/* <DesignProvider> */}
-                                <Route path="/following/:userId(\d)" render={props => {
-                                    if (isAuthenticated()) {
-                                        return <UserHome {...props} />
-                                    }
-                                }} />
 
-                                {/* <Route path="/following/designs/:userId(\d)" render={props => {
-                                    if (isAuthenticated()) {
-                                        return <UserHome {...props} />
-                                    }
-                                }} /> */}
-                            {/* </DesignProvider> */}
-                        {/* </UserProvider> */}
+                        <Route path="/following/:userId(\d)" render={props => {
+                            if (isAuthenticated()) {
+                                return <UserHome {...props} />
+                            }
+                        }} />
+
                     </>
                     : null
             }

@@ -6,7 +6,6 @@ const DesignList = props => {
     const followedUser = props.match.path.includes('following')
     const [followedDesigns, setFollowedDesigns] = useState([])
 
-
     let { designs, getOtherUserDesigns } = useContext(DesignContext)
 
     const getFollowedUserDesigns = () => {

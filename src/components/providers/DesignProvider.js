@@ -13,8 +13,6 @@ export const DesignContext = React.createContext()
 export const DesignProvider = props => {
     const [designs, setDesigns] = useState([])
     const [currentUser] = localStorage.getItem("currUserId")
-    console.log("DesignProvider", currentUser)
-
 
     const getDesigns = () => {
         return fetch(`${remoteURL}/designs?_expand=fabric&_expand=finishedSize&userId=${currentUser}`)

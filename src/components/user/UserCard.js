@@ -10,8 +10,6 @@ const UserCard = props => {
     //when updating the follow status this will hold the needed id
     const [followId, setFollowId] = useState()
 
-    const [otherInfo, setOtherInfo] = useState({})
-
     const { deleteFollow, followUser } = useContext(UserContext)
 
     const { findStatus } = useFollowStatus(props.user)
@@ -37,10 +35,8 @@ const UserCard = props => {
         //pass the followId so that the user can unfollow
         userInfo.followId = followId
         sessionStorage.setItem("followedUser", JSON.stringify(userInfo))
-        props.history.push({
-            pathname: `/following/${userInfo.id}`,
-            state: userInfo
-        })
+        props.history.push(`/following/${userInfo.id}`)
+
     }
 
     const unfollowFromDesign = (followId) => {
@@ -48,24 +44,19 @@ const UserCard = props => {
         deleteFollow(followId)
     }
 
-    const getFollowedUserInfo = () => {
-        const userObj = JSON.parse(sessionStorage.getItem("followedUser"))
-        setOtherInfo(userObj)
-    }
+    console.log("UserCare", props.user)
+
     useEffect(updateStatusAndId, [])
-    useEffect(getFollowedUserInfo, [])
-
-
 
     return (
         <div className="userCard">
             <div className="card-content">
                 {
-                    //showDesign is only passed in when the user card is populated due to props.match.path.includes('designs') evaluating to true
+                    //showDesign is only passed in when the user card is populated due to props.match.params.userId > 0
                     (props.showDesign === true) ?
                         <>
-                            <h2>{otherInfo.firstName} {otherInfo.lastName}'s Designs</h2>
-                            <button onClick={() => unfollowFromDesign(otherInfo.followId)}>Unfollow</button>
+                            <h2>{props.user.firstName} {props.user.lastName}'s Designs</h2>
+                            <button onClick={() => unfollowFromDesign(props.user.followId)}>Unfollow</button>
                         </>
                         :
                         <>
