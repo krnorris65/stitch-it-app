@@ -60,6 +60,7 @@ export const DesignProvider = props => {
 
     // Load all designs when component is mounted
     useEffect(() => {
+        console.log(currentUser)
         getDesigns()
     }, [])
 

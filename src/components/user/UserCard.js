@@ -46,8 +46,6 @@ const UserCard = props => {
 
     useEffect(updateStatusAndId, [])
 
-    console.log(sessionStorage.getItem("followedUser"))
-
     return (
         <div className="userCard">
             <div className="card-content">
