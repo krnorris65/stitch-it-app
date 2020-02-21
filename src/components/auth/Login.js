@@ -39,17 +39,17 @@ const Login = props => {
             <h2>Welcome to Stitch It</h2>
 
             <article>
-                <fieldset className="formBkgd">
+                <div className="formBkgd">
                     <h3>Please Login</h3>
                     <div className="formgrid">
-                        <label htmlFor="inputEmail">Email address</label>
+                        <label htmlFor="email">Email address</label>
                         <input ref={email} type="email"
                             id="email"
                             placeholder="Email address"
                             required="" autoFocus="" />
                     </div>
                     <div className="formgrid">
-                        <label htmlFor="inputPassword">Password</label>
+                        <label htmlFor="password">Password</label>
                         <input ref={password} type="password"
                             id="password"
                             placeholder="Password"
@@ -58,7 +58,7 @@ const Login = props => {
                     <div className="alignRight">
                         <button type="button" className="formBtn" onClick={handleLogin}>Login</button>
                     </div>
-                </fieldset>
+                </div>
             </article>
         </>
     )

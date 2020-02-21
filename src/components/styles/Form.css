@@ -96,3 +96,7 @@ article label, article input, article select, article textarea, article span {
     text-align: left;
     margin-bottom: .5em;
 }
+
+.subText {
+    font-size: .75em;
+}
