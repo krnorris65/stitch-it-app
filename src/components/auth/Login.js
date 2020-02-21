@@ -35,28 +35,32 @@ const Login = props => {
 
     }
     return (
-        <article>
-            <fieldset className="formBkgd">
-                <h3>Please Login</h3>
-                <div className="formgrid">
-                    <label htmlFor="inputEmail">Email address</label>
-                    <input ref={email} type="email"
-                        id="email"
-                        placeholder="Email address"
-                        required="" autoFocus="" />
-                </div>
-                <div className="formgrid">
-                    <label htmlFor="inputPassword">Password</label>
-                    <input ref={password} type="password"
-                        id="password"
-                        placeholder="Password"
-                        required="" />
-                </div>
-                <div className="alignRight">
-                    <button type="button" className="formBtn" onClick={handleLogin}>Login</button>
-                </div>
-            </fieldset>
-        </article>
+        <>
+            <h2>Welcome to Stitch It</h2>
+
+            <article>
+                <fieldset className="formBkgd">
+                    <h3>Please Login</h3>
+                    <div className="formgrid">
+                        <label htmlFor="inputEmail">Email address</label>
+                        <input ref={email} type="email"
+                            id="email"
+                            placeholder="Email address"
+                            required="" autoFocus="" />
+                    </div>
+                    <div className="formgrid">
+                        <label htmlFor="inputPassword">Password</label>
+                        <input ref={password} type="password"
+                            id="password"
+                            placeholder="Password"
+                            required="" />
+                    </div>
+                    <div className="alignRight">
+                        <button type="button" className="formBtn" onClick={handleLogin}>Login</button>
+                    </div>
+                </fieldset>
+            </article>
+        </>
     )
 }
 
