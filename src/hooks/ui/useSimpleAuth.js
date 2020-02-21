@@ -11,6 +11,15 @@ const useSimpleAuth = () => {
 
     }
 
+    const hasPublicProfile = () => {
+        const userId = localStorage.getItem("currUserId")
+        return fetch(`${remoteURL}/users/${userId}`)
+        .then(res => res.json())
+        .then(user => {
+            return user.publicProfile
+        })
+    }
+
     const register = userInfo => {
         //a new user is created by posting to the database by targeting the register endpoint
         return fetch(`${remoteURL}/register`, {
@@ -67,7 +76,7 @@ const useSimpleAuth = () => {
         localStorage.removeItem("currUserId")
     }
 
-    return { isAuthenticated, logout, login, register }
+    return { isAuthenticated, logout, login, register, hasPublicProfile }
 }
 
 export default useSimpleAuth

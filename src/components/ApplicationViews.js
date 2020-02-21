@@ -24,7 +24,11 @@ const ApplicationViews = props => {
             }} />
 
             <Route path="/following/:userId(\d)" render={props => {
-                return <UserHome {...props} />
+                if(isAuthenticated()){
+                    return <UserHome {...props} />
+                } else {
+                    return <Redirect to="/" />
+                }
             }} />
 
             {/* if the user is already logged in they they will not be able to access the login or register pages */}
