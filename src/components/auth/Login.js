@@ -44,14 +44,17 @@ const Login = props => {
                         id="email"
                         placeholder="Email address"
                         required="" autoFocus="" />
-
+                </div>
+                <div className="formgrid">
                     <label htmlFor="inputPassword">Password</label>
                     <input ref={password} type="password"
                         id="password"
                         placeholder="Password"
                         required="" />
                 </div>
-                <button type="button" onClick={handleLogin}>Login</button>
+                <div className="alignRight">
+                    <button type="button" className="formBtn" onClick={handleLogin}>Login</button>
+                </div>
             </fieldset>
         </article>
     )

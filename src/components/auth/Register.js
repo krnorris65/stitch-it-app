@@ -41,36 +41,41 @@ const Register = props => {
             <fieldset className="formBkgd">
                 <h3>Please Register</h3>
                 <div className="formgrid">
-                    <label htmlFor="inputFirstName">First Name</label>
+                    <label htmlFor="inputFirstName">First Name:</label>
                     <input ref={firstName} type="text"
                         id="firstName"
                         placeholder="First Name"
                         required="" autoFocus="" />
-
-                    <label htmlFor="inputLastName">Last Name</label>
+                </div>
+                <div className="formgrid">
+                    <label htmlFor="inputLastName">Last Name:</label>
                     <input ref={lastName} type="text"
                         id="lastName"
                         placeholder="Last Name"
                         required="" autoFocus="" />
-
-                    <label htmlFor="inputEmail">Email address</label>
+                </div>
+                <div className="formgrid">
+                    <label htmlFor="inputEmail">Email address:</label>
                     <input ref={email} type="email"
                         id="email"
                         placeholder="Email address"
                         required="" autoFocus="" />
-
-                    <label htmlFor="inputPassword">Password</label>
+                </div>
+                <div className="formgrid">
+                    <label htmlFor="inputPassword">Password:</label>
                     <input ref={password} type="password"
                         id="password"
                         placeholder="Password"
                         required="" />
-
+                </div>
+                <div className="formgrid">
                     <label htmlFor="inputPublic">Public Profile?</label>
                     <input ref={publicProfile} type="checkbox"
                         id="publicProfile" />
-
                 </div>
-                <button type="button" onClick={handleRegister}>Register</button>
+                <div className="alignRight">
+                    <button type="button" className="formBtn" onClick={handleRegister}>Register</button>
+                </div>
             </fieldset>
         </article>
     )
