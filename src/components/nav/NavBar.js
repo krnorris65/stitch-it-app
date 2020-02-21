@@ -18,6 +18,7 @@ const NavBar = props => {
         <nav>
             <Toolbar>
                 <Typography variant="h6" onClick={() => props.history.push("/")}> <img id="logo" src={require('./needle.svg')} alt="logo"/></Typography>
+                <Typography className="nav-link" variant="h6" onClick={() => props.history.push("/")}> Stitch It</Typography>
                 {isAuthenticated() ?
                     <>
                         <Typography className="nav-link" variant="h6" onClick={() => props.history.push("/")}> My Designs</Typography>
