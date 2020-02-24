@@ -48,16 +48,16 @@ const UserHome = props => {
 
             <h2>Following Users <span onClick={() => selectSection("")}><SearchIcon /></span></h2>
 
-            {
-                //only need to show unapproved request button if the current user doesn't have a public profile. if they have a public profile, then a user can follow them automatically so there won't be any pending requests 
-                (!publicProfile) ?
-                    <button onClick={() => selectSection("unapproved")}>View Follow Requests</button>
-                    : null
-            }
 
             <div id="userContainer">
                 <UserProvider>
                     <div className="userSection sideSection">
+                        {
+                            //only need to show unapproved request button if the current user doesn't have a public profile. if they have a public profile, then a user can follow them automatically so there won't be any pending requests 
+                            (!publicProfile) ?
+                                <button id="viewBtn" className="formBtn" onClick={() => selectSection("unapproved")}>View Follow Requests</button>
+                                : null
+                        }
                         <UserFollowList {...props} />
                     </div>
 
@@ -66,7 +66,7 @@ const UserHome = props => {
                         {
                             (showSection === "unapproved") ?
                                 <>
-                                    <ArrowBackIcon onClick={() => selectSection("")}/>
+                                    <ArrowBackIcon onClick={() => selectSection("")} />
                                     <UserUnapprovedList />
                                 </>
                                 : (Number(props.match.params.userId) > 0 && sessionStorage.getItem("followedUser") !== null) ?
