@@ -2,8 +2,6 @@ import React, { useState, useEffect, useContext } from 'react'
 import { UserContext } from '../providers/UserProvider'
 import useFollowStatus from '../../hooks/ui/useFollowStatus'
 
-import PersonIcon from '@material-ui/icons/Person';
-
 const UserCard = props => {
     const [currentUser] = localStorage.getItem("currUserId")
     const [followedStatus, setFollowedStatus] = useState(false)
@@ -58,12 +56,12 @@ const UserCard = props => {
                         </>
                         :
                         <>
-                            <h4 className="userName">{props.user.firstName} {props.user.lastName}</h4>
+                            <h3 className="userName">{props.user.firstName} {props.user.lastName}</h3>
 
                             {
                                 // conditional that checks if the user is the one that's logged in
                                 (followedStatus === "current") ?
-                                    <PersonIcon className="userIcon" onClick={() => props.history.push("/")} />
+                                    <button className="formBtn" onClick={() => props.history.push("/")}>My Designs</button>
                                     // if the current user is currently following the user
                                     // if the current user isn't following the user and the user's profile is public
                                     : (followedStatus === "following") ?

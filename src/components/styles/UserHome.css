@@ -7,11 +7,7 @@
 }
 
 .userName{
-    padding-right: 1em;
-}
-
-.userIcon {
-    cursor: pointer;
+    margin: 1em;
 }
 
 .userCard {
@@ -28,6 +24,7 @@
     border-radius: 1%;
     margin: .25em;
     padding: .25em;
+    justify-content: space-between;
 }
 
 .mainSection {
@@ -42,4 +39,14 @@
 
 .mainSection .userCard {
     width: 100%;
+}
+
+.sideSection .userCard .card-content{
+    flex-direction: column;
+}
+
+
+.userCard .formBtn {
+    margin: .5em;
+    max-width: 10em;
 }
