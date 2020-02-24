@@ -54,7 +54,7 @@ const UserCard = props => {
                     (props.showDesign === true) ?
                         <>
                             <h2 className="userName">{props.user.firstName} {props.user.lastName}'s Designs</h2>
-                            <button onClick={() => unfollowFromDesign(props.user.followId)}>Unfollow</button>
+                            <button className="formBtn" onClick={() => unfollowFromDesign(props.user.followId)}>Unfollow</button>
                         </>
                         :
                         <>
@@ -68,15 +68,15 @@ const UserCard = props => {
                                     // if the current user isn't following the user and the user's profile is public
                                     : (followedStatus === "following") ?
                                         <>
-                                            <button onClick={() => viewDesigns(props.user, followId)}>View Profile</button>
+                                            <button className="formBtn" onClick={() => viewDesigns(props.user, followId)}>View Designs</button>
                                         </>
                                         // if the current user has requested to follow the user but it hasn't been approved
                                         : (followedStatus === "pending") ?
-                                            <button onClick={() => deleteFollow(followId)}>Delete Follow Request</button>
+                                            <button className="formBtn" onClick={() => deleteFollow(followId)}>Delete Follow Request</button>
                                             : (props.user.publicProfile) ?
-                                                <button onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Follow</button>
+                                                <button className="formBtn" onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Follow</button>
                                                 // if the current user isn't following the user and the user's profile is private
-                                                : <button onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Request to Follow</button>
+                                                : <button className="formBtn" onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Request to Follow</button>
                             }
                         </>
                 }

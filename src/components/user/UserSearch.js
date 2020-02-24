@@ -1,4 +1,4 @@
-import React, {useRef, useContext } from 'react'
+import React, {useRef, useContext, useEffect } from 'react'
 import UserCard from './UserCard'
 import {UserContext} from '../providers/UserProvider'
 
@@ -16,6 +16,13 @@ const UserSearch = props => {
         //reset value of search
         searchedName.current.value = ""
     }
+
+    //when component unmounts, reset the searchResults
+    useEffect(
+        () => {
+            return () => findUsers("")
+        }, []
+    )
 
     
     return (
