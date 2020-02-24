@@ -14,7 +14,32 @@
     cursor: pointer;
 }
 
+.userCard {
+    background-color: var(--dark-background);
+    border: 1px solid black;
+    border-radius: 1%;
+    margin: .25em;
+}
+
 .userCard .card-content {
     display: flex;
     align-items: center;
+    background-color: var(--white-opacity);
+    border-radius: 1%;
+    margin: .25em;
+    padding: .25em;
+}
+
+.mainSection {
+    background-color: orange;
+    flex-basis: 80%;
+}
+
+.sideSection {
+    flex-basis: 20%;
+    background-color: green;
+}
+
+.mainSection .userCard {
+    width: 50%;
 }

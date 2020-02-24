@@ -53,7 +53,7 @@ const UserCard = props => {
                     //showDesign is only passed in when the user card is populated due to props.match.params.userId > 0
                     (props.showDesign === true) ?
                         <>
-                            <h2>{props.user.firstName} {props.user.lastName}'s Designs</h2>
+                            <h2 className="userName">{props.user.firstName} {props.user.lastName}'s Designs</h2>
                             <button onClick={() => unfollowFromDesign(props.user.followId)}>Unfollow</button>
                         </>
                         :

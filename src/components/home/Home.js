@@ -13,7 +13,7 @@ const Home = props => {
             {
                 (isAuthenticated()) ?
                     <>
-                        <h2>Stitch It</h2>
+                        <h2>My Designs</h2>
                         <DesignProvider>
                             <DesignList {...props} />
                         </DesignProvider>

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import useSimpleAuth from '../../hooks/ui/useSimpleAuth'
+import SearchIcon from '@material-ui/icons/Search';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
 
 
 import UserSearch from './UserSearch'
@@ -28,9 +31,9 @@ const UserHome = props => {
     useEffect(
         () => {
             hasPublicProfile()
-            .then(profileStatus => {
-                setPublicProfile(profileStatus)
-            })
+                .then(profileStatus => {
+                    setPublicProfile(profileStatus)
+                })
         }, []
     )
     //when component unmounts, remove the followedUser info from session storage
@@ -43,26 +46,29 @@ const UserHome = props => {
     return (
         <>
 
-            <h2>User Home Page</h2>
-            <button onClick={() => selectSection("")}>Search Users</button>
+            <h2>Following Users <span onClick={() => selectSection("")}><SearchIcon /></span></h2>
+
             {
-                //only need to show unapproved request button if the current user doesn't have a public profile. if they have a public profile, then a user can follow them automatically so there won't be any pending requests ---CURRENTLY NOT WORKING, NEED TO IMPLEMENT
+                //only need to show unapproved request button if the current user doesn't have a public profile. if they have a public profile, then a user can follow them automatically so there won't be any pending requests 
                 (!publicProfile) ?
-                <button onClick={() => selectSection("unapproved")}>View Unapproved Requests</button>
-                : null
+                    <button onClick={() => selectSection("unapproved")}>View Follow Requests</button>
+                    : null
             }
 
             <div id="userContainer">
                 <UserProvider>
-                    <div className="userSection">
+                    <div className="userSection sideSection">
                         <UserFollowList {...props} />
                     </div>
 
-                    <div className="userSection">
+                    <div className="userSection mainSection">
 
                         {
                             (showSection === "unapproved") ?
-                                <UserUnapprovedList />
+                                <>
+                                    <ArrowBackIcon onClick={() => selectSection("")}/>
+                                    <UserUnapprovedList />
+                                </>
                                 : (Number(props.match.params.userId) > 0 && sessionStorage.getItem("followedUser") !== null) ?
                                     <>
                                         <UserCard {...props} user={JSON.parse(sessionStorage.getItem("followedUser"))} showDesign={true} />
@@ -71,7 +77,10 @@ const UserHome = props => {
                                         </DesignProvider>
 
                                     </>
-                                    : <UserSearch {...props} />
+                                    :
+                                    <>
+                                        <UserSearch {...props} />
+                                    </>
                         }
                     </div>
                 </UserProvider>

@@ -2,6 +2,7 @@ import React, {useRef, useContext } from 'react'
 import UserCard from './UserCard'
 import {UserContext} from '../providers/UserProvider'
 
+
 const UserSearch = props => {
     const {searchResults, findUsers} = useContext(UserContext)
     
@@ -19,7 +20,7 @@ const UserSearch = props => {
     
     return (
         <>
-            <h2>Find Users</h2>
+            <h2>Search for Users</h2>
 
             <input id="searchInput" type="text" ref={searchedName} placeholder="Search for a user" />
             <button onClick={submitSearch}>Search</button>
