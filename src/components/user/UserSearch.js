@@ -27,8 +27,8 @@ const UserSearch = props => {
     
     return (
         <>
-            {/* <h2>Search for Users</h2> */}
             <div className="searchdiv">
+            <h2>Search for Users</h2>
             <input id="searchInput" type="text" ref={searchedName} placeholder="Search for a user" />
             <button onClick={submitSearch}>Search</button>
             </div>

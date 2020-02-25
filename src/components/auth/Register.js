@@ -40,7 +40,7 @@ const Register = props => {
         <>
             <h2>Welcome to Stitch It</h2>
 
-            <article>
+            <article className="formEl">
                 <div className="formBkgd">
                     <h3>Please Register</h3>
                     <div className="formgrid">

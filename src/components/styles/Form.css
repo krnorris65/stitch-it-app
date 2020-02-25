@@ -1,4 +1,4 @@
-article {
+.formEl {
     max-width: 40em;
     margin: 2em auto;
     padding: .5em;
@@ -13,7 +13,7 @@ article {
     background-color: var(--white-opacity);
 }
 
-article input, article textarea, article select {
+.formEl input, .formEl textarea, .formEl select {
     box-sizing: border-box;
     padding: .2em .4em;
     margin: .2em 0;
@@ -21,11 +21,11 @@ article input, article textarea, article select {
     box-shadow: none;
 }
 
-article button, article label, .iconRight {
+.formEl button, .formEl label, .iconRight {
     cursor: pointer;
 }
 
-article .alignRight {
+.formEl .alignRight {
     text-align: right;
 }
 
@@ -35,14 +35,14 @@ article .alignRight {
     float: right;
 }
 
-article .formgrid {
+.formEl .formgrid {
     align-items: center;
     display: flex;
     flex-direction: column;
     margin: 1em;
 }
 
-article label, article input, article select, article textarea, article span {
+.formEl label, .formEl input, .formEl select, .formEl textarea, .formEl span {
     width: 90%;
 }
 
