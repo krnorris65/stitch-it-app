@@ -32,7 +32,7 @@ const DesignList = props => {
                     </>
                     :
                     <>
-                        <div className="design-container">
+                        <div className="design-container followed-designs">
                             {followedDesigns.map(design => <DesignCard key={design.id} design={design} {...props} />)}
                         </div>
                     </>

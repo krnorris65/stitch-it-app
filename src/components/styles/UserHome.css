@@ -2,6 +2,16 @@
     display: flex;
 }
 
+#userButtons {
+    /* display: flex; */
+    /* flex-direction: column; */
+}
+
+#findBtn {
+    margin: .5em;
+    max-width: 15%;
+}
+
 .userSection {
     padding: 10px;
 }
@@ -59,4 +69,5 @@
 
 #viewBtn {
     max-width: 100%;
+    margin-bottom: .5em;
 }

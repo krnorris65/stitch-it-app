@@ -17,7 +17,7 @@ import DesignList from "../design/DesignList"
 import '../styles/UserHome.css'
 
 const UserHome = props => {
-    const [showSection, setSection] = useState()
+    const [showSection, setSection] = useState("")
     const { hasPublicProfile } = useSimpleAuth()
     const [publicProfile, setPublicProfile] = useState(true)
 
@@ -43,35 +43,35 @@ const UserHome = props => {
         }, []
     )
 
+    console.log("showSection", showSection)
+
     return (
         <>
 
-            <article>
-                <button className="formBtn" onClick={() => selectSection("")}>Find Users</button>
-            </article>
-
-            <div id="userContainer">
+            <article id="userContainer">
                 <UserProvider>
-                    <div className="userSection sideSection">
-                        <h2>Currently Following</h2>
-
+                    <section className="userSection sideSection">
+                        <h2>Following</h2>
                         {
                             //only need to show unapproved request button if the current user doesn't have a public profile. if they have a public profile, then a user can follow them automatically so there won't be any pending requests 
                             (!publicProfile) ?
                                 <button id="viewBtn" className="formBtn" onClick={() => selectSection("unapproved")}>View Follow Requests</button>
                                 : null
                         }
-                        <UserFollowList {...props} />
-                    </div>
 
-                    <div className="userSection mainSection">
+                        <UserFollowList {...props} />
+                    </section>
+
+                    <section className="userSection mainSection">
 
                         {
-                            (showSection === "unapproved") ?
-                                <>
-                                    <UserUnapprovedList />
-                                </>
-                                : (Number(props.match.params.userId) > 0 && sessionStorage.getItem("followedUser") !== null) ?
+                            
+                            (showSection === "unapproved" || Number(props.match.params.userId) > 0) ?
+                            <button id="findBtn" className="formBtn" onClick={() => selectSection("")}>Find Users</button>
+                            : null
+                        }
+                        {
+                            (Number(props.match.params.userId) > 0 && sessionStorage.getItem("followedUser") !== null) ?
                                     <>
                                         <UserCard {...props} user={JSON.parse(sessionStorage.getItem("followedUser"))} showDesign={true} />
                                         <DesignProvider>
@@ -79,14 +79,18 @@ const UserHome = props => {
                                         </DesignProvider>
 
                                     </>
-                                    :
+                                    : (showSection === "unapproved") ?
+                                    <>
+                                        <UserUnapprovedList />
+                                    </>
+                                    : 
                                     <>
                                         <UserSearch {...props} />
                                     </>
                         }
-                    </div>
+                    </section>
                 </UserProvider>
-            </div>
+            </article>
         </>
     )
 }
