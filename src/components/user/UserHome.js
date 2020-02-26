@@ -20,12 +20,23 @@ const UserHome = props => {
     const [showSection, setSection] = useState("")
     const { hasPublicProfile } = useSimpleAuth()
     const [publicProfile, setPublicProfile] = useState(true)
+    const [buttonVisible, setButtonVisible] = useState("hidden")
 
 
     const selectSection = (section) => {
         setSection(section)
         props.history.push("/following/0")
     }
+
+    const showButton = () => {
+        if (showSection === "unapproved" || Number(props.match.params.userId) > 0) {
+            setButtonVisible("visible")
+        } else {
+            setButtonVisible("hidden")
+        }
+    }
+
+    useEffect(showButton, [showSection, props.match.params.userId])
 
     //determines if the current user has a public profile when the component mounts
     useEffect(
@@ -42,8 +53,6 @@ const UserHome = props => {
             return () => sessionStorage.removeItem("followedUser")
         }, []
     )
-
-    console.log("showSection", showSection)
 
     return (
         <>
@@ -65,13 +74,13 @@ const UserHome = props => {
                     <section className="userSection mainSection">
 
                         {
-                            
-                            (showSection === "unapproved" || Number(props.match.params.userId) > 0) ?
-                            <button id="findBtn" className="formBtn" onClick={() => selectSection("")}>Find Users</button>
-                            : null
+
+                            <button style={{ visibility: `${buttonVisible}` }} id="findBtn" className="formBtn" onClick={() => selectSection("")}>Find Users</button>
+
                         }
-                        {
-                            (Number(props.match.params.userId) > 0 && sessionStorage.getItem("followedUser") !== null) ?
+                        <div className="subSection">
+                            {
+                                (Number(props.match.params.userId) > 0 && sessionStorage.getItem("followedUser") !== null) ?
                                     <>
                                         <UserCard {...props} user={JSON.parse(sessionStorage.getItem("followedUser"))} showDesign={true} />
                                         <DesignProvider>
@@ -80,14 +89,15 @@ const UserHome = props => {
 
                                     </>
                                     : (showSection === "unapproved") ?
-                                    <>
-                                        <UserUnapprovedList />
-                                    </>
-                                    : 
-                                    <>
-                                        <UserSearch {...props} />
-                                    </>
-                        }
+                                        <>
+                                            <UserUnapprovedList />
+                                        </>
+                                        :
+                                        <>
+                                            <UserSearch {...props} />
+                                        </>
+                            }
+                        </div>
                     </section>
                 </UserProvider>
             </article>

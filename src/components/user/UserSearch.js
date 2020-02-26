@@ -1,11 +1,11 @@
-import React, {useRef, useContext, useEffect } from 'react'
+import React, { useRef, useContext, useEffect } from 'react'
 import UserCard from './UserCard'
-import {UserContext} from '../providers/UserProvider'
+import { UserContext } from '../providers/UserProvider'
 
 
 const UserSearch = props => {
-    const {searchResults, findUsers} = useContext(UserContext)
-    
+    const { searchResults, findUsers } = useContext(UserContext)
+
     const searchedName = useRef()
 
     const submitSearch = () => {
@@ -24,18 +24,21 @@ const UserSearch = props => {
         }, []
     )
 
-    
+
     return (
         <>
-            <div className="searchdiv">
             <h2>Search for Users</h2>
-            <input id="searchInput" type="text" ref={searchedName} placeholder="Search for a user" />
-            <button onClick={submitSearch}>Search</button>
+
+            <div className="userCard">
+                <div className="searchdiv">
+                    <input id="searchInput" type="text" ref={searchedName} placeholder="Search for a user" />
+                    <button className="formBtn" onClick={submitSearch}>Search</button>
+                </div>
             </div>
 
             <div>
                 {
-                    searchResults.map(user => <UserCard key={user.id} user={user} {...props}/>)
+                    searchResults.map(user => <UserCard key={user.id} user={user} {...props} />)
                 }
             </div>
         </>

@@ -2,11 +2,6 @@
     display: flex;
 }
 
-#userButtons {
-    /* display: flex; */
-    /* flex-direction: column; */
-}
-
 #findBtn {
     margin: .5em;
     max-width: 15%;
@@ -25,6 +20,7 @@
     border: 1px solid black;
     border-radius: 1%;
     margin: .25em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
 }
 
 .userCard .card-content {
@@ -38,8 +34,18 @@
 }
 
 .mainSection {
-    /* background-color: orange; */
     flex-basis: 80%;
+
+}
+
+.mainSection .subSection {
+    max-width: 50em;
+    margin: 2em auto;
+    padding: 2em;
+}
+
+.mainSection .userCard {
+    width: 100%;
 }
 
 .sideSection {
@@ -47,11 +53,13 @@
     flex-basis: 20%;
     border: 2px solid var(--red-accent);
     min-width: 225px;
-    /* background-color: var(--red-accent); */
 }
 
-.mainSection .userCard {
-    width: 100%;
+.sideSection h2 {
+    text-align: center;
+    margin-top: .5em;
+    margin-bottom: .25em;
+    /* color: snow; */
 }
 
 .sideSection .userCard .card-content{
@@ -69,8 +77,10 @@
 }
 
 #searchInput {
-    width: 20%;
+    width: 40%;
     margin-right: 1em;
+    box-sizing: border-box;
+    padding: .2em .4em;
 }
 
 #viewBtn {
@@ -78,9 +88,9 @@
     margin-bottom: .5em;
 }
 
-.sideSection h2 {
-    text-align: center;
-    margin-top: .5em;
-    margin-bottom: .25em;
-    /* color: snow; */
+.userCard .searchdiv {
+    background-color: var(--white-opacity);
+    border-radius: 1%;
+    margin: .2em;
+    padding: .25em;
 }
