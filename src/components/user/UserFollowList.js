@@ -7,8 +7,6 @@ const UserFollowList = props => {
 
     return (
         <>
-        <h2>Following These Users</h2>
-
             <div className="container-cards">
                 {followedUsers.map(followObj => <UserCard key={followObj.id} user={followObj.user} followObj={followObj} {...props}/>)}
             </div>

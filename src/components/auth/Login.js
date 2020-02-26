@@ -10,50 +10,57 @@ const Login = props => {
     const handleLogin = evt => {
         evt.preventDefault()
 
-        if(email.current.value === "" || password.current.value === ""){
+        if (email.current.value === "" || password.current.value === "") {
             alert("Please complete all fields")
         }
-        else{
+        else {
 
-        const userInfo = {
-            email: email.current.value,
-            password: password.current.value
-        }
+            const userInfo = {
+                email: email.current.value,
+                password: password.current.value
+            }
 
-        //login returns where the app should redirect to depending on if login was successful
-        login(userInfo)
-            .then(loginFailed => {
- 
-                props.history.push("/")
-                //will reset login form if the user entered incorrect credentials and stays in the login page
-                if(loginFailed){
-                    email.current.value = ""
-                    password.current.value = ""
-                }
-            })
+            //login returns where the app should redirect to depending on if login was successful
+            login(userInfo)
+                .then(loginFailed => {
+
+                    props.history.push("/")
+                    //will reset login form if the user entered incorrect credentials and stays in the login page
+                    if (loginFailed) {
+                        email.current.value = ""
+                        password.current.value = ""
+                    }
+                })
         }
 
     }
     return (
-        <form onSubmit={handleLogin}>
-            <fieldset>
-                <h3>Please Login</h3>
-                <div className="formgrid">
-                    <input ref={email} type="email"
-                        id="email"
-                        placeholder="Email address"
-                        required="" autoFocus="" />
-                    <label htmlFor="inputEmail">Email address</label>
+        <>
+            <h2>Welcome to Stitch It</h2>
 
-                    <input ref={password} type="password"
-                        id="password"
-                        placeholder="Password"
-                        required="" />
-                    <label htmlFor="inputPassword">Password</label>
+            <article className="formEl">
+                <div className="formBkgd">
+                    <h3>Please Login</h3>
+                    <div className="formgrid">
+                        <label htmlFor="email">Email address</label>
+                        <input ref={email} type="email"
+                            id="email"
+                            placeholder="Email address"
+                            required="" autoFocus="" />
+                    </div>
+                    <div className="formgrid">
+                        <label htmlFor="password">Password</label>
+                        <input ref={password} type="password"
+                            id="password"
+                            placeholder="Password"
+                            required="" />
+                    </div>
+                    <div className="alignRight">
+                        <button type="button" className="formBtn" onClick={handleLogin}>Login</button>
+                    </div>
                 </div>
-                <button type="submit">Login</button>
-            </fieldset>
-        </form>
+            </article>
+        </>
     )
 }
 

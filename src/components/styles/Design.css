@@ -13,6 +13,8 @@
     padding: .5em;
     display: flex;
     flex-direction: column;
+    max-width: 350px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
 }
 
 .designStatus {
@@ -37,7 +39,7 @@
     margin: auto .25em;
 }
 
-.designEl svg:hover {
+.designEl svg:hover, .formEl svg:hover {
     color: var(--red-accent);
     cursor: pointer;
 }

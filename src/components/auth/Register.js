@@ -29,7 +29,7 @@ const Register = props => {
                 .then(redirectTo => {
                     props.history.push(redirectTo)
 
-                    if(redirectTo === "/register") {
+                    if (redirectTo === "/register") {
                         password.current.value = ""
                     }
                 })
@@ -37,41 +37,51 @@ const Register = props => {
     }
 
     return (
-        <form onSubmit={handleRegister}>
-            <fieldset>
-                <h3>Please Register</h3>
-                <div className="formgrid">
-                    <input ref={firstName} type="text"
-                        id="firstName"
-                        placeholder="First Name"
-                        required="" autoFocus="" />
-                    <label htmlFor="inputFirstName">First Name</label>
+        <>
+            <h2>Welcome to Stitch It</h2>
 
-                    <input ref={lastName} type="text"
-                        id="lastName"
-                        placeholder="Last Name"
-                        required="" autoFocus="" />
-                    <label htmlFor="inputLastName">Last Name</label>
-
-                    <input ref={email} type="email"
-                        id="email"
-                        placeholder="Email address"
-                        required="" autoFocus="" />
-                    <label htmlFor="inputEmail">Email address</label>
-
-                    <input ref={password} type="password"
-                        id="password"
-                        placeholder="Password"
-                        required="" />
-                    <label htmlFor="inputPassword">Password</label>
-
-                    <input ref={publicProfile} type="checkbox"
-                        id="publicProfile"/>
-                    <label htmlFor="inputPublic">Public Profile?</label>
+            <article className="formEl">
+                <div className="formBkgd">
+                    <h3>Please Register</h3>
+                    <div className="formgrid">
+                        <label htmlFor="firstName">First Name:</label>
+                        <input ref={firstName} type="text"
+                            id="firstName"
+                            placeholder="First Name"
+                            required="" autoFocus="" />
+                    </div>
+                    <div className="formgrid">
+                        <label htmlFor="lastName">Last Name:</label>
+                        <input ref={lastName} type="text"
+                            id="lastName"
+                            placeholder="Last Name"
+                            required="" autoFocus="" />
+                    </div>
+                    <div className="formgrid">
+                        <label htmlFor="email">Email address:</label>
+                        <input ref={email} type="email"
+                            id="email"
+                            placeholder="Email address"
+                            required="" autoFocus="" />
+                    </div>
+                    <div className="formgrid">
+                        <label htmlFor="password">Password:</label>
+                        <input ref={password} type="password"
+                            id="password"
+                            placeholder="Password"
+                            required="" />
+                    </div>
+                    <div className="formgrid">
+                        <label htmlFor="publicProfile">Public Profile? <span className="subText">(anyone can view your designs)</span></label>
+                        <input ref={publicProfile} type="checkbox"
+                            id="publicProfile" />
+                    </div>
+                    <div className="alignRight">
+                        <button type="button" className="formBtn" onClick={handleRegister}>Register</button>
+                    </div>
                 </div>
-                <button type="submit">Register</button>
-            </fieldset>
-        </form>
+            </article>
+        </>
     )
 }
 

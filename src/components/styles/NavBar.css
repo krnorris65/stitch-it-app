@@ -10,6 +10,13 @@ nav {
 .nav-link:hover{
     display: inline;
     font-size: 1.5rem;
-    /* color: var(--red-accent); */
     cursor: pointer;
 }
+
+#logo {
+    margin-top: .5em;
+    margin-right: .5em;
+    height: 50px;
+    width: auto;
+}
+

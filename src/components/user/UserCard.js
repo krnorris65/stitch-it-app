@@ -2,8 +2,6 @@ import React, { useState, useEffect, useContext } from 'react'
 import { UserContext } from '../providers/UserProvider'
 import useFollowStatus from '../../hooks/ui/useFollowStatus'
 
-import PersonIcon from '@material-ui/icons/Person';
-
 const UserCard = props => {
     const [currentUser] = localStorage.getItem("currUserId")
     const [followedStatus, setFollowedStatus] = useState(false)
@@ -46,8 +44,6 @@ const UserCard = props => {
 
     useEffect(updateStatusAndId, [])
 
-    console.log(sessionStorage.getItem("followedUser"))
-
     return (
         <div className="userCard">
             <div className="card-content">
@@ -55,30 +51,30 @@ const UserCard = props => {
                     //showDesign is only passed in when the user card is populated due to props.match.params.userId > 0
                     (props.showDesign === true) ?
                         <>
-                            <h2>{props.user.firstName} {props.user.lastName}'s Designs</h2>
-                            <button onClick={() => unfollowFromDesign(props.user.followId)}>Unfollow</button>
+                            <h2 className="userName">{props.user.firstName} {props.user.lastName}'s Designs</h2>
+                            <button className="formBtn" onClick={() => unfollowFromDesign(props.user.followId)}>Unfollow</button>
                         </>
                         :
                         <>
-                            <h4 className="userName">{props.user.firstName} {props.user.lastName}</h4>
+                            <h3 className="userName">{props.user.firstName} {props.user.lastName}</h3>
 
                             {
                                 // conditional that checks if the user is the one that's logged in
                                 (followedStatus === "current") ?
-                                    <PersonIcon className="userIcon" onClick={() => props.history.push("/")} />
+                                    <button className="formBtn" onClick={() => props.history.push("/")}>My Designs</button>
                                     // if the current user is currently following the user
                                     // if the current user isn't following the user and the user's profile is public
                                     : (followedStatus === "following") ?
                                         <>
-                                            <button onClick={() => viewDesigns(props.user, followId)}>View Profile</button>
+                                            <button className="formBtn" onClick={() => viewDesigns(props.user, followId)}>View Designs</button>
                                         </>
                                         // if the current user has requested to follow the user but it hasn't been approved
                                         : (followedStatus === "pending") ?
-                                            <button onClick={() => deleteFollow(followId)}>Delete Follow Request</button>
+                                            <button className="formBtn" onClick={() => deleteFollow(followId)}>Delete Follow Request</button>
                                             : (props.user.publicProfile) ?
-                                                <button onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Follow</button>
+                                                <button className="formBtn" onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Follow</button>
                                                 // if the current user isn't following the user and the user's profile is private
-                                                : <button onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Request to Follow</button>
+                                                : <button className="formBtn" onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Request to Follow</button>
                             }
                         </>
                 }

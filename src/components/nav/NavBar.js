@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import useSimpleAuth from '../../hooks/ui/useSimpleAuth'
 
 import Toolbar from '@material-ui/core/Toolbar';
@@ -18,10 +17,12 @@ const NavBar = props => {
     return (
         <nav>
             <Toolbar>
-                <Typography className="nav-link" variant="h6" onClick={() => props.history.push("/")}> Home</Typography>
+                <Typography variant="h6" onClick={() => props.history.push("/")}> <img id="logo" src={require('./needle.svg')} alt="logo"/></Typography>
+                <Typography className="nav-link" variant="h6" onClick={() => props.history.push("/")}> Stitch It</Typography>
                 {isAuthenticated() ?
                     <>
-                        <Typography className="nav-link" variant="h6" onClick={() => props.history.push("/following/0")}>Find Users</Typography>
+                        <Typography className="nav-link" variant="h6" onClick={() => props.history.push("/")}> My Designs</Typography>
+                        <Typography className="nav-link" variant="h6" onClick={() => props.history.push("/following/0")}>Following</Typography>
                         {/* <Typography className="nav-link" variant="h6">Messages</Typography> */}
                         <Button color="inherit" onClick={handleLogout}>Logout</Button>
                     </>
