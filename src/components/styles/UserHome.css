@@ -89,8 +89,13 @@
 }
 
 .userCard .searchdiv {
-    background-color: var(--white-opacity);
     border-radius: 1%;
     margin: .2em;
     padding: .25em;
+    text-align: center;
+}
+
+.searchdiv .formBtn {
+    background-color: var(--white-opacity);
+    color: black;
 }

@@ -29,7 +29,7 @@ const UserSearch = props => {
         <>
             <h2>Search for Users</h2>
 
-            <div className="userCard">
+            <div className="userCard searchCard">
                 <div className="searchdiv">
                     <input id="searchInput" type="text" ref={searchedName} placeholder="Search for a user" />
                     <button className="formBtn" onClick={submitSearch}>Search</button>
