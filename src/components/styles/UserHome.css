@@ -46,6 +46,8 @@
     height: 50%;
     flex-basis: 20%;
     border: 2px solid var(--red-accent);
+    min-width: 225px;
+    /* background-color: var(--red-accent); */
 }
 
 .mainSection .userCard {
@@ -74,4 +76,11 @@
 #viewBtn {
     max-width: 100%;
     margin-bottom: .5em;
+}
+
+.sideSection h2 {
+    text-align: center;
+    margin-top: .5em;
+    margin-bottom: .25em;
+    /* color: snow; */
 }
