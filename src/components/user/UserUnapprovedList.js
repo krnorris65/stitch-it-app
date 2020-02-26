@@ -9,7 +9,7 @@ const UserUnapprovedList = props => {
 
     return (
         <>
-        <h2>Reply To These Requests</h2>
+        <h2>Pending Follow Requests</h2>
             <div className="container-cards">
                 {unapprovedUsers.map(followRequest => <UserApprovalCard key={followRequest.id} followRequest={followRequest}/>)}
             </div>

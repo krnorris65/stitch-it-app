@@ -62,6 +62,10 @@
     max-width: 10em;
 }
 
+.userCard .button-container {
+    display: flex;
+}
+
 #searchInput {
     width: 20%;
     margin-right: 1em;
