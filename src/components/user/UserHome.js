@@ -44,17 +44,18 @@ const UserHome = props => {
             {
                 <button className="userBtn" onClick={() => props.history.push("/users/search")}>Find Users</button>
             }
-                        {
+            {
                 <button className="userBtn" onClick={() => props.history.push("/users/following")}>Following Users</button>
             }
             {
-                //only need to show unapproved request button if the current user doesn't have a public profile. if they have a public profile, then a user can follow them automatically so there won't be any pending requests 
+                //only need to show unapproved request button if the current user doesn't have a public profile. if they have a public profile, then a user can follow them automatically so there won't be any pending requests. 
+                //When getting information out of localStorage false comes back as "f"
+
                 (hasPublicProfile === "f") ?
                     <button className="userBtn" onClick={() => props.history.push("/users/pending")}>View Follow Requests</button>
                     : null
             }
 
-            {/* <article id="userContainer"> */}
             <article className="userContainer">
                 {
                     (showSection === "following") ?
