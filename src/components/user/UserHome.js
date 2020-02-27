@@ -36,16 +36,16 @@ const UserHome = props => {
 
     const findOtherUser = (id) => {
         getFollowedUserInfo(id)
-        .then(userInfo => {
-            //if user info comes back set it as other user info and set the section to user-designs
-            if(userInfo){
-                setOtherUserInfo(userInfo)
-                setSection("user-designs")
-            } else {
-                //else show following page
-                setSection("following")
-            }
-        })
+            .then(userInfo => {
+                //if user info comes back set it as other user info and set the section to user-designs
+                if (userInfo) {
+                    setOtherUserInfo(userInfo)
+                    setSection("user-designs")
+                } else {
+                    //else show following page
+                    setSection("following")
+                }
+            })
     }
 
     useEffect(findSection, [])
@@ -54,10 +54,10 @@ const UserHome = props => {
     return (
         <>
             {
-                <button className="userBtn" onClick={() => props.history.push("/users/search")}>Find Users</button>
+                <button className="userBtn" onClick={() => props.history.push("/users/following")}>Following</button>
             }
             {
-                <button className="userBtn" onClick={() => props.history.push("/users/following")}>Following Users</button>
+                <button className="userBtn" onClick={() => props.history.push("/users/search")}>Search for Users</button>
             }
             {
                 //only need to show unapproved request button if the current user doesn't have a public profile. if they have a public profile, then a user can follow them automatically so there won't be any pending requests. 

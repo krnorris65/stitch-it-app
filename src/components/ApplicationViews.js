@@ -7,7 +7,6 @@ import useSimpleAuth from '../hooks/ui/useSimpleAuth'
 import Home from './home/Home'
 import DesignForm from './design/DesignForm'
 import UserHome from './user/UserHome'
-import UserPage from './user/UserPage'
 
 import { FabricProvider } from "./providers/FabricProvider"
 import { SizeProvider } from "./providers/SizeProvider"
@@ -23,14 +22,6 @@ const ApplicationViews = props => {
         <div id="app-container">
             <Route exact path="/" render={props => {
                 return <Home {...props} />
-            }} />
-
-            <Route path="/following/:userId(\d)" render={props => {
-                if (isAuthenticated()) {
-                    return <UserPage {...props} />
-                } else {
-                    return <Redirect to="/" />
-                }
             }} />
 
             <Route path="/users/search" render={props => {
