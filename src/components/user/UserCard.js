@@ -9,9 +9,7 @@ const UserCard = props => {
     const [followedStatus, setFollowedStatus] = useState(false)
     //when updating the follow status this will hold the needed id
     const [followId, setFollowId] = useState()
-
     const { deleteFollow, followUser } = useContext(UserContext)
-
     const { findStatus } = useFollowStatus(props.user)
 
     const updateStatusAndId = () => {
@@ -34,14 +32,13 @@ const UserCard = props => {
     const viewDesigns = (userInfo, followId) => {
         //pass the followId so that the user can unfollow
         userInfo.followId = followId
-        sessionStorage.setItem("followedUser", JSON.stringify(userInfo))
         props.history.push(`/users/following/${userInfo.id}`)
 
     }
 
     const unfollowFromDesign = (followId) => {
-        props.history.push("/following/0")
         deleteFollow(followId)
+            .then(() => props.history.push("/users/following"))
     }
 
     useEffect(updateStatusAndId, [])

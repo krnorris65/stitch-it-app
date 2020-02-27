@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 
 const remoteURL = 'http://localhost:5002'
 
@@ -7,46 +7,46 @@ export const UserContext = React.createContext()
 export const UserProvider = props => {
     const [followedUsers, setFollowedUsers] = useState([])
     const [unapprovedUsers, setUnapprovedUsers] = useState([])
-    const [pendingRequests, setPendingRequests] =useState([])
+    const [pendingRequests, setPendingRequests] = useState([])
     const [searchResults, setSearchResult] = useState([])
-    
+
     const [currentUser] = localStorage.getItem("currUserId")
 
     const getFollowedUsers = () => {
         return fetch(`${remoteURL}/follows?_expand=user&currentUserId=${currentUser}&pending=false`)
-        .then(res => res.json())
-        .then(setFollowedUsers)
+            .then(res => res.json())
+            .then(setFollowedUsers)
     }
 
     const getPendingRequests = () => {
         return fetch(`${remoteURL}/follows?_expand=user&currentUserId=${currentUser}&pending=true`)
-        .then(res => res.json())
-        .then(setPendingRequests)
+            .then(res => res.json())
+            .then(setPendingRequests)
     }
 
     const getSingleUser = (id) => {
-        return fetch(`${remoteURL}/users/${id}?pending=true`)
-        .then(res => res.json())
+        return fetch(`${remoteURL}/users/${id}`)
+            .then(res => res.json())
     }
 
     const getAllUsersWithFollows = () => {
         return fetch(`${remoteURL}/users?_embed=follows`)
-        .then(res => res.json())
+            .then(res => res.json())
     }
 
     const getUnapprovedRequests = () => {
         //need to have an additional request for each user to expand upon the requesting user's information
         return fetch(`${remoteURL}/follows?userId=${currentUser}&pending=true`)
-        .then(res => res.json())
-        .then(async unapprovedReq => {
-            await Promise.all(
-                unapprovedReq.map(async requestObj => {
-                    await getSingleUser( requestObj.currentUserId)
-                        .then(userInfo => requestObj.user = userInfo)
-                })
-            )
-            setUnapprovedUsers(unapprovedReq)
-        })
+            .then(res => res.json())
+            .then(async unapprovedReq => {
+                await Promise.all(
+                    unapprovedReq.map(async requestObj => {
+                        await getSingleUser(requestObj.currentUserId)
+                            .then(userInfo => requestObj.user = userInfo)
+                    })
+                )
+                setUnapprovedUsers(unapprovedReq)
+            })
     }
 
     //creates new follow 
@@ -58,9 +58,9 @@ export const UserProvider = props => {
             },
             body: JSON.stringify(newFollow)
         })
-        .then(getFollowedUsers)
-        .then(getPendingRequests)
-        .then(() => setSearchResult([]))
+            .then(getFollowedUsers)
+            .then(getPendingRequests)
+            .then(() => setSearchResult([]))
     }
 
     //updates existing follow request to approve request
@@ -75,8 +75,8 @@ export const UserProvider = props => {
             },
             body: JSON.stringify(approveObj)
         })
-        .then(getFollowedUsers)
-        .then(getUnapprovedRequests)
+            .then(getFollowedUsers)
+            .then(getUnapprovedRequests)
     }
 
     //deletes follow
@@ -84,10 +84,10 @@ export const UserProvider = props => {
         return fetch(`${remoteURL}/follows/${id}`, {
             method: "DELETE",
         })
-        .then(getFollowedUsers)
-        .then(getUnapprovedRequests)
-        .then(getPendingRequests)
-        .then(() => setSearchResult([]))
+            .then(getFollowedUsers)
+            .then(getUnapprovedRequests)
+            .then(getPendingRequests)
+            .then(() => setSearchResult([]))
     }
 
     const findUsers = (searched) => {

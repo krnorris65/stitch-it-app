@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import UserSearch from './UserSearch'
 import UserCard from './UserCard'
 import UserFollowList from "./UserFollowList"
 import UserUnapprovedList from "./UserUnapprovedList"
 import { DesignProvider } from "../providers/DesignProvider"
+import { UserContext } from "../providers/UserProvider"
 
 import DesignList from "../design/DesignList"
 
@@ -14,6 +15,10 @@ const UserHome = props => {
     //following, search, pending, user-designs
     const [showSection, setSection] = useState("")
     const [hasPublicProfile] = localStorage.getItem("publicProfile")
+    const [otherUserInfo, setOtherUserInfo] = useState({})
+
+    let { getSingleUser } = useContext(UserContext)
+
 
     const findSection = () => {
         const urlPath = props.match.path
@@ -23,21 +28,24 @@ const UserHome = props => {
         //if the params has a userId set the section to user-design
         if (userId) {
             setSection("user-designs")
+            findOtherUser(userId)
         } else {
             //else set it to the section from the url
             setSection(currentSection)
         }
     }
 
+    const findOtherUser = (id) => {
+        getSingleUser(id)
+        .then(setOtherUserInfo)
+    }
+
     useEffect(findSection, [])
 
+    useEffect(() => {
+        console.log("trigger")
+    }, [props.match.params.userId])
 
-    //when component unmounts, remove the followedUser info from session storage
-    useEffect(
-        () => {
-            return () => sessionStorage.removeItem("followedUser")
-        }, []
-    )
 
     return (
         <>
@@ -74,7 +82,7 @@ const UserHome = props => {
                                 </> :
                                 (showSection === "user-designs") ?
                                     <>
-                                        {/* <UserCard {...props} user={JSON.parse(sessionStorage.getItem("followedUser"))} showDesign={true} /> */}
+                                        <UserCard {...props} user={otherUserInfo} showDesign={true} />
                                         <DesignProvider>
                                             <DesignList {...props} />
                                         </DesignProvider>
