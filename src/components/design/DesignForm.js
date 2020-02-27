@@ -12,8 +12,7 @@ import { DesignContext } from '../providers/DesignProvider'
 import { FabricContext } from '../providers/FabricProvider'
 import { SizeContext } from '../providers/SizeProvider'
 
-
-
+import "../styles/Form.css"
 
 function getModalStyle() {
     const top = 40;

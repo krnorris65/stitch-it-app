@@ -1,0 +1,21 @@
+.userName{
+    margin: 1em;
+}
+
+.userCard {
+    background-color: var(--dark-background);
+    border: 1px solid black;
+    border-radius: 1%;
+    margin: .25em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+}
+
+.userCard .card-content {
+    display: flex;
+    align-items: center;
+    background-color: var(--white-opacity);
+    border-radius: 1%;
+    margin: .25em;
+    padding: .25em;
+    justify-content: space-between;
+}

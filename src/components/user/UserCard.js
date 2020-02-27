@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react'
 import { UserContext } from '../providers/UserProvider'
 import useFollowStatus from '../../hooks/ui/useFollowStatus'
 
+import '../styles/UserCard.css'
+
 const UserCard = props => {
     const [currentUser] = localStorage.getItem("currUserId")
     const [followedStatus, setFollowedStatus] = useState(false)
@@ -33,7 +35,7 @@ const UserCard = props => {
         //pass the followId so that the user can unfollow
         userInfo.followId = followId
         sessionStorage.setItem("followedUser", JSON.stringify(userInfo))
-        props.history.push(`/following/${userInfo.id}`)
+        props.history.push(`/users/following/${userInfo.id}`)
 
     }
 

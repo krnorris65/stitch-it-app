@@ -73,7 +73,8 @@ const UserHome = props => {
             {
                 <button className="formBtn" onClick={() => props.history.push("/users/following/1")}>Users 2 Page</button>
             }
-            <article id="userContainer">
+            {/* <article id="userContainer"> */}
+            <article className="userSection">
                 {
                     (showSection === "following") ?
                         <>

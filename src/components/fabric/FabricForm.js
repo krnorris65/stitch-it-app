@@ -6,6 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { FabricContext } from '../providers/FabricProvider'
 
 
+
 const FabricForm = props => {
     const { firstLetterCase } = helper()
     const type = useRef()
