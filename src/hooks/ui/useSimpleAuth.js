@@ -16,7 +16,7 @@ const useSimpleAuth = () => {
         return fetch(`${remoteURL}/users/${userId}`)
         .then(res => res.json())
         .then(user => {
-            return user.publicProfile
+            localStorage.setItem("publicProfile", user.publicProfile)
         })
     }
 
@@ -36,6 +36,7 @@ const useSimpleAuth = () => {
                     //after registering a new user, their id is stored in localStorage to then log the user in and state of loggedIn to true
                     localStorage.setItem("currUserId", res.user.id)
                     setLoggedIn(true)
+                    hasPublicProfile(res.user.id)
                     return "/"
                 } else {
                     alert(res)
@@ -60,6 +61,8 @@ const useSimpleAuth = () => {
                     //after verifying that the user entered in correct credentials, their id is stored in localStorage and state of loggedIn is set to true
                     localStorage.setItem("currUserId", res.user.id)
                     setLoggedIn(true)
+                    hasPublicProfile(res.user.id)
+                    
                     //return false if login was successful
                     return false
                 } else {
@@ -74,6 +77,7 @@ const useSimpleAuth = () => {
         //when the user logs out, state of loggedIn is set to false and their id is removed from localStorage
         setLoggedIn(false)
         localStorage.removeItem("currUserId")
+        localStorage.removeItem("publicProfile")
     }
 
     return { isAuthenticated, logout, login, register, hasPublicProfile }

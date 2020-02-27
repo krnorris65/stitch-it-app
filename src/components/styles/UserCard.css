@@ -19,3 +19,12 @@
     padding: .25em;
     justify-content: space-between;
 }
+
+.userCard .formBtn {
+    margin: .5em;
+    max-width: 10em;
+}
+
+.userCard .button-container {
+    display: flex;
+}
