@@ -17,7 +17,7 @@ const UserHome = props => {
     const [hasPublicProfile] = localStorage.getItem("publicProfile")
     const [otherUserInfo, setOtherUserInfo] = useState({})
 
-    let { getSingleUser } = useContext(UserContext)
+    let { getFollowedUserInfo } = useContext(UserContext)
 
 
     const findSection = () => {
@@ -25,9 +25,8 @@ const UserHome = props => {
         const currentSection = urlPath.split("/")[2]
         const userId = props.match.params.userId
 
-        //if the params has a userId set the section to user-design
+        //if the params has a userId find if the user is followed by the current user
         if (userId) {
-            setSection("user-designs")
             findOtherUser(userId)
         } else {
             //else set it to the section from the url
@@ -36,15 +35,20 @@ const UserHome = props => {
     }
 
     const findOtherUser = (id) => {
-        getSingleUser(id)
-        .then(setOtherUserInfo)
+        getFollowedUserInfo(id)
+        .then(userInfo => {
+            //if user info comes back set it as other user info and set the section to user-designs
+            if(userInfo){
+                setOtherUserInfo(userInfo)
+                setSection("user-designs")
+            } else {
+                //else show following page
+                setSection("following")
+            }
+        })
     }
 
     useEffect(findSection, [])
-
-    useEffect(() => {
-        console.log("trigger")
-    }, [props.match.params.userId])
 
 
     return (

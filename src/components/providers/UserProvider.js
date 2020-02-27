@@ -29,6 +29,18 @@ export const UserProvider = props => {
             .then(res => res.json())
     }
 
+    const getFollowedUserInfo = (otherId) => {
+        return fetch(`${remoteURL}/follows?userId=${otherId}&currentUserId=${currentUser}&_expand=user`)
+            .then(res => res.json())
+            .then(dataArray => {
+                if(dataArray.length === 0) {
+                    return undefined
+                } else {
+                    return dataArray[0].user
+                }
+            })
+    }
+
     const getAllUsersWithFollows = () => {
         return fetch(`${remoteURL}/users?_embed=follows`)
             .then(res => res.json())
@@ -118,7 +130,7 @@ export const UserProvider = props => {
 
     return (
         <UserContext.Provider value={{
-            followedUsers, unapprovedUsers, followUser, approveFollow, deleteFollow, findUsers, searchResults, pendingRequests, getSingleUser
+            followedUsers, unapprovedUsers, followUser, approveFollow, deleteFollow, findUsers, searchResults, pendingRequests, getSingleUser, getFollowedUserInfo
         }}>
             {props.children}
         </UserContext.Provider>
