@@ -7,10 +7,12 @@ import useSimpleAuth from '../hooks/ui/useSimpleAuth'
 import Home from './home/Home'
 import DesignForm from './design/DesignForm'
 import UserHome from './user/UserHome'
+import UserPage from './user/UserPage'
 
 import { FabricProvider } from "./providers/FabricProvider"
 import { SizeProvider } from "./providers/SizeProvider"
 import { DesignProvider } from "./providers/DesignProvider"
+import { UserProvider } from "./providers/UserProvider"
 
 
 
@@ -24,8 +26,45 @@ const ApplicationViews = props => {
             }} />
 
             <Route path="/following/:userId(\d)" render={props => {
-                if(isAuthenticated()){
-                    return <UserHome {...props} />
+                if (isAuthenticated()) {
+                    return <UserPage {...props} />
+                } else {
+                    return <Redirect to="/" />
+                }
+            }} />
+
+            <Route path="/users/search" render={props => {
+                if (isAuthenticated()) {
+                    return <UserProvider>
+                        <UserHome {...props} />
+                    </UserProvider>
+                } else {
+                    return <Redirect to="/" />
+                }
+            }} />
+            <Route exact path="/users/following" render={props => {
+                if (isAuthenticated()) {
+                    return <UserProvider>
+                        <UserHome {...props} />
+                    </UserProvider>
+                } else {
+                    return <Redirect to="/" />
+                }
+            }} />
+            <Route exact path="/users/following/:userId(\d)" render={props => {
+                if (isAuthenticated()) {
+                    return <UserProvider>
+                        <UserHome {...props} />
+                    </UserProvider>
+                } else {
+                    return <Redirect to="/" />
+                }
+            }} />
+            <Route path="/users/pending" render={props => {
+                if (isAuthenticated()) {
+                    return <UserProvider>
+                        <UserHome {...props} />
+                    </UserProvider>
                 } else {
                     return <Redirect to="/" />
                 }

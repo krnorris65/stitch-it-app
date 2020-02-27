@@ -14,7 +14,7 @@ import DesignList from "../design/DesignList"
 
 import '../styles/UserHome.css'
 
-const UserHome = props => {
+const UserPage = props => {
     const [showSection, setSection] = useState("")
     const { hasPublicProfile } = useSimpleAuth()
     const [publicProfile, setPublicProfile] = useState(true)
@@ -92,4 +92,4 @@ const UserHome = props => {
     )
 }
 
-export default UserHome
+export default UserPage
