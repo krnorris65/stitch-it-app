@@ -23,7 +23,7 @@ const NavBar = props => {
                     <>
                         <Typography className="nav-link" variant="h6" onClick={() => props.history.push("/")}> My Designs</Typography>
                         <Typography className="nav-link" variant="h6" onClick={() => props.history.push("/following/0")}>Following</Typography>
-                        <Typography className="nav-link" variant="h6" onClick={() => props.history.push("/following")}>User Home</Typography>
+                        <Typography className="nav-link" variant="h6" onClick={() => props.history.push("/users/following")}>User Home</Typography>
                         {/* <Typography className="nav-link" variant="h6">Messages</Typography> */}
                         <Button color="inherit" onClick={handleLogout}>Logout</Button>
                     </>
