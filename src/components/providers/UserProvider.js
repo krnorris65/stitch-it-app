@@ -30,7 +30,7 @@ export const UserProvider = props => {
     }
 
     const getFollowedUserInfo = (otherId) => {
-        return fetch(`${remoteURL}/follows?userId=${otherId}&currentUserId=${currentUser}&_expand=user`)
+        return fetch(`${remoteURL}/follows?userId=${otherId}&currentUserId=${currentUser}&_expand=user&pending=false`)
             .then(res => res.json())
             .then(dataArray => {
                 if(dataArray.length === 0) {
