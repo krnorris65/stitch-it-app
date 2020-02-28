@@ -42,7 +42,7 @@ const ApplicationViews = props => {
                     return <Redirect to="/" />
                 }
             }} />
-            <Route exact path="/users/following/:userId(\d)" render={props => {
+            <Route path="/users/following/:userId/:followId" render={props => {
                 if (isAuthenticated()) {
                     return <UserProvider>
                         <UserHome {...props} />

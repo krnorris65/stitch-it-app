@@ -31,8 +31,7 @@ const UserCard = props => {
 
     const viewDesigns = (userInfo, followId) => {
         //pass the followId so that the user can unfollow
-        userInfo.followId = followId
-        props.history.push(`/users/following/${userInfo.id}`)
+        props.history.push(`/users/following/${userInfo.id}/${followId}`)
 
     }
 
@@ -51,7 +50,7 @@ const UserCard = props => {
                     (props.showDesign === true) ?
                         <>
                             <h2 className="userName">{props.user.firstName} {props.user.lastName}'s Designs</h2>
-                            <button className="formBtn" onClick={() => unfollowFromDesign(props.user.followId)}>Unfollow</button>
+                            <button className="formBtn" onClick={() => unfollowFromDesign(props.match.params.followId)}>Unfollow</button>
                         </>
                         :
                         <>
