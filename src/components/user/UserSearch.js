@@ -14,6 +14,14 @@ const UserSearch = props => {
         findUsers(searched)
     }
 
+    useEffect(() => {
+        return () => {
+            // reset search values after the user navigates away from the search page
+            searchedName.current.value = ""
+            findUsers("")
+        }
+    }, [])
+
     return (
         <>
             <h2>Search for Users</h2>
