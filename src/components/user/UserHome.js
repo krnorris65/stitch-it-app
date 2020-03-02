@@ -20,17 +20,14 @@ const UserHome = props => {
     let { getFollowedUserInfo } = useContext(UserContext)
 
 
-    const findSection = () => {
-        const urlPath = props.match.path
-        const currentSection = urlPath.split("/")[2]
+    const getCurrentSection = () => {
         const userId = props.match.params.userId
         const followId = props.match.params.followId
         //if the params has a userId find if the user is followed by the current user
         if (userId && followId) {
             findOtherUser(userId)
         } else {
-            //else set it to the section from the url
-            setSection(currentSection)
+            setSection(props.match.params.sectionType)
         }
     }
 
@@ -48,7 +45,7 @@ const UserHome = props => {
             })
     }
 
-    useEffect(findSection, [props.location.pathname])
+    useEffect(getCurrentSection, [props.location.pathname])
 
 
     return (

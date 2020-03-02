@@ -24,7 +24,7 @@ const ApplicationViews = props => {
                 return <Home {...props} />
             }} />
 
-            <Route path="/users/search" render={props => {
+            <Route exact path="/users/:sectionType" render={props => {
                 if (isAuthenticated()) {
                     return <UserProvider>
                         <UserHome {...props} />
@@ -33,25 +33,8 @@ const ApplicationViews = props => {
                     return <Redirect to="/" />
                 }
             }} />
-            <Route exact path="/users/following" render={props => {
-                if (isAuthenticated()) {
-                    return <UserProvider>
-                        <UserHome {...props} />
-                    </UserProvider>
-                } else {
-                    return <Redirect to="/" />
-                }
-            }} />
+ 
             <Route path="/users/following/:userId(\d+)/:followId(\d+)" render={props => {
-                if (isAuthenticated()) {
-                    return <UserProvider>
-                        <UserHome {...props} />
-                    </UserProvider>
-                } else {
-                    return <Redirect to="/" />
-                }
-            }} />
-            <Route path="/users/pending" render={props => {
                 if (isAuthenticated()) {
                     return <UserProvider>
                         <UserHome {...props} />
