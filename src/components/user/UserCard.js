@@ -2,14 +2,14 @@ import React, { useState, useEffect, useContext } from 'react'
 import { UserContext } from '../providers/UserProvider'
 import useFollowStatus from '../../hooks/ui/useFollowStatus'
 
+import '../styles/UserCard.css'
+
 const UserCard = props => {
     const [currentUser] = localStorage.getItem("currUserId")
     const [followedStatus, setFollowedStatus] = useState(false)
     //when updating the follow status this will hold the needed id
     const [followId, setFollowId] = useState()
-
     const { deleteFollow, followUser } = useContext(UserContext)
-
     const { findStatus } = useFollowStatus(props.user)
 
     const updateStatusAndId = () => {
@@ -31,15 +31,13 @@ const UserCard = props => {
 
     const viewDesigns = (userInfo, followId) => {
         //pass the followId so that the user can unfollow
-        userInfo.followId = followId
-        sessionStorage.setItem("followedUser", JSON.stringify(userInfo))
-        props.history.push(`/following/${userInfo.id}`)
+        props.history.push(`/users/following/${userInfo.id}/${followId}`)
 
     }
 
     const unfollowFromDesign = (followId) => {
-        props.history.push("/following/0")
         deleteFollow(followId)
+            .then(() => props.history.push("/users/following"))
     }
 
     useEffect(updateStatusAndId, [])
@@ -52,7 +50,7 @@ const UserCard = props => {
                     (props.showDesign === true) ?
                         <>
                             <h2 className="userName">{props.user.firstName} {props.user.lastName}'s Designs</h2>
-                            <button className="formBtn" onClick={() => unfollowFromDesign(props.user.followId)}>Unfollow</button>
+                            <button className="formBtn" onClick={() => unfollowFromDesign(props.match.params.followId)}>Unfollow</button>
                         </>
                         :
                         <>

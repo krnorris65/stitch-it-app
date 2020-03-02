@@ -11,6 +11,7 @@ import UserHome from './user/UserHome'
 import { FabricProvider } from "./providers/FabricProvider"
 import { SizeProvider } from "./providers/SizeProvider"
 import { DesignProvider } from "./providers/DesignProvider"
+import { UserProvider } from "./providers/UserProvider"
 
 
 
@@ -23,9 +24,21 @@ const ApplicationViews = props => {
                 return <Home {...props} />
             }} />
 
-            <Route path="/following/:userId(\d)" render={props => {
-                if(isAuthenticated()){
-                    return <UserHome {...props} />
+            <Route exact path="/users/:sectionType" render={props => {
+                if (isAuthenticated()) {
+                    return <UserProvider>
+                        <UserHome {...props} />
+                    </UserProvider>
+                } else {
+                    return <Redirect to="/" />
+                }
+            }} />
+ 
+            <Route path="/users/following/:userId(\d+)/:followId(\d+)" render={props => {
+                if (isAuthenticated()) {
+                    return <UserProvider>
+                        <UserHome {...props} />
+                    </UserProvider>
                 } else {
                     return <Redirect to="/" />
                 }

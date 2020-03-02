@@ -1,79 +1,22 @@
-#userContainer {
-    display: flex;
-}
-
-#findBtn {
-    margin: .5em;
-    max-width: 15%;
-}
-
-.userSection {
-    padding: 10px;
-}
-
-.userName{
-    margin: 1em;
-}
-
-.userCard {
-    background-color: var(--dark-background);
-    border: 1px solid black;
-    border-radius: 1%;
-    margin: .25em;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
-}
-
-.userCard .card-content {
-    display: flex;
-    align-items: center;
-    background-color: var(--white-opacity);
-    border-radius: 1%;
-    margin: .25em;
-    padding: .25em;
-    justify-content: space-between;
-}
-
-.mainSection {
-    flex-basis: 80%;
-
-}
-
-.mainSection .subSection {
+.userContainer {
     max-width: 50em;
     margin: 1em auto;
     padding: 1em;
 }
 
-.mainSection .userCard {
-    width: 100%;
-}
-
-.sideSection {
-    height: 50%;
-    flex-basis: 20%;
-    border: 2px solid var(--red-accent);
-    min-width: 225px;
-}
-
-.sideSection h2 {
-    text-align: center;
-    margin-top: .5em;
-    margin-bottom: .25em;
-    /* color: snow; */
-}
-
-.sideSection .userCard .card-content{
-    flex-direction: column;
-}
-
-
-.userCard .formBtn {
+.userBtn {
+    width: 15em;
+    padding: .5em;
     margin: .5em;
-    max-width: 10em;
+    background-color: var(--dark-background);
+    border: none;
+    color: snow;
+    font-size: 14px;
+    border-radius: 2px;
 }
 
-.userCard .button-container {
-    display: flex;
+.userBtn:hover {
+    background-color: var(--red-accent);
 }
 
 #searchInput {

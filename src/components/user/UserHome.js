@@ -1,106 +1,96 @@
-import React, { useState, useEffect } from 'react'
-import useSimpleAuth from '../../hooks/ui/useSimpleAuth'
-import SearchIcon from '@material-ui/icons/Search';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-
-
+import React, { useState, useEffect, useContext } from 'react'
 
 import UserSearch from './UserSearch'
 import UserCard from './UserCard'
 import UserFollowList from "./UserFollowList"
 import UserUnapprovedList from "./UserUnapprovedList"
-import { UserProvider } from "../providers/UserProvider"
 import { DesignProvider } from "../providers/DesignProvider"
+import { UserContext } from "../providers/UserProvider"
 
 import DesignList from "../design/DesignList"
 
 import '../styles/UserHome.css'
 
 const UserHome = props => {
+    //following, search, pending, user-designs
     const [showSection, setSection] = useState("")
-    const { hasPublicProfile } = useSimpleAuth()
-    const [publicProfile, setPublicProfile] = useState(true)
-    const [buttonVisible, setButtonVisible] = useState("hidden")
+    const [hasPublicProfile] = localStorage.getItem("publicProfile")
+    const [otherUserInfo, setOtherUserInfo] = useState({})
+
+    let { getFollowedUserInfo } = useContext(UserContext)
 
 
-    const selectSection = (section) => {
-        setSection(section)
-        props.history.push("/following/0")
-    }
-
-    const showButton = () => {
-        if (showSection === "unapproved" || Number(props.match.params.userId) > 0) {
-            setButtonVisible("visible")
+    const getCurrentSection = () => {
+        const userId = props.match.params.userId
+        const followId = props.match.params.followId
+        //if the params has a userId find if the user is followed by the current user
+        if (userId && followId) {
+            findOtherUser(userId)
         } else {
-            setButtonVisible("hidden")
+            setSection(props.match.params.sectionType)
         }
     }
 
-    useEffect(showButton, [showSection, props.match.params.userId])
+    const findOtherUser = (id) => {
+        getFollowedUserInfo(id)
+            .then(userInfo => {
+                //if user info comes back set it as other user info and set the section to user-designs
+                if (userInfo) {
+                    setOtherUserInfo(userInfo)
+                    setSection("user-designs")
+                } else {
+                    //else show following page
+                    setSection("following")
+                }
+            })
+    }
 
-    //determines if the current user has a public profile when the component mounts
-    useEffect(
-        () => {
-            hasPublicProfile()
-                .then(profileStatus => {
-                    setPublicProfile(profileStatus)
-                })
-        }, []
-    )
-    //when component unmounts, remove the followedUser info from session storage
-    useEffect(
-        () => {
-            return () => sessionStorage.removeItem("followedUser")
-        }, []
-    )
+    useEffect(getCurrentSection, [props.location.pathname])
+
 
     return (
         <>
+            {
+                <button className="userBtn" onClick={() => props.history.push("/users/following")}>Following</button>
+            }
+            {
+                <button className="userBtn" onClick={() => props.history.push("/users/search")}>Search for Users</button>
+            }
+            {
+                //only need to show unapproved request button if the current user doesn't have a public profile. if they have a public profile, then a user can follow them automatically so there won't be any pending requests. 
+                //When getting information out of localStorage false comes back as "f"
 
-            <article id="userContainer">
-                <UserProvider>
-                    <section className="userSection sideSection">
-                        <h2>Following</h2>
-                        {
-                            //only need to show unapproved request button if the current user doesn't have a public profile. if they have a public profile, then a user can follow them automatically so there won't be any pending requests 
-                            (!publicProfile) ?
-                                <button id="viewBtn" className="formBtn" onClick={() => selectSection("unapproved")}>View Follow Requests</button>
-                                : null
-                        }
+                (hasPublicProfile === "f") ?
+                    <button className="userBtn" onClick={() => props.history.push("/users/pending")}>View Follow Requests</button>
+                    : null
+            }
 
-                        <UserFollowList {...props} />
-                    </section>
+            <article className="userContainer">
+                {
+                    (showSection === "following") ?
+                        <>
+                            <UserFollowList {...props} />
+                        </> :
+                        (showSection === "search") ?
+                            <>
+                                <UserSearch {...props} />
 
-                    <section className="userSection mainSection">
+                            </> :
+                            (showSection === "pending") ?
+                                <>
+                                    <UserUnapprovedList />
 
-                        {
-
-                            <button style={{ visibility: `${buttonVisible}` }} id="findBtn" className="formBtn" onClick={() => selectSection("")}>Find Users</button>
-
-                        }
-                        <div className="subSection">
-                            {
-                                (Number(props.match.params.userId) > 0 && sessionStorage.getItem("followedUser") !== null) ?
+                                </> :
+                                (showSection === "user-designs") ?
                                     <>
-                                        <UserCard {...props} user={JSON.parse(sessionStorage.getItem("followedUser"))} showDesign={true} />
+                                        <UserCard {...props} user={otherUserInfo} showDesign={true} />
                                         <DesignProvider>
                                             <DesignList {...props} />
                                         </DesignProvider>
-
-                                    </>
-                                    : (showSection === "unapproved") ?
-                                        <>
-                                            <UserUnapprovedList />
-                                        </>
-                                        :
-                                        <>
-                                            <UserSearch {...props} />
-                                        </>
-                            }
-                        </div>
-                    </section>
-                </UserProvider>
+                                    </> : null
+                }
             </article>
+
         </>
     )
 }
