@@ -9,7 +9,7 @@ const UserCard = props => {
     const [followedStatus, setFollowedStatus] = useState(false)
     //when updating the follow status this will hold the needed id
     const [followId, setFollowId] = useState()
-    const { deleteFollow, followUser } = useContext(UserContext)
+    const { deleteFollow, followUser, getFollowedUserInfo } = useContext(UserContext)
     const { findStatus } = useFollowStatus(props.user)
 
     const updateStatusAndId = () => {
@@ -26,7 +26,13 @@ const UserCard = props => {
             pending: !publicProfile
         }
 
-        followUser(newFollow)
+        followUser(newFollow).then(followInfo => {
+            if(!followInfo.pending){
+                props.history.push(`/users/following/${followInfo.userId}/${followInfo.id}`)
+            } else {
+                props.history.push("/users/following")
+            }
+        })
     }
 
     const viewDesigns = (userInfo, followId) => {

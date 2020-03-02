@@ -61,7 +61,7 @@ export const UserProvider = props => {
             })
     }
 
-    //creates new follow 
+    //creates new follow, sets the search results to an empty array and returns the new object
     const followUser = (newFollow) => {
         return fetch(`${remoteURL}/follows`, {
             method: "POST",
@@ -70,9 +70,10 @@ export const UserProvider = props => {
             },
             body: JSON.stringify(newFollow)
         })
-            .then(getFollowedUsers)
-            .then(getPendingRequests)
-            .then(() => setSearchResult([]))
+            .then(newFollow => {
+                setSearchResult([])
+                return newFollow.json()
+            })
     }
 
     //updates existing follow request to approve request
