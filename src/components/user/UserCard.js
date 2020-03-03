@@ -26,7 +26,13 @@ const UserCard = props => {
             pending: !publicProfile
         }
 
-        followUser(newFollow)
+        followUser(newFollow).then(followInfo => {
+            if(!followInfo.pending){
+                props.history.push(`/users/following/${followInfo.userId}/${followInfo.id}`)
+            } else {
+                props.history.push("/users/following")
+            }
+        })
     }
 
     const viewDesigns = (userInfo, followId) => {

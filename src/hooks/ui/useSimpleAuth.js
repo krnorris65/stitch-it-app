@@ -11,6 +11,14 @@ const useSimpleAuth = () => {
 
     }
 
+    const currentUserInfo = () => {
+        const userId = localStorage.getItem("currUserId")
+        if(userId){
+            return fetch(`${remoteURL}/users/${userId}`)
+            .then(res => res.json())
+        }
+    }
+
     const hasPublicProfile = () => {
         const userId = localStorage.getItem("currUserId")
         return fetch(`${remoteURL}/users/${userId}`)
@@ -80,7 +88,7 @@ const useSimpleAuth = () => {
         localStorage.removeItem("publicProfile")
     }
 
-    return { isAuthenticated, logout, login, register, hasPublicProfile }
+    return { isAuthenticated, logout, login, register, hasPublicProfile, currentUserInfo }
 }
 
 export default useSimpleAuth

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import useSimpleAuth from '../../hooks/ui/useSimpleAuth'
 
 import Toolbar from '@material-ui/core/Toolbar';
@@ -9,12 +9,19 @@ import "../styles/NavBar.css"
 
 
 const NavBar = props => {
-    const { isAuthenticated, logout } = useSimpleAuth()
+    const { isAuthenticated, logout, currentUserInfo } = useSimpleAuth()
+    const [firstName, setFirstName] = useState("")
 
     const handleLogout = () => {
         logout()
         props.history.push("/")
     }
+
+    useEffect(() => {
+        if(isAuthenticated()){
+            currentUserInfo().then(info => setFirstName(info.firstName))
+        }
+    }, [isAuthenticated()])
 
     return (
         <nav>
@@ -26,7 +33,7 @@ const NavBar = props => {
                         <Typography className="nav-link" variant="h6" onClick={() => props.history.push("/")}> My Designs</Typography>
                         <Typography className="nav-link" variant="h6" onClick={() => props.history.push("/users/following")}>Following</Typography>
                         {/* <Typography className="nav-link" variant="h6">Messages</Typography> */}
-                        <Button color="inherit" onClick={handleLogout}>Logout</Button>
+                        <Button color="inherit" onClick={handleLogout}>Logout {firstName}</Button>
                     </>
                     :
                     <>
