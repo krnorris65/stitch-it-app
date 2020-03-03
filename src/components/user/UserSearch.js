@@ -12,12 +12,12 @@ const UserSearch = props => {
         const searched = searchedName.current.value.toLowerCase()
         //will only search users if the user enters something in the input
         findUsers(searched)
+        searchedName.current.value = ""
     }
 
     useEffect(() => {
         return () => {
             // reset search values after the user navigates away from the search page
-            searchedName.current.value = ""
             findUsers("")
         }
     }, [])

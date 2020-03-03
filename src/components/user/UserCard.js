@@ -9,7 +9,7 @@ const UserCard = props => {
     const [followedStatus, setFollowedStatus] = useState(false)
     //when updating the follow status this will hold the needed id
     const [followId, setFollowId] = useState()
-    const { deleteFollow, followUser, getFollowedUserInfo } = useContext(UserContext)
+    const { deleteFollow, followUser } = useContext(UserContext)
     const { findStatus } = useFollowStatus(props.user)
 
     const updateStatusAndId = () => {

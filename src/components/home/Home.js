@@ -8,6 +8,7 @@ import { DesignProvider } from "../providers/DesignProvider"
 
 const Home = props => {
     const { isAuthenticated } = useSimpleAuth()
+
     return (
         <>
             {
