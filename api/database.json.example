@@ -7,22 +7,6 @@
       "lastName": "Norris",
       "publicProfile": true,
       "id": 1
-    },
-    {
-      "email": "brandon@aol.com",
-      "password": "$2a$10$bl6GMZSvFHnpsZcYwlnkXe/6s0OX6KBYqf.e9KFrPqhPGmQ6TqjKu",
-      "firstName": "Brandon",
-      "lastName": "Rardin",
-      "publicProfile": true,
-      "id": 2
-    },
-    {
-      "email": "Ada@aol.com",
-      "password": "$2a$10$H7EITEv2aDarnBy6hJJm.eusaaO8tdk9./EjkZsfps/NqXKuCsr6S",
-      "firstName": "Ada",
-      "lastName": "Grace",
-      "publicProfile": false,
-      "id": 3
     }
   ],
   "designs": [
@@ -37,56 +21,7 @@
       "userId": 1
     }
   ],
-  "follows": [
-    {
-      "id": 1,
-      "currentUserId": 2,
-      "userId": 1,
-      "pending": true
-    },
-    {
-      "id": 4,
-      "currentUserId": 2,
-      "pending": true,
-      "userId": 4
-    },
-    {
-      "currentUserId": 1,
-      "userId": 3,
-      "pending": true,
-      "id": 5
-    },
-    {
-      "currentUserId": 6,
-      "userId": 1,
-      "pending": false,
-      "id": 6
-    },
-    {
-      "currentUserId": 6,
-      "userId": 2,
-      "pending": false,
-      "id": 7
-    },
-    {
-      "currentUserId": 6,
-      "userId": 4,
-      "pending": false,
-      "id": 8
-    },
-    {
-      "currentUserId": 1,
-      "userId": 5,
-      "pending": false,
-      "id": 9
-    },
-    {
-      "currentUserId": 1,
-      "userId": 4,
-      "pending": false,
-      "id": 10
-    }
-  ],
+  "follows": [],
   "fabrics": [
     {
       "id": 1,
