@@ -15,13 +15,13 @@ export const DesignProvider = props => {
     const [currentUser] = localStorage.getItem("currUserId")
 
     const getDesigns = () => {
-        return fetch(`${remoteURL}/designs?_expand=fabric&_expand=finishedSize&userId=${currentUser}`)
+        return fetch(`${remoteURL}/designs?_expand=fabric&_expand=finishedSize&_sort=completedDate&_order=desc&userId=${currentUser}`)
         .then(res => res.json())
         .then(setDesigns)
     }
 
     const getOtherUserDesigns = (userId) => {
-        return fetch(`${remoteURL}/designs?_expand=fabric&_expand=finishedSize&userId=${userId}`)
+        return fetch(`${remoteURL}/designs?_expand=fabric&_expand=finishedSize&_sort=completedDate&_order=desc&userId=${userId}`)
         .then(res => res.json())
     }
 

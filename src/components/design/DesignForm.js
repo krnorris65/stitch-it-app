@@ -41,6 +41,7 @@ const DesignForm = props => {
 
     const [loadingStatus, setLoadingStatus] = useState(true)
     const [newDesign] = useState(props.match.path.includes('new'))
+    const [editAllowed, setEditAllowed] = useState(true)
 
     const { fabrics } = useContext(FabricContext)
     const { sizes } = useContext(SizeContext)
@@ -74,14 +75,18 @@ const DesignForm = props => {
                 .then(editDesign => {
                     setLoadingStatus(false)
 
-                    title.current.value = editDesign.title
-                    description.current.value = editDesign.description
-                    completedDate.current.value = editDesign.completedDate
-                    fabricId.current.value = editDesign.fabricId
-                    finishedSizeId.current.value = editDesign.finishedSizeId
+                    // if the user manually types in the path to try to edit someone elses design it won't present the user with the form
+                    if (editDesign.userId !== Number(localStorage.getItem("currUserId"))) {
+                        setEditAllowed(false)
+                    } else {
+                        title.current.value = editDesign.title
+                        description.current.value = editDesign.description
+                        completedDate.current.value = editDesign.completedDate
+                        fabricId.current.value = editDesign.fabricId
+                        finishedSizeId.current.value = editDesign.finishedSizeId
 
-                    setPhotoLink(editDesign.photoLink)
-
+                        setPhotoLink(editDesign.photoLink)
+                    }
                 })
         } else {
             finishedSizeId.current.value = 1;
@@ -151,110 +156,116 @@ const DesignForm = props => {
 
     return (
         <article className="formEl">
-            <div className="formBkgd">
-                <CloseIcon className="iconRight" onClick={() => props.history.push("/")} />
-                {
-                    (newDesign) ? <h2>Create New Design</h2> : <h2>Update Design</h2>
-                }
-                <div className="formgrid">
-                    <label htmlFor="designTitle">Title:</label>
-                    <input type="text" required id="designTitle"
-                        ref={title}
-                        placeholder="Design Title"
-                    />
-                </div>
-
-                <div className="formgrid">
-                    <label htmlFor="designDescription">Description:</label>
-                    <textarea id="designDescription"
-                        ref={description}
-                        placeholder="Add information pertaining to floss used, color of fabric, helpful notes, etc."
-                        maxLength="150"
-                        rows="3"
-                    ></textarea>
-
-                </div>
-
-                <div className="formgrid">
-                    <label htmlFor="designCompleted">Completed On:</label>
-                    <input type="date" id="designCompleted"
-                        ref={completedDate}
-                    />
-
-                </div>
-
-                <div className="formgrid">
-                    <label htmlFor="designFabric">Fabric:</label>
-
-                    <select id="designFabric" ref={fabricId}>
-                        {
-                            fabrics.map(fabric => <option key={fabric.id} value={fabric.id}>{fabric.type} {fabric.count} count</option>)
-                        }
-                    </select>
-
-                    <span className="add--new" onClick={() => handleOpen("fabric")}>Add New Fabric</span>
-                </div>
-                <Modal
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                    open={openFabric}
-                    onClose={handleClose}
-                >
-                    <div style={modalStyle} className={classes.paper}>
-                        <FabricForm updateFabricDropdownValue={updateFabricDropdownValue} handleClose={handleClose} />
-                    </div>
-
-                </Modal>
-
-                <div className="formgrid">
-                    <label htmlFor="designSize">Finished Size:</label>
-
-                    <select id="designSize" ref={finishedSizeId}>
-                        {
-                            sizes.map(fSize => <option key={fSize.id} value={fSize.id}>{fSize.size}</option>)
-                        }
-                    </select>
-
-                    <span className="add--new" onClick={() => handleOpen("size")}>Add New Size</span>
-                </div>
-
-
-                <Modal
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                    open={openSize}
-                    onClose={handleClose}
-                >
-                    <div style={modalStyle} className={classes.paper}>
-
-                        <SizeForm updateSizesDropdown={updateSizesDropdown} handleClose={handleClose} />
-                    </div>
-                </Modal>
-
-
-
-                <div className="formgrid">
-                    <label>Design Photo:</label>
+            {editAllowed ?
+                <div className="formBkgd">
+                    <CloseIcon className="iconRight" onClick={() => props.history.push("/")} />
                     {
-                        (photoLink === "") ?
-                            <span className="add--new photo--action" onClick={uploadWidget}>Add Photo</span>
-                            :
-                            <>
-                                <span className="add--new photo--action" onClick={() => setPhotoLink("")}>Remove Photo</span>
-                                <img className="uploadImage" src={photoLink} alt="" />
-                            </>
-
+                        (newDesign) ? <h2>Create New Design</h2> : <h2>Update Design</h2>
                     }
-                </div>
+                    <div className="formgrid">
+                        <label htmlFor="designTitle">Title:</label>
+                        <input type="text" required id="designTitle"
+                            ref={title}
+                            placeholder="Design Title"
+                        />
+                    </div>
 
-                <div className="alignRight">
-                    <button className="formBtn" type="button" disabled={loadingStatus} onClick={newOrUpdatedDesign}>
+                    <div className="formgrid">
+                        <label htmlFor="designDescription">Description:</label>
+                        <textarea id="designDescription"
+                            ref={description}
+                            placeholder="Add information pertaining to floss used, color of fabric, helpful notes, etc."
+                            maxLength="150"
+                            rows="3"
+                        ></textarea>
+
+                    </div>
+
+                    <div className="formgrid">
+                        <label htmlFor="designCompleted">Completed On:</label>
+                        <input type="date" id="designCompleted"
+                            ref={completedDate}
+                        />
+
+                    </div>
+
+                    <div className="formgrid">
+                        <label htmlFor="designFabric">Fabric:</label>
+
+                        <select id="designFabric" ref={fabricId}>
+                            {
+                                fabrics.map(fabric => <option key={fabric.id} value={fabric.id}>{fabric.type} {fabric.count} count</option>)
+                            }
+                        </select>
+
+                        <span className="add--new" onClick={() => handleOpen("fabric")}>Add New Fabric</span>
+                    </div>
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={openFabric}
+                        onClose={handleClose}
+                    >
+                        <div style={modalStyle} className={classes.paper}>
+                            <FabricForm updateFabricDropdownValue={updateFabricDropdownValue} handleClose={handleClose} />
+                        </div>
+
+                    </Modal>
+
+                    <div className="formgrid">
+                        <label htmlFor="designSize">Finished Size:</label>
+
+                        <select id="designSize" ref={finishedSizeId}>
+                            {
+                                sizes.map(fSize => <option key={fSize.id} value={fSize.id}>{fSize.size}</option>)
+                            }
+                        </select>
+
+                        <span className="add--new" onClick={() => handleOpen("size")}>Add New Size</span>
+                    </div>
+
+
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={openSize}
+                        onClose={handleClose}
+                    >
+                        <div style={modalStyle} className={classes.paper}>
+
+                            <SizeForm updateSizesDropdown={updateSizesDropdown} handleClose={handleClose} />
+                        </div>
+                    </Modal>
+
+
+
+                    <div className="formgrid">
+                        <label>Design Photo:</label>
                         {
-                            (newDesign) ? <>Create</> : <>Update</>
+                            (photoLink === "") ?
+                                <span className="add--new photo--action" onClick={uploadWidget}>Add Photo</span>
+                                :
+                                <>
+                                    <span className="add--new photo--action" onClick={() => setPhotoLink("")}>Remove Photo</span>
+                                    <img className="uploadImage" src={photoLink} alt="" />
+                                </>
+
                         }
-                    </button>
+                    </div>
+
+                    <div className="alignRight">
+                        <button className="formBtn" type="button" disabled={loadingStatus} onClick={newOrUpdatedDesign}>
+                            {
+                                (newDesign) ? <>Create</> : <>Update</>
+                            }
+                        </button>
+                    </div>
                 </div>
-            </div>
+                :
+                <div className="formBkgd">
+                    <h2>You do not have permission to edit this design</h2>
+                </div>
+            }
         </article>
     )
 
