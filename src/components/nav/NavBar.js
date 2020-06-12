@@ -19,7 +19,7 @@ const NavBar = props => {
 
     useEffect(() => {
         if(isAuthenticated()){
-            currentUserInfo().then(info => setFirstName(info.firstName))
+            currentUserInfo().then(info => setFirstName(info.user.first_name))
         }
     }, [isAuthenticated()])
 

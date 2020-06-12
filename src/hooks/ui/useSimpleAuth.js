@@ -12,19 +12,20 @@ const useSimpleAuth = () => {
     }
 
     const currentUserInfo = () => {
-        const userId = localStorage.getItem("stitchit-token")
-        if(userId){
-            return fetch(`${remoteURL}/users/${userId}`)
+        const stitcherId = localStorage.getItem("stitcher_id")
+        if(stitcherId){
+            return fetch(`${remoteURL}/stitchers/${stitcherId}`)
             .then(res => res.json())
         }
     }
 
     const hasPublicProfile = () => {
-        const userId = localStorage.getItem("stitchit-token")
-        return fetch(`${remoteURL}/users/${userId}`)
+        const stitcherId = localStorage.getItem("stitcher_id")
+        return fetch(`${remoteURL}/stitchers/${stitcherId}`)
         .then(res => res.json())
         .then(user => {
-            localStorage.setItem("publicProfile", user.publicProfile)
+            localStorage.setItem("publicProfile", user.public_profile)
+
         })
     }
 
@@ -43,8 +44,9 @@ const useSimpleAuth = () => {
                 if (typeof res === "object" && "token" in res) {
                     //after registering a new user, their api token is stored in localStorage to then log the user in and state of loggedIn to true
                     localStorage.setItem("stitchit-token", res.token)
+                    localStorage.setItem("stitcher_id", res.stitcher_id)
                     setLoggedIn(true)
-                    // hasPublicProfile(res.user.id)
+                    hasPublicProfile()
                     return "/"
                 } else {
                     alert(res)
@@ -69,8 +71,9 @@ const useSimpleAuth = () => {
                 if (typeof res === "object" && "token" in res) {
                     //after verifying that the user entered in correct credentials, their api token is stored in localStorage and state of loggedIn is set to true
                     localStorage.setItem("stitchit-token", res.token)
+                    localStorage.setItem("stitcher_id", res.stitcher_id)
                     setLoggedIn(true)
-                    // hasPublicProfile(res.user.id)
+                    hasPublicProfile()
                     
                     //return false if login was successful
                     return false
