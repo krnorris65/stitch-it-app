@@ -18,11 +18,11 @@ const Register = props => {
         else {
 
             const userInfo = {
-                firstName: firstName.current.value,
-                lastName: lastName.current.value,
+                first_name: firstName.current.value,
+                last_name: lastName.current.value,
                 email: email.current.value,
                 password: password.current.value,
-                publicProfile: publicProfile.current.checked
+                public_profile: publicProfile.current.checked
             }
 
             register(userInfo)

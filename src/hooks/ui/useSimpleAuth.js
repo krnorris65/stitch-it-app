@@ -1,18 +1,18 @@
 import { useState } from 'react'
 
-const remoteURL = "http://localhost:5002"
+const remoteURL = "http://localhost:8000"
 
 const useSimpleAuth = () => {
     const [loggedIn, setLoggedIn] = useState(false)
 
-    //verifies whether a user is logged into the app by checking if the state of loggedIn is true or currUserId in localStorage is not null
+    //verifies whether a user is logged into the app by checking if the state of loggedIn is true or stitchit-token in localStorage is not null
     const isAuthenticated = () => {
-        return loggedIn || localStorage.getItem("currUserId") !== null
+        return loggedIn || localStorage.getItem("stitchit-token") !== null
 
     }
 
     const currentUserInfo = () => {
-        const userId = localStorage.getItem("currUserId")
+        const userId = localStorage.getItem("stitchit-token")
         if(userId){
             return fetch(`${remoteURL}/users/${userId}`)
             .then(res => res.json())
@@ -20,7 +20,7 @@ const useSimpleAuth = () => {
     }
 
     const hasPublicProfile = () => {
-        const userId = localStorage.getItem("currUserId")
+        const userId = localStorage.getItem("stitchit-token")
         return fetch(`${remoteURL}/users/${userId}`)
         .then(res => res.json())
         .then(user => {
@@ -30,7 +30,7 @@ const useSimpleAuth = () => {
 
     const register = userInfo => {
         //a new user is created by posting to the database by targeting the register endpoint
-        return fetch(`${remoteURL}/register`, {
+        return fetch(`${remoteURL}/register/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -40,11 +40,11 @@ const useSimpleAuth = () => {
         })
             .then(res => res.json())
             .then(res => {
-                if (typeof res === "object" && "accessToken" in res) {
-                    //after registering a new user, their id is stored in localStorage to then log the user in and state of loggedIn to true
-                    localStorage.setItem("currUserId", res.user.id)
+                if (typeof res === "object" && "token" in res) {
+                    //after registering a new user, their api token is stored in localStorage to then log the user in and state of loggedIn to true
+                    localStorage.setItem("stitchit-token", res.token)
                     setLoggedIn(true)
-                    hasPublicProfile(res.user.id)
+                    // hasPublicProfile(res.user.id)
                     return "/"
                 } else {
                     alert(res)
@@ -55,7 +55,7 @@ const useSimpleAuth = () => {
 
     const login = userInfo => {
         //logs an existing user in by targeting the login in endpoint and verifying that the email/password matches for 
-        return fetch(`${remoteURL}/login`, {
+        return fetch(`${remoteURL}/login/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -65,16 +65,17 @@ const useSimpleAuth = () => {
         })
             .then(res => res.json())
             .then(res => {
-                if (typeof res === "object" && "accessToken" in res) {
-                    //after verifying that the user entered in correct credentials, their id is stored in localStorage and state of loggedIn is set to true
-                    localStorage.setItem("currUserId", res.user.id)
+                console.log(res)
+                if (typeof res === "object" && "token" in res) {
+                    //after verifying that the user entered in correct credentials, their api token is stored in localStorage and state of loggedIn is set to true
+                    localStorage.setItem("stitchit-token", res.token)
                     setLoggedIn(true)
-                    hasPublicProfile(res.user.id)
+                    // hasPublicProfile(res.user.id)
                     
                     //return false if login was successful
                     return false
                 } else {
-                    alert(res)
+                    alert("Invalid credentials")
                     //return true if login failed
                     return true
                 }
@@ -84,7 +85,7 @@ const useSimpleAuth = () => {
     const logout = () => {
         //when the user logs out, state of loggedIn is set to false and their id is removed from localStorage
         setLoggedIn(false)
-        localStorage.removeItem("currUserId")
+        localStorage.removeItem("stitchit-token")
         localStorage.removeItem("publicProfile")
     }
 
