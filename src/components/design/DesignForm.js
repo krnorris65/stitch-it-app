@@ -130,7 +130,7 @@ const DesignForm = props => {
             if(photoLink.imageFile !== ""){
                 formData.append('photo', photoLink.imageFile, photoLink.imagePath)
             } else {
-                formData.append('photo', null)
+                formData.append('photo', photoLink.imageFile)
             }
             setLoadingStatus(true)
             if (newDesign) {
