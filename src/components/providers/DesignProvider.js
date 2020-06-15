@@ -59,7 +59,7 @@ export const DesignProvider = props => {
     const deleteDesign = (id) => {
         return fetch(`${remoteURL}/designs/${id}`, {
             method: "DELETE",
-            header: {
+            headers: {
                 "Authorization": `Token ${localStorage.getItem("stitchit-token")}`
             }
         })

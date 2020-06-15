@@ -75,16 +75,16 @@ const DesignForm = props => {
                     setLoadingStatus(false)
 
                     // if the user manually types in the path to try to edit someone elses design it won't present the user with the form
-                    if (editDesign.userId !== Number(localStorage.getItem("currUserId"))) {
+                    if (editDesign.stitcher_id !== Number(localStorage.getItem("stitcher_id"))) {
                         setEditAllowed(false)
                     } else {
                         title.current.value = editDesign.title
                         description.current.value = editDesign.description
-                        completedDate.current.value = editDesign.completedDate
-                        fabricId.current.value = editDesign.fabricId
-                        finishedSizeId.current.value = editDesign.finishedSizeId
+                        completedDate.current.value = editDesign.completed_date
+                        fabricId.current.value = editDesign.fabric_id
+                        finishedSizeId.current.value = editDesign.size_id
 
-                        setPhotoLink(editDesign.photoLink)
+                        // setPhotoLink(editDesign.photoLink)
                     }
                 })
         } else {
