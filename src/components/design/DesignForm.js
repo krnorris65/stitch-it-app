@@ -46,7 +46,7 @@ const DesignForm = props => {
     const { sizes } = useContext(SizeContext)
     const { getOneDesign, addDesign, editDesign } = useContext(DesignContext)
 
-    const [photo, setPhoto] = useState({ imageFile: "", imageName: "Choose File", imageUrl: "" })
+    const [photo, setPhoto] = useState({ imageFile: "", imageName: "", imageUrl: "" })
 
     const title = useRef()
     const description = useRef()
@@ -84,9 +84,11 @@ const DesignForm = props => {
                         fabricId.current.value = editDesign.fabric_id
                         finishedSizeId.current.value = editDesign.size_id
                         console.log(editDesign.photo)
-                        const fileName = editDesign.photo.split('/media/design/images/')[1]
-
-                        setPhoto({ imageFile: "", imageUrl: editDesign.photo, imageName: fileName})
+                        if(editDesign.photo !== null){
+                            const fileName = editDesign.photo.split('/media/design/images/')[1]
+    
+                            setPhoto({ imageFile: "", imageUrl: editDesign.photo, imageName: fileName})
+                        }
                     }
                 })
         } else {
@@ -114,7 +116,7 @@ const DesignForm = props => {
     }
 
     const handleFileUpload = e => {
-        setPhoto({ imageFile: e.target.files[0], imageName: e.target.files[0].name });
+        setPhoto({ imageFile: e.target.files[0], imageName: e.target.files[0].name, imageUrl: "" });
     };
 
 
@@ -130,7 +132,7 @@ const DesignForm = props => {
             formData.append('fabric_id', Number(fabricId.current.value))
             formData.append('size_id', Number(finishedSizeId.current.value))
             // if imageFile is not "" then a new photo has been uploaded
-            if(photo.imageFile !== "" && photo.imageUrl === ""){
+            if(photo.imageFile !== ""){
                 formData.append('photo', photo.imageFile, photo.imageName)
             } else if(photo.imageFile === "" && photo.imageUrl !== ""){
                 //if  imageFile is an empty string and the imageUrl is not "", then a photo was uploaded previously and hasn't changed
@@ -241,27 +243,26 @@ const DesignForm = props => {
                     <div className="formgrid">
                         <label>Design Photo:</label>
                         {
-                            (photo.imageFile === "") ?
+                            (photo.imageFile !== "" || photo.imageUrl !== "") ?
+                            <span className="add--new photo--action" onClick={() => {
+                                setPhoto({ imageFile: "", imageName: "Choose File", imageUrl: "" })
+                            }}>Remove Photo</span>:null
+                            
+                        }
+                        {
+                            (photo.imageUrl === "") ?
                                 <>
                                     <input
                                         type='file'
                                         id='customFile'
                                         onChange={handleFileUpload}
                                     />
-                                    <label htmlFor='customFile'>
-                                        {photo.imageName}
-                                    </label>
+
                                 </>
-                                :
-                                <>
-                                    <span className="add--new photo--action" onClick={() => setPhoto({imageFile:""})}>Remove Photo</span>
-                                    <label htmlFor='customFile'>
-                                        {photo.imageName}
-                                    </label>
-                                    <img className="uploadImage" src={photo.imageUrl} alt="" />
-                                </>
+                                : <img className="uploadImage" src={photo.imageUrl} alt="" />
 
                         }
+
                     </div>
 
                     <div className="alignRight">
