@@ -44,14 +44,14 @@ export const DesignProvider = props => {
         // .then(getDesigns)
     }
 
-    const editDesign = (editedDesign) => {
-        return fetch(`${remoteURL}/designs/${editedDesign.id}`, {
+    const editDesign = (designId, editedDesign) => {
+        return fetch(`${remoteURL}/designs/${designId}`, {
             method: "PUT",
             headers: {
-                "Content-Type": "application/json",
+                "Accept": "application/json",
                 "Authorization": `Token ${localStorage.getItem("stitchit-token")}`
             },
-            body: JSON.stringify(editedDesign)
+            body: editedDesign
         })
         // .then(getDesigns)
     }

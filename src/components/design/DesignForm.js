@@ -46,7 +46,7 @@ const DesignForm = props => {
     const { sizes } = useContext(SizeContext)
     const { getOneDesign, addDesign, editDesign } = useContext(DesignContext)
 
-    const [photoLink, setPhotoLink] = useState({ imageFile: "", imagePath: "Choose File" })
+    const [photo, setPhoto] = useState({ imageFile: "", imageName: "Choose File", imageUrl: "" })
 
     const title = useRef()
     const description = useRef()
@@ -83,8 +83,10 @@ const DesignForm = props => {
                         completedDate.current.value = editDesign.completed_date
                         fabricId.current.value = editDesign.fabric_id
                         finishedSizeId.current.value = editDesign.size_id
+                        console.log(editDesign.photo)
+                        const fileName = editDesign.photo.split('/media/design/images/')[1]
 
-                        // setPhotoLink(editDesign.photoLink)
+                        setPhoto({ imageFile: "", imageUrl: editDesign.photo, imageName: fileName})
                     }
                 })
         } else {
@@ -112,7 +114,7 @@ const DesignForm = props => {
     }
 
     const handleFileUpload = e => {
-        setPhotoLink({ imageFile: e.target.files[0], imagePath: e.target.files[0].name });
+        setPhoto({ imageFile: e.target.files[0], imageName: e.target.files[0].name });
     };
 
 
@@ -127,10 +129,15 @@ const DesignForm = props => {
             formData.append('completed_date', completedDate.current.value)
             formData.append('fabric_id', Number(fabricId.current.value))
             formData.append('size_id', Number(finishedSizeId.current.value))
-            if(photoLink.imageFile !== ""){
-                formData.append('photo', photoLink.imageFile, photoLink.imagePath)
+            // if imageFile is not "" then a new photo has been uploaded
+            if(photo.imageFile !== "" && photo.imageUrl === ""){
+                formData.append('photo', photo.imageFile, photo.imageName)
+            } else if(photo.imageFile === "" && photo.imageUrl !== ""){
+                //if  imageFile is an empty string and the imageUrl is not "", then a photo was uploaded previously and hasn't changed
+                formData.append('photo', `design/images/${photo.imageName}`)
             } else {
-                formData.append('photo', photoLink.imageFile)
+                //else send an empty string
+                formData.append('photo', "")
             }
             setLoadingStatus(true)
             if (newDesign) {
@@ -233,18 +240,8 @@ const DesignForm = props => {
 
                     <div className="formgrid">
                         <label>Design Photo:</label>
-                        <>
-                            <input
-                                type='file'
-                                id='customFile'
-                                onChange={handleFileUpload}
-                            />
-                            <label htmlFor='customFile'>
-                                {photoLink.imagePath}
-                            </label>
-                        </>
                         {
-                            (photoLink.imagePath === "") ?
+                            (photo.imageFile === "") ?
                                 <>
                                     <input
                                         type='file'
@@ -252,13 +249,16 @@ const DesignForm = props => {
                                         onChange={handleFileUpload}
                                     />
                                     <label htmlFor='customFile'>
-                                        {photoLink.imagePath}
+                                        {photo.imageName}
                                     </label>
                                 </>
                                 :
                                 <>
-                                    <span className="add--new photo--action" onClick={() => setPhotoLink("")}>Remove Photo</span>
-                                    <img className="uploadImage" src={photoLink} alt="" />
+                                    <span className="add--new photo--action" onClick={() => setPhoto({imageFile:""})}>Remove Photo</span>
+                                    <label htmlFor='customFile'>
+                                        {photo.imageName}
+                                    </label>
+                                    <img className="uploadImage" src={photo.imageUrl} alt="" />
                                 </>
 
                         }
