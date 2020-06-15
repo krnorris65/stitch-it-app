@@ -29,25 +29,13 @@ export const SizeProvider = props => {
             })
     }
 
-    const findSizeId = (size) => {
-        return fetch(`${remoteURL}/sizes?size=${size}`)
-            .then(res => res.json())
-            .then(result => {
-                if(result.length > 0){
-                    return result[0].id
-                } else {
-                    return undefined
-                }
-            })
-    }
-
     useEffect(() => {
         getSizes()
     }, [])
 
     return (
         <SizeContext.Provider value={{
-            sizes, addSize, findSizeId
+            sizes, addSize
         }}>
             {props.children}
         </SizeContext.Provider>
