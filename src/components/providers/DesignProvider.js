@@ -12,7 +12,6 @@ export const DesignContext = React.createContext()
  */
 export const DesignProvider = props => {
     const [designs, setDesigns] = useState([])
-    const [currentUser] = localStorage.getItem("currUserId")
 
     const getDesigns = () => {
         return fetch(`${remoteURL}/designs`, {
@@ -25,19 +24,20 @@ export const DesignProvider = props => {
     }
 
     const getOtherUserDesigns = (userId) => {
-        return fetch(`${remoteURL}/designs?_expand=fabric&_expand=finishedSize&_sort=completedDate&_order=desc&userId=${userId}`)
+        return fetch(`${remoteURL}/designs?stitcher=${userId}`)
             .then(res => res.json())
     }
 
     const getOneDesign = (id) => {
-        return fetch(`${remoteURL}/designs/${id}?_expand=fabric&_expand=finishedSize`)
+        return fetch(`${remoteURL}/designs/${id}`)
             .then(res => res.json())
     }
     const addDesign = (newDesign) => {
         return fetch(`${remoteURL}/designs`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Token ${localStorage.getItem("stitchit-token")}`
             },
             body: JSON.stringify(newDesign)
         })
@@ -48,7 +48,8 @@ export const DesignProvider = props => {
         return fetch(`${remoteURL}/designs/${editedDesign.id}`, {
             method: "PUT",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Token ${localStorage.getItem("stitchit-token")}`
             },
             body: JSON.stringify(editedDesign)
         })
@@ -58,6 +59,9 @@ export const DesignProvider = props => {
     const deleteDesign = (id) => {
         return fetch(`${remoteURL}/designs/${id}`, {
             method: "DELETE",
+            header: {
+                "Authorization": `Token ${localStorage.getItem("stitchit-token")}`
+            }
         })
             .then(getDesigns)
     }
