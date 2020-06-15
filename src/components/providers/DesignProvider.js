@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 
-const remoteURL = "http://localhost:5002"
+const remoteURL = "http://localhost:8000"
 /*
     The context is imported and used by individual components
     that need data
@@ -15,19 +15,23 @@ export const DesignProvider = props => {
     const [currentUser] = localStorage.getItem("currUserId")
 
     const getDesigns = () => {
-        return fetch(`${remoteURL}/designs?_expand=fabric&_expand=finishedSize&_sort=completedDate&_order=desc&userId=${currentUser}`)
-        .then(res => res.json())
-        .then(setDesigns)
+        return fetch(`${remoteURL}/designs`, {
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("stitchit-token")}`
+            }
+        })
+            .then(res => res.json())
+            .then(setDesigns)
     }
 
     const getOtherUserDesigns = (userId) => {
         return fetch(`${remoteURL}/designs?_expand=fabric&_expand=finishedSize&_sort=completedDate&_order=desc&userId=${userId}`)
-        .then(res => res.json())
+            .then(res => res.json())
     }
 
     const getOneDesign = (id) => {
         return fetch(`${remoteURL}/designs/${id}?_expand=fabric&_expand=finishedSize`)
-        .then(res => res.json())
+            .then(res => res.json())
     }
     const addDesign = (newDesign) => {
         return fetch(`${remoteURL}/designs`, {
@@ -55,7 +59,7 @@ export const DesignProvider = props => {
         return fetch(`${remoteURL}/designs/${id}`, {
             method: "DELETE",
         })
-        .then(getDesigns)
+            .then(getDesigns)
     }
 
     // Load all designs when component is mounted
@@ -66,8 +70,9 @@ export const DesignProvider = props => {
 
     return (
         <DesignContext.Provider value={{
-            designs, addDesign, editDesign, deleteDesign, getOneDesign, getOtherUserDesigns}}>
-                {props.children}
-            </DesignContext.Provider>
+            designs, addDesign, editDesign, deleteDesign, getOneDesign, getOtherUserDesigns
+        }}>
+            {props.children}
+        </DesignContext.Provider>
     )
 }

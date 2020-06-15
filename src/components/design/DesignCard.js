@@ -37,7 +37,7 @@ const DesignCard = props => {
                     <ul>
 
                         <li>Fabric: {`${currentDesign.fabric.type} ${currentDesign.fabric.count} count`}</li>
-                        <li>Finished Size: {currentDesign.finishedSize.size}</li>
+                        <li>Finished Size: {currentDesign.size.size}</li>
 
                         <li>{currentDesign.description}</li>
 
