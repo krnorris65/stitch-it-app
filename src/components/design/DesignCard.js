@@ -9,7 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 const DesignCard = props => {
     const { deleteDesign } = useContext(DesignContext)
     const [currentDesign] = useState(props.design)
-    const [currentUser] = localStorage.getItem("currUserId")
+    const [currentUser] = localStorage.getItem("stitcher_id")
 
     const confirmDelete = (id) => {
         const userConfirm = window.confirm("Are you sure you want to delete this design?")
@@ -23,13 +23,13 @@ const DesignCard = props => {
         <div className="card">
             <div className="card-content">
                 {
-                    (currentDesign.photoLink) ?
-                        <img className="uploadedImg" src={`${currentDesign.photoLink}`} alt={`${currentDesign.title}`} /> :
+                    (currentDesign.photo) ?
+                        <img className="uploadedImg" src={`${currentDesign.photo}`} alt={`${currentDesign.title}`} /> :
                         <img className="defaultImg" src={require('./no-image.png')} alt="default design" />
                 }
                 {
-                    (currentDesign.completedDate !== "") ?
-                        <p className="designStatus">{currentDesign.completedDate} </p> :
+                    (currentDesign.completed_date !== "") ?
+                        <p className="designStatus">{currentDesign.completed_date} </p> :
                         <p className="designStatus">Work In Progress</p>
                 }
                 <section className="designDetails">
@@ -46,7 +46,7 @@ const DesignCard = props => {
 
             </div>
             {
-                (currentDesign.userId === Number(currentUser)) ?
+                (currentDesign.stitcher_id === Number(currentUser)) ?
                     <div className="designActions">
                         <EditIcon onClick={() => props.history.push(`/design/edit/${currentDesign.id}`)} />
                         <DeleteIcon onClick={() => confirmDelete(currentDesign.id)} />
