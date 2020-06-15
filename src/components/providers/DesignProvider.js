@@ -36,10 +36,10 @@ export const DesignProvider = props => {
         return fetch(`${remoteURL}/designs`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+                "Accept": "application/json",
                 "Authorization": `Token ${localStorage.getItem("stitchit-token")}`
             },
-            body: JSON.stringify(newDesign)
+            body: newDesign
         })
         // .then(getDesigns)
     }

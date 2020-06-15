@@ -1,5 +1,4 @@
 import React, { useContext, useState, useRef, useEffect } from 'react'
-import CloudinaryInfo from './CloudinaryInfo'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -47,7 +46,7 @@ const DesignForm = props => {
     const { sizes } = useContext(SizeContext)
     const { getOneDesign, addDesign, editDesign } = useContext(DesignContext)
 
-    const [photoLink, setPhotoLink] = useState("")
+    const [photoLink, setPhotoLink] = useState({ imageFile: "", imagePath: "Choose File" })
 
     const title = useRef()
     const description = useRef()
@@ -112,41 +111,34 @@ const DesignForm = props => {
         handleClose()
     }
 
-    //method that opens the cloudinary widget and sets the secure_url from the result as the photoLink
-    const uploadWidget = () => {
-
-        window.cloudinary.openUploadWidget({ cloud_name: `${CloudinaryInfo.cloud_name}`, upload_preset: `${CloudinaryInfo.upload_preset}`, tags: ['cross stitch'] },
-            (error, result) => {
-
-                if (result !== undefined) {
-                    // change state so that the imageUrl property will contain the URL of the uploaded image
-                    setPhotoLink(`${result[0].secure_url}`)
-                }
-            });
-    }
+    const handleFileUpload = e => {
+        setPhotoLink({ imageFile: e.target.files[0], imagePath: e.target.files[0].name });
+    };
 
 
     const newOrUpdatedDesign = () => {
-        const design = {
-            title: title.current.value,
-            description: description.current.value,
-            completedDate: completedDate.current.value,
-            photoLink: photoLink,
-            fabricId: Number(fabricId.current.value),
-            finishedSizeId: Number(finishedSizeId.current.value),
-            userId: Number(localStorage.getItem("currUserId"))
-        }
 
-        if (design.title === "") {
+        if (title.current.value === "") {
             alert("Please fill out a Title")
         } else {
+            const formData = new FormData()
+            formData.append('title', title.current.value)
+            formData.append('description', description.current.value)
+            formData.append('completed_date', completedDate.current.value)
+            formData.append('fabric_id', Number(fabricId.current.value))
+            formData.append('size_id', Number(finishedSizeId.current.value))
+            if(photoLink.imageFile !== ""){
+                formData.append('photo', photoLink.imageFile, photoLink.imagePath)
+            } else {
+                formData.append('photo', null)
+            }
             setLoadingStatus(true)
             if (newDesign) {
-                addDesign(design)
+                addDesign(formData)
                     .then(() => props.history.push("/"))
             } else {
-                design.id = Number(props.match.params.designId)
-                editDesign(design)
+                const designId = Number(props.match.params.designId)
+                editDesign(designId, formData)
                     .then(() => props.history.push("/"))
             }
 
@@ -241,9 +233,28 @@ const DesignForm = props => {
 
                     <div className="formgrid">
                         <label>Design Photo:</label>
+                        <>
+                            <input
+                                type='file'
+                                id='customFile'
+                                onChange={handleFileUpload}
+                            />
+                            <label htmlFor='customFile'>
+                                {photoLink.imagePath}
+                            </label>
+                        </>
                         {
-                            (photoLink === "") ?
-                                <span className="add--new photo--action" onClick={uploadWidget}>Add Photo</span>
+                            (photoLink.imagePath === "") ?
+                                <>
+                                    <input
+                                        type='file'
+                                        id='customFile'
+                                        onChange={handleFileUpload}
+                                    />
+                                    <label htmlFor='customFile'>
+                                        {photoLink.imagePath}
+                                    </label>
+                                </>
                                 :
                                 <>
                                     <span className="add--new photo--action" onClick={() => setPhotoLink("")}>Remove Photo</span>
