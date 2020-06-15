@@ -13,6 +13,7 @@ const useSimpleAuth = () => {
 
     const currentUserInfo = () => {
         const stitcherId = localStorage.getItem("stitcher_id")
+        console.log("run current")
         if(stitcherId){
             return fetch(`${remoteURL}/stitchers/${stitcherId}`)
             .then(res => res.json())
