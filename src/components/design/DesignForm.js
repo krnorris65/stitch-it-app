@@ -46,7 +46,7 @@ const DesignForm = props => {
     const { sizes } = useContext(SizeContext)
     const { getOneDesign, addDesign, editDesign } = useContext(DesignContext)
 
-    const [photo, setPhoto] = useState({ imageFile: "", imageUrl: "" })
+    const [photo, setPhoto] = useState("")
 
     const title = useRef()
     const description = useRef()
@@ -84,8 +84,8 @@ const DesignForm = props => {
                         fabricId.current.value = editDesign.fabric_id
                         finishedSizeId.current.value = editDesign.size_id
                         console.log(editDesign.photo)
-                        if(editDesign.photo !== null){    
-                            setPhoto({ imageFile: "", imageUrl: editDesign.photo})
+                        if (editDesign.photo !== null) {
+                            setPhoto(editDesign.photo)
                         }
                     }
                 })
@@ -114,7 +114,7 @@ const DesignForm = props => {
     }
 
     const handleFileUpload = e => {
-        setPhoto({ imageFile: e.target.files[0], imageName: e.target.files[0].name, imageUrl: "" });
+        setPhoto(e.target.files[0])
     };
 
 
@@ -130,9 +130,10 @@ const DesignForm = props => {
             formData.append('fabric_id', Number(fabricId.current.value))
             formData.append('size_id', Number(finishedSizeId.current.value))
             // if imageFile is not "" then a new photo has been uploaded
-            if(photo.imageFile !== ""){
-                formData.append('photo', photo.imageFile, photo.imageFile.name)
-            } else if(photo.imageFile === "" && photo.imageUrl !== ""){
+            console.log(typeof (photo))
+            if (typeof (photo) !== 'string') {
+                formData.append('photo', photo, photo.name)
+            } else if (photo === "" && photo.imageUrl !== "") {
                 //if  imageFile is an empty string and the imageUrl is not "", then a photo was uploaded previously and hasn't changed
                 formData.append('photo', photo.imageUrl)
             } else {
@@ -241,14 +242,15 @@ const DesignForm = props => {
                     <div className="formgrid">
                         <label>Design Photo:</label>
                         {
-                            (photo.imageFile !== "" || photo.imageUrl !== "") ?
-                            <span className="add--new photo--action" onClick={() => {
-                                setPhoto({ imageFile: "", imageName: "Choose File", imageUrl: "" })
-                            }}>Remove Photo</span>:null
-                            
+                            (typeof (photo) !== 'string') ?
+                                <>
+                                    <input type='text' readonly value={photo.name}/>
+
+                                </>
+                                : null
                         }
                         {
-                            (photo.imageUrl === "") ?
+                            (photo === "") ?
                                 <>
                                     <input
                                         type='file'
@@ -257,8 +259,15 @@ const DesignForm = props => {
                                     />
 
                                 </>
-                                : <img className="uploadImage" src={photo.imageUrl} alt="" />
+                                : <span className="add--new photo--action" onClick={() => {
+                                    setPhoto("")
+                                }}>Remove Photo</span>
 
+                        }
+                        {
+                            (photo !== "" && typeof (photo) === 'string') ?
+                                <img className="uploadImage" src={photo} alt="" />
+                                : null
                         }
 
                     </div>
