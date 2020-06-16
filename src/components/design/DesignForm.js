@@ -46,7 +46,7 @@ const DesignForm = props => {
     const { sizes } = useContext(SizeContext)
     const { getOneDesign, addDesign, editDesign } = useContext(DesignContext)
 
-    const [photo, setPhoto] = useState({ imageFile: "", imageName: "", imageUrl: "" })
+    const [photo, setPhoto] = useState({ imageFile: "", imageUrl: "" })
 
     const title = useRef()
     const description = useRef()
@@ -84,10 +84,8 @@ const DesignForm = props => {
                         fabricId.current.value = editDesign.fabric_id
                         finishedSizeId.current.value = editDesign.size_id
                         console.log(editDesign.photo)
-                        if(editDesign.photo !== null){
-                            const fileName = editDesign.photo.split('/media/design/images/')[1]
-    
-                            setPhoto({ imageFile: "", imageUrl: editDesign.photo, imageName: fileName})
+                        if(editDesign.photo !== null){    
+                            setPhoto({ imageFile: "", imageUrl: editDesign.photo})
                         }
                     }
                 })
@@ -133,10 +131,10 @@ const DesignForm = props => {
             formData.append('size_id', Number(finishedSizeId.current.value))
             // if imageFile is not "" then a new photo has been uploaded
             if(photo.imageFile !== ""){
-                formData.append('photo', photo.imageFile, photo.imageName)
+                formData.append('photo', photo.imageFile, photo.imageFile.name)
             } else if(photo.imageFile === "" && photo.imageUrl !== ""){
                 //if  imageFile is an empty string and the imageUrl is not "", then a photo was uploaded previously and hasn't changed
-                formData.append('photo', `design/images/${photo.imageName}`)
+                formData.append('photo', photo.imageUrl)
             } else {
                 //else send an empty string
                 formData.append('photo', "")
