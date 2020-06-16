@@ -47,6 +47,8 @@ const DesignForm = props => {
     const { getOneDesign, addDesign, editDesign } = useContext(DesignContext)
 
     const [photo, setPhoto] = useState("")
+    // used so the user can preview the photo they selected to upload
+    const [photoPreview, setPhotoPreview] = useState("")
 
     const title = useRef()
     const description = useRef()
@@ -115,6 +117,10 @@ const DesignForm = props => {
 
     const handleFileUpload = e => {
         setPhoto(e.target.files[0])
+        // allow user to preview the photo they selected
+        const reader = new FileReader()
+        reader.readAsDataURL(e.target.files[0])
+        reader.onloadend = () => setPhotoPreview(reader.result)
     };
 
 
@@ -244,7 +250,8 @@ const DesignForm = props => {
                         {
                             (typeof (photo) !== 'string') ?
                                 <>
-                                    <input type='text' readonly value={photo.name}/>
+                                    <img id="photoPreview" className="uploadImage" src={photoPreview} />
+                                    <label htmlFor="photoPreview">{photo.name}</label>
 
                                 </>
                                 : null
