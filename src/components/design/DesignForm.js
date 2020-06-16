@@ -248,15 +248,6 @@ const DesignForm = props => {
                     <div className="formgrid">
                         <label>Design Photo:</label>
                         {
-                            (typeof (photo) !== 'string') ?
-                                <>
-                                    <img id="photoPreview" className="uploadImage" src={photoPreview} />
-                                    <label htmlFor="photoPreview">{photo.name}</label>
-
-                                </>
-                                : null
-                        }
-                        {
                             (photo === "") ?
                                 <>
                                     <input
@@ -274,6 +265,15 @@ const DesignForm = props => {
                         {
                             (photo !== "" && typeof (photo) === 'string') ?
                                 <img className="uploadImage" src={photo} alt="" />
+                                : null
+                        }
+                                                {
+                            (typeof (photo) !== 'string') ?
+                                <>
+                                    <img id="photoPreview" className="uploadImage" src={photoPreview} />
+                                    <span>{photo.name}</span>
+
+                                </>
                                 : null
                         }
 
