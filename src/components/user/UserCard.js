@@ -10,7 +10,7 @@ const UserCard = props => {
     //when updating the follow status this will hold the needed id
     const [followId, setFollowId] = useState()
     const { deleteFollow, followUser } = useContext(UserContext)
-    const { findStatus } = useFollowStatus(props.user)
+    const { findStatus } = useFollowStatus(props.stitcher)
 
     const updateStatusAndId = () => {
         const statusInfo = findStatus()
@@ -37,7 +37,8 @@ const UserCard = props => {
 
     const viewDesigns = (userInfo, followId) => {
         //pass the followId so that the user can unfollow
-        props.history.push(`/users/following/${userInfo.id}/${followId}`)
+        console.log(userInfo)
+        props.history.push(`/users/following/${userInfo.stitcher_id}/${followId}`)
 
     }
 
@@ -55,12 +56,12 @@ const UserCard = props => {
                     //showDesign is only passed in when the user card is populated due to props.match.params.userId > 0
                     (props.showDesign === true) ?
                         <>
-                            <h2 className="userName">{props.user.firstName} {props.user.lastName}'s Designs</h2>
+                            <h2 className="userName">{props.stitcher.user.first_name} {props.stitcher.user.last_name}'s Designs</h2>
                             <button className="formBtn" onClick={() => unfollowFromDesign(props.match.params.followId)}>Unfollow</button>
                         </>
                         :
                         <>
-                            <h3 className="userName">{props.user.firstName} {props.user.lastName}</h3>
+                            <h3 className="userName">{props.stitcher.user.first_name} {props.stitcher.user.last_name}</h3>
 
                             {
                                 // conditional that checks if the user is the one that's logged in
@@ -70,15 +71,15 @@ const UserCard = props => {
                                     // if the current user isn't following the user and the user's profile is public
                                     : (followedStatus === "following") ?
                                         <>
-                                            <button className="formBtn" onClick={() => viewDesigns(props.user, followId)}>View Designs</button>
+                                            <button className="formBtn" onClick={() => viewDesigns(props.followObj, followId)}>View Designs</button>
                                         </>
                                         // if the current user has requested to follow the user but it hasn't been approved
                                         : (followedStatus === "pending") ?
                                             <button className="formBtn" onClick={() => deleteFollow(followId)}>Delete Follow Request</button>
-                                            : (props.user.publicProfile) ?
-                                                <button className="formBtn" onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Follow</button>
+                                            : (props.stitcher.user.public_profile) ?
+                                                <button className="formBtn" onClick={() => submitFollow(props.user.id, props.stitcher.user.public_profile)}>Follow</button>
                                                 // if the current user isn't following the user and the user's profile is private
-                                                : <button className="formBtn" onClick={() => submitFollow(props.user.id, props.user.publicProfile)}>Request to Follow</button>
+                                                : <button className="formBtn" onClick={() => submitFollow(props.user.id, props.stitcher.user.public_profile)}>Request to Follow</button>
                             }
                         </>
                 }

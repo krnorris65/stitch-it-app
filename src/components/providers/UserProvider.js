@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-const remoteURL = 'http://localhost:5002'
+const remoteURL = "http://localhost:8000"
 
 export const UserContext = React.createContext()
 
@@ -13,32 +13,36 @@ export const UserProvider = props => {
     const [currentUser] = localStorage.getItem("currUserId")
 
     const getFollowedUsers = () => {
-        return fetch(`${remoteURL}/follows?_expand=user&currentUserId=${currentUser}&pending=false`)
+        return fetch(`${remoteURL}/follows?pending=False`, {
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("stitchit-token")}`
+            }
+        })
             .then(res => res.json())
             .then(setFollowedUsers)
     }
 
     const getPendingRequests = () => {
-        return fetch(`${remoteURL}/follows?_expand=user&currentUserId=${currentUser}&pending=true`)
+        return fetch(`${remoteURL}/follows?pending=True`, {
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("stitchit-token")}`
+            }
+        })
             .then(res => res.json())
             .then(setPendingRequests)
     }
 
     const getSingleUser = (id) => {
-        return fetch(`${remoteURL}/users/${id}`)
+        return fetch(`${remoteURL}/stitchers/${id}`, {
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("stitchit-token")}`
+            }
+        })
             .then(res => res.json())
     }
 
     const getFollowedUserInfo = (otherId) => {
-        return fetch(`${remoteURL}/follows?userId=${otherId}&currentUserId=${currentUser}&_expand=user&pending=false`)
-            .then(res => res.json())
-            .then(dataArray => {
-                if(dataArray.length === 0) {
-                    return undefined
-                } else {
-                    return dataArray[0].user
-                }
-            })
+        return getSingleUser(otherId)
     }
 
     const getAllUsersWithFollows = () => {
@@ -48,17 +52,22 @@ export const UserProvider = props => {
 
     const getUnapprovedRequests = () => {
         //need to have an additional request for each user to expand upon the requesting user's information
-        return fetch(`${remoteURL}/follows?userId=${currentUser}&pending=true`)
+        return fetch(`${remoteURL}/follows?unapproved_request=True`, {
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("stitchit-token")}`
+            }
+        })
             .then(res => res.json())
-            .then(async unapprovedReq => {
-                await Promise.all(
-                    unapprovedReq.map(async requestObj => {
-                        await getSingleUser(requestObj.currentUserId)
-                            .then(userInfo => requestObj.user = userInfo)
-                    })
-                )
-                setUnapprovedUsers(unapprovedReq)
-            })
+            .then(setUnapprovedUsers)
+            // .then(async unapprovedReq => {
+            //     await Promise.all(
+            //         unapprovedReq.map(async requestObj => {
+            //             await getSingleUser(requestObj.currentUserId)
+            //                 .then(userInfo => requestObj.user = userInfo)
+            //         })
+            //     )
+            //     setUnapprovedUsers(unapprovedReq)
+            // })
     }
 
     //creates new follow, sets the search results to an empty array and returns the new object
@@ -66,7 +75,8 @@ export const UserProvider = props => {
         return fetch(`${remoteURL}/follows`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Token ${localStorage.getItem("stitchit-token")}`
             },
             body: JSON.stringify(newFollow)
         })
@@ -96,6 +106,9 @@ export const UserProvider = props => {
     const deleteFollow = (id) => {
         return fetch(`${remoteURL}/follows/${id}`, {
             method: "DELETE",
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("stitchit-token")}`
+            }
         })
             .then(getFollowedUsers)
             .then(getUnapprovedRequests)

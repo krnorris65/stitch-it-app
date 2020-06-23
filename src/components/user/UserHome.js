@@ -83,7 +83,7 @@ const UserHome = props => {
                                 </> :
                                 (showSection === "user-designs") ?
                                     <>
-                                        <UserCard {...props} user={otherUserInfo} showDesign={true} />
+                                        <UserCard {...props} stitcher={otherUserInfo} showDesign={true} />
                                         <DesignProvider>
                                             <DesignList {...props} />
                                         </DesignProvider>

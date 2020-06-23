@@ -5,11 +5,13 @@ import { UserContext } from '../providers/UserProvider'
 const UserFollowList = props => {
     const { followedUsers } = useContext(UserContext)
 
+    console.log(followedUsers)
+
     return (
         <>
             <h2>Following</h2>
             <div className="container-cards">
-                {followedUsers.map(followObj => <UserCard key={followObj.id} user={followObj.user} followObj={followObj} {...props} />)}
+                {followedUsers.map(followObj => <UserCard key={followObj.id} stitcher={followObj.stitcher} followObj={followObj} {...props} />)}
             </div>
         </>
     )
