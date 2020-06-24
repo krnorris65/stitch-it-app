@@ -59,15 +59,6 @@ export const UserProvider = props => {
         })
             .then(res => res.json())
             .then(setUnapprovedUsers)
-            // .then(async unapprovedReq => {
-            //     await Promise.all(
-            //         unapprovedReq.map(async requestObj => {
-            //             await getSingleUser(requestObj.currentUserId)
-            //                 .then(userInfo => requestObj.user = userInfo)
-            //         })
-            //     )
-            //     setUnapprovedUsers(unapprovedReq)
-            // })
     }
 
     //creates new follow, sets the search results to an empty array and returns the new object
@@ -92,9 +83,10 @@ export const UserProvider = props => {
             pending: false
         }
         return fetch(`${remoteURL}/follows/${id}`, {
-            method: "PATCH",
+            method: "PUT",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Token ${localStorage.getItem("stitchit-token")}`
             },
             body: JSON.stringify(approveObj)
         })

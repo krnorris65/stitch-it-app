@@ -6,6 +6,8 @@ import { UserContext } from '../providers/UserProvider'
 const UserUnapprovedList = props => {
     const { unapprovedUsers } = useContext(UserContext)
 
+    console.log('unapproved', unapprovedUsers)
+
 
     return (
         <>
