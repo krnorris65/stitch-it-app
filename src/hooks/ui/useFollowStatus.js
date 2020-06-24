@@ -13,6 +13,7 @@ const useFollowStatus = stitcher => {
         const found = followedUsers.find(followInfo => followInfo.stitcher_id === stitcher.user_id)
         //checks to see if the user has an unresolved follow request from the current user
         const pending = pendingRequests.find(pendingInfo => pendingInfo.stitcher_id === stitcher.user_id)
+        
 
         if (stitcher.user_id === Number(currentUser)) {
             // current - user is the current user
