@@ -46,7 +46,7 @@ export const UserProvider = props => {
     }
 
     const getAllUsersWithFollows = () => {
-        return fetch(`${remoteURL}/users?_embed=follows`)
+        return fetch(`${remoteURL}/stitchers`)
             .then(res => res.json())
     }
 
@@ -119,10 +119,11 @@ export const UserProvider = props => {
     const findUsers = (searched) => {
         if (searched !== "") {
             getAllUsersWithFollows()
-                .then(allUsers => {
-                    const filteredUsers = allUsers.filter(user => {
+                .then(allStitchers => {
+                    console.log(allStitchers)
+                    const filteredUsers = allStitchers.filter(stitcher => {
                         // concats first and last name into one string and converts it to lower case
-                        const fullName = `${user.firstName} ${user.lastName}`.toLowerCase()
+                        const fullName = `${stitcher.user.first_name} ${stitcher.user.last_name}`.toLowerCase()
                         // if the user's full name includes what was searched for return that user
 
                         return fullName.includes(searched)

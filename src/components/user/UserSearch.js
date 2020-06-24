@@ -35,7 +35,7 @@ const UserSearch = props => {
 
             <div>
                 {
-                    searchResults.map(user => <UserCard key={user.id} user={user} {...props} />)
+                    searchResults.map(user => <UserCard key={user.id} stitcher={user} {...props} />)
                 }
             </div>
         </>
