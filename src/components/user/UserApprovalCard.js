@@ -5,8 +5,6 @@ import { UserContext } from '../providers/UserProvider'
 const UserApprovalCard = props => {
     const { deleteFollow, approveFollow } = useContext(UserContext)
 
-    console.log(props.followRequest)
-
     return (
         <div className="userCard">
             <div className="card-content">
