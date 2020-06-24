@@ -76,10 +76,10 @@ const UserCard = props => {
                                         // if the current user has requested to follow the user but it hasn't been approved
                                         : (followedStatus === "pending") ?
                                             <button className="formBtn" onClick={() => deleteFollow(followId)}>Delete Follow Request</button>
-                                            : (props.stitcher.user.public_profile) ?
-                                                <button className="formBtn" onClick={() => submitFollow(props.user.id, props.stitcher.user.public_profile)}>Follow</button>
+                                            : (props.stitcher.public_profile) ?
+                                                <button className="formBtn" onClick={() => submitFollow(props.user.id, props.stitcher.public_profile)}>Follow</button>
                                                 // if the current user isn't following the user and the user's profile is private
-                                                : <button className="formBtn" onClick={() => submitFollow(props.user.id, props.stitcher.user.public_profile)}>Request to Follow</button>
+                                                : <button className="formBtn" onClick={() => submitFollow(props.user.id, props.stitcher.public_profile)}>Request to Follow</button>
                             }
                         </>
                 }
