@@ -85,7 +85,6 @@ const DesignForm = props => {
                         completedDate.current.value = editDesign.completed_date
                         fabricId.current.value = editDesign.fabric_id
                         finishedSizeId.current.value = editDesign.size_id
-                        console.log(editDesign.photo)
                         if (editDesign.photo !== null) {
                             setPhoto(editDesign.photo)
                         }
@@ -135,10 +134,7 @@ const DesignForm = props => {
             formData.append('completed_date', completedDate.current.value)
             formData.append('fabric_id', Number(fabricId.current.value))
             formData.append('size_id', Number(finishedSizeId.current.value))
-            // if imageFile is not "" then a new photo has been uploaded
-            console.log(typeof (photo))
-            console.log("photo", photo)
-            console.log("photoPreview", photoPreview)
+            // if photo is not of type string then a new photo has been uploaded
             if (typeof (photo) !== 'string') {
                 //new photo has been uploaded
                 formData.append('photo', photo, photo.name)

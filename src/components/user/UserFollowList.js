@@ -5,8 +5,6 @@ import { UserContext } from '../providers/UserProvider'
 const UserFollowList = props => {
     const { followedUsers } = useContext(UserContext)
 
-    console.log(followedUsers)
-
     return (
         <>
             <h2>Following</h2>

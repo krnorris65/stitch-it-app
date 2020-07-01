@@ -110,7 +110,6 @@ export const UserProvider = props => {
         if (searched !== "") {
             getAllUsersWithFollows()
                 .then(allStitchers => {
-                    console.log(allStitchers)
                     const filteredUsers = allStitchers.filter(stitcher => {
                         // concats first and last name into one string and converts it to lower case
                         const fullName = `${stitcher.user.first_name} ${stitcher.user.last_name}`.toLowerCase()

@@ -13,7 +13,6 @@ const useSimpleAuth = () => {
 
     const currentUserInfo = () => {
         const stitcherId = localStorage.getItem("stitcher_id")
-        console.log("run current")
         if(stitcherId){
             return fetch(`${remoteURL}/stitchers/${stitcherId}`)
             .then(res => res.json())
@@ -68,7 +67,6 @@ const useSimpleAuth = () => {
         })
             .then(res => res.json())
             .then(res => {
-                console.log(res)
                 if (typeof res === "object" && "token" in res) {
                     //after verifying that the user entered in correct credentials, their api token is stored in localStorage and state of loggedIn is set to true
                     localStorage.setItem("stitchit-token", res.token)
