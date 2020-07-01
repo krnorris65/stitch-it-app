@@ -137,13 +137,17 @@ const DesignForm = props => {
             formData.append('size_id', Number(finishedSizeId.current.value))
             // if imageFile is not "" then a new photo has been uploaded
             console.log(typeof (photo))
+            console.log("photo", photo)
+            console.log("photoPreview", photoPreview)
             if (typeof (photo) !== 'string') {
+                //new photo has been uploaded
                 formData.append('photo', photo, photo.name)
-            } else if (photo === "" && photo.imageUrl !== "") {
-                //if  imageFile is an empty string and the imageUrl is not "", then a photo was uploaded previously and hasn't changed
-                formData.append('photo', photo.imageUrl)
+            } else if (photo !== "") {
+                //if  photo is not an empty string, then a photo was uploaded previously and hasn't changed. Send the path to the file to the API
+                const imagePath = photo.split("media/")[1]
+                formData.append('photo', imagePath)
             } else {
-                //else send an empty string
+                //no photo has been uploaded, send an empty string
                 formData.append('photo', "")
             }
             setLoadingStatus(true)

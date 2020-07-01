@@ -91,6 +91,7 @@ const useSimpleAuth = () => {
         setLoggedIn(false)
         localStorage.removeItem("stitchit-token")
         localStorage.removeItem("publicProfile")
+        localStorage.removeItem("stitcher_id")
     }
 
     return { isAuthenticated, logout, login, register, hasPublicProfile, currentUserInfo }
