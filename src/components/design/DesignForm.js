@@ -1,5 +1,4 @@
 import React, { useContext, useState, useRef, useEffect } from 'react'
-import CloudinaryInfo from './CloudinaryInfo'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -47,7 +46,9 @@ const DesignForm = props => {
     const { sizes } = useContext(SizeContext)
     const { getOneDesign, addDesign, editDesign } = useContext(DesignContext)
 
-    const [photoLink, setPhotoLink] = useState("")
+    const [photo, setPhoto] = useState("")
+    // used so the user can preview the photo they selected to upload
+    const [photoPreview, setPhotoPreview] = useState("")
 
     const title = useRef()
     const description = useRef()
@@ -76,16 +77,17 @@ const DesignForm = props => {
                     setLoadingStatus(false)
 
                     // if the user manually types in the path to try to edit someone elses design it won't present the user with the form
-                    if (editDesign.userId !== Number(localStorage.getItem("currUserId"))) {
+                    if (editDesign.stitcher_id !== Number(localStorage.getItem("stitcher_id"))) {
                         setEditAllowed(false)
                     } else {
                         title.current.value = editDesign.title
                         description.current.value = editDesign.description
-                        completedDate.current.value = editDesign.completedDate
-                        fabricId.current.value = editDesign.fabricId
-                        finishedSizeId.current.value = editDesign.finishedSizeId
-
-                        setPhotoLink(editDesign.photoLink)
+                        completedDate.current.value = editDesign.completed_date
+                        fabricId.current.value = editDesign.fabric_id
+                        finishedSizeId.current.value = editDesign.size_id
+                        if (editDesign.photo !== null) {
+                            setPhoto(editDesign.photo)
+                        }
                     }
                 })
         } else {
@@ -112,41 +114,45 @@ const DesignForm = props => {
         handleClose()
     }
 
-    //method that opens the cloudinary widget and sets the secure_url from the result as the photoLink
-    const uploadWidget = () => {
-
-        window.cloudinary.openUploadWidget({ cloud_name: `${CloudinaryInfo.cloud_name}`, upload_preset: `${CloudinaryInfo.upload_preset}`, tags: ['cross stitch'] },
-            (error, result) => {
-
-                if (result !== undefined) {
-                    // change state so that the imageUrl property will contain the URL of the uploaded image
-                    setPhotoLink(`${result[0].secure_url}`)
-                }
-            });
-    }
+    const handleFileUpload = e => {
+        setPhoto(e.target.files[0])
+        // allow user to preview the photo they selected
+        const reader = new FileReader()
+        reader.readAsDataURL(e.target.files[0])
+        reader.onloadend = () => setPhotoPreview(reader.result)
+    };
 
 
     const newOrUpdatedDesign = () => {
-        const design = {
-            title: title.current.value,
-            description: description.current.value,
-            completedDate: completedDate.current.value,
-            photoLink: photoLink,
-            fabricId: Number(fabricId.current.value),
-            finishedSizeId: Number(finishedSizeId.current.value),
-            userId: Number(localStorage.getItem("currUserId"))
-        }
 
-        if (design.title === "") {
+        if (title.current.value === "") {
             alert("Please fill out a Title")
         } else {
+            const formData = new FormData()
+            formData.append('title', title.current.value)
+            formData.append('description', description.current.value)
+            formData.append('completed_date', completedDate.current.value)
+            formData.append('fabric_id', Number(fabricId.current.value))
+            formData.append('size_id', Number(finishedSizeId.current.value))
+            // if photo is not of type string then a new photo has been uploaded
+            if (typeof (photo) !== 'string') {
+                //new photo has been uploaded
+                formData.append('photo', photo, photo.name)
+            } else if (photo !== "") {
+                //if  photo is not an empty string, then a photo was uploaded previously and hasn't changed. Send the path to the file to the API
+                const imagePath = photo.split("media/")[1]
+                formData.append('photo', imagePath)
+            } else {
+                //no photo has been uploaded, send an empty string
+                formData.append('photo', "")
+            }
             setLoadingStatus(true)
             if (newDesign) {
-                addDesign(design)
+                addDesign(formData)
                     .then(() => props.history.push("/"))
             } else {
-                design.id = Number(props.match.params.designId)
-                editDesign(design)
+                const designId = Number(props.match.params.designId)
+                editDesign(designId, formData)
                     .then(() => props.history.push("/"))
             }
 
@@ -242,15 +248,35 @@ const DesignForm = props => {
                     <div className="formgrid">
                         <label>Design Photo:</label>
                         {
-                            (photoLink === "") ?
-                                <span className="add--new photo--action" onClick={uploadWidget}>Add Photo</span>
-                                :
+                            (photo === "") ?
                                 <>
-                                    <span className="add--new photo--action" onClick={() => setPhotoLink("")}>Remove Photo</span>
-                                    <img className="uploadImage" src={photoLink} alt="" />
+                                    <input
+                                        type='file'
+                                        id='customFile'
+                                        onChange={handleFileUpload}
+                                    />
+
                                 </>
+                                : <span className="add--new photo--action" onClick={() => {
+                                    setPhoto("")
+                                }}>Remove Photo</span>
 
                         }
+                        {
+                            (photo !== "" && typeof (photo) === 'string') ?
+                                <img className="uploadImage" src={photo} alt="" />
+                                : null
+                        }
+                                                {
+                            (typeof (photo) !== 'string') ?
+                                <>
+                                    <img id="photoPreview" className="uploadImage" src={photoPreview} />
+                                    <span>{photo.name}</span>
+
+                                </>
+                                : null
+                        }
+
                     </div>
 
                     <div className="alignRight">

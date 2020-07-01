@@ -12,7 +12,7 @@ const FabricForm = props => {
     const type = useRef()
     const count = useRef()
 
-    const { findFabricId, addFabric } = useContext(FabricContext)
+    const {addFabric } = useContext(FabricContext)
 
     const handleFabric = evt => {
         evt.preventDefault()
@@ -26,20 +26,10 @@ const FabricForm = props => {
         if (fabric.type === "" || fabric.count === 0) {
             alert("Please add type and fabric count (must be greater than 0)")
         } else {
-            //make a get request to see if a fabric with that type and count exist and if so it returns the id
-            findFabricId(fabric.type, fabric.count)
-                .then(foundId => {
-                    if (foundId !== undefined) {
-                        //set the existing fabric that was entered as the selected option
-                        props.updateFabricDropdownValue(foundId)
-                    } else {
-                        //if the fabric doesn't exist, add it to the database
-                        //and pass the new fabric id to the parent component
-                        addFabric(fabric)
-                            .then(newFabric => {
-                                props.updateFabricDropdownValue(newFabric.id)
-                            })
-                    }
+            //add new fabric to the database and update the FabricDropdownValue. If the fabric already exists the api will not create a new instance, but will return the existing one.
+            addFabric(fabric)
+                .then(newFabric => {
+                    props.updateFabricDropdownValue(newFabric.id)
                 })
         }
     }

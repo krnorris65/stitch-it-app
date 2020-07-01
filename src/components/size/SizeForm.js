@@ -12,7 +12,7 @@ const SizeForm = props => {
     const height = useRef()
     const unit = useRef()
 
-    const { findSizeId, addSize } = useContext(SizeContext)
+    const { addSize } = useContext(SizeContext)
 
     const handleSize = evt => {
         evt.preventDefault()
@@ -35,18 +35,12 @@ const SizeForm = props => {
             } else {
                 sizeObj.size = `${specs.width.value}x${specs.height.value} ${specs.unit.value}`
             }
-
-            findSizeId(sizeObj.size)
-                .then(foundId => {
-                    if (foundId !== undefined) {
-                        props.updateSizesDropdown(foundId)
-                    } else {
-                        addSize(sizeObj)
-                            .then(newSize => {
-                                props.updateSizesDropdown(newSize.id)
-                            })
-                    }
+            //add new size to the database and update the SizeDropdownValue. If the size already exists the api will not create a new instance, but will return the existing one.
+            addSize(sizeObj)
+                .then(newSize => {
+                    props.updateSizesDropdown(newSize.id)
                 })
+
 
         }
 

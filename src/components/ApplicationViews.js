@@ -58,7 +58,6 @@ const ApplicationViews = props => {
                 <SizeProvider>
                     <Route path="/design/new" render={props => {
                         if (isAuthenticated()) {
-                            console.log(isAuthenticated())
                             return <DesignProvider>
                                 <DesignForm {...props} />
                             </DesignProvider>
