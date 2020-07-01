@@ -10,8 +10,6 @@ export const UserProvider = props => {
     const [pendingRequests, setPendingRequests] = useState([])
     const [searchResults, setSearchResult] = useState([])
 
-    const [currentUser] = localStorage.getItem("currUserId")
-
     const getFollowedUsers = () => {
         return fetch(`${remoteURL}/follows?pending=False`, {
             headers: {

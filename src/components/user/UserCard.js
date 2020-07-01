@@ -5,7 +5,6 @@ import useFollowStatus from '../../hooks/ui/useFollowStatus'
 import '../styles/UserCard.css'
 
 const UserCard = props => {
-    const [currentUser] = localStorage.getItem("currUserId")
     const [followedStatus, setFollowedStatus] = useState(false)
     //when updating the follow status this will hold the needed id
     const [followId, setFollowId] = useState()

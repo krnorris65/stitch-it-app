@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { UserContext } from '../../components/providers/UserProvider'
 
 const useFollowStatus = stitcher => {
-    const [currentUser] = localStorage.getItem("currUserId")
+    const [currentUser] = localStorage.getItem("stitcher_id")
 
     const { followedUsers, pendingRequests } = useContext(UserContext)
 
